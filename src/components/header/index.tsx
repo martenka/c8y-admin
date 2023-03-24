@@ -1,4 +1,4 @@
-import { DarkModeOutlined, LightModeOutlined } from "@mui/icons-material";
+import { DarkModeOutlined, LightModeOutlined } from '@mui/icons-material';
 import {
   AppBar,
   Avatar,
@@ -9,12 +9,12 @@ import {
   Stack,
   Toolbar,
   Typography,
-} from "@mui/material";
-import { useGetIdentity, useGetLocale, useSetLocale } from "@refinedev/core";
-import i18n from "i18n";
-import React, { useContext } from "react";
+} from '@mui/material';
+import { useGetIdentity, useGetLocale, useSetLocale } from '@refinedev/core';
+import i18n from 'i18n';
+import React, { useContext } from 'react';
 
-import { ColorModeContext } from "../../contexts/color-mode";
+import { ColorModeContext } from '../../contexts/color-mode';
 
 type IUser = {
   id: number;
@@ -46,14 +46,14 @@ export const Header: React.FC = () => {
               setMode();
             }}
           >
-            {mode === "dark" ? <LightModeOutlined /> : <DarkModeOutlined />}
+            {mode === 'dark' ? <LightModeOutlined /> : <DarkModeOutlined />}
           </IconButton>
 
           <FormControl sx={{ m: 1, minWidth: 120 }}>
             <Select
               disableUnderline
               defaultValue={currentLocale}
-              inputProps={{ "aria-label": "Without label" }}
+              inputProps={{ 'aria-label': 'Without label' }}
               variant="standard"
             >
               {[...(i18n.languages ?? [])].sort().map((lang: string) => (
@@ -73,13 +73,13 @@ export const Header: React.FC = () => {
                   >
                     <Avatar
                       sx={{
-                        width: "16px",
-                        height: "16px",
-                        marginRight: "5px",
+                        width: '16px',
+                        height: '16px',
+                        marginRight: '5px',
                       }}
                       src={`/images/flags/${lang}.svg`}
                     />
-                    {lang === "en" ? "English" : "German"}
+                    {lang === 'en' ? 'English' : 'German'}
                   </Stack>
                 </MenuItem>
               ))}

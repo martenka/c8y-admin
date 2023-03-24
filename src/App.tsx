@@ -1,5 +1,5 @@
-import { Authenticated, GitHubBanner, Refine } from "@refinedev/core";
-import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
+import { Authenticated, GitHubBanner, Refine } from '@refinedev/core';
+import { RefineKbar, RefineKbarProvider } from '@refinedev/kbar';
 
 import {
   AuthPage,
@@ -7,32 +7,32 @@ import {
   Layout,
   notificationProvider,
   RefineSnackbarProvider,
-} from "@refinedev/mui";
+} from '@refinedev/mui';
 
-import { CssBaseline, GlobalStyles } from "@mui/material";
+import { CssBaseline, GlobalStyles } from '@mui/material';
 import routerBindings, {
   CatchAllNavigate,
   NavigateToResource,
   UnsavedChangesNotifier,
-} from "@refinedev/react-router-v6";
-import dataProvider from "@refinedev/simple-rest";
+} from '@refinedev/react-router-v6';
+import dataProvider from '@refinedev/simple-rest';
 import {
   BlogPostCreate,
   BlogPostEdit,
   BlogPostList,
   BlogPostShow,
-} from "pages/blog-posts";
+} from 'pages/blog-posts';
 import {
   CategoryCreate,
   CategoryEdit,
   CategoryList,
   CategoryShow,
-} from "pages/categories";
-import { useTranslation } from "react-i18next";
-import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
-import { authProvider } from "./authProvider";
-import { Header } from "./components/header";
-import { ColorModeContextProvider } from "./contexts/color-mode";
+} from 'pages/categories';
+import { useTranslation } from 'react-i18next';
+import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom';
+import { authProvider } from './authProvider';
+import { Header } from './components/header';
+import { ColorModeContextProvider } from './contexts/color-mode';
 
 function App() {
   const { t, i18n } = useTranslation();
@@ -49,31 +49,31 @@ function App() {
       <RefineKbarProvider>
         <ColorModeContextProvider>
           <CssBaseline />
-          <GlobalStyles styles={{ html: { WebkitFontSmoothing: "auto" } }} />
+          <GlobalStyles styles={{ html: { WebkitFontSmoothing: 'auto' } }} />
           <RefineSnackbarProvider>
             <Refine
-              dataProvider={dataProvider("https://api.fake-rest.refine.dev")}
+              dataProvider={dataProvider('https://api.fake-rest.refine.dev')}
               notificationProvider={notificationProvider}
               routerProvider={routerBindings}
               authProvider={authProvider}
               i18nProvider={i18nProvider}
               resources={[
                 {
-                  name: "blog_posts",
-                  list: "/blog-posts",
-                  create: "/blog-posts/create",
-                  edit: "/blog-posts/edit/:id",
-                  show: "/blog-posts/show/:id",
+                  name: 'blog_posts',
+                  list: '/blog-posts',
+                  create: '/blog-posts/create',
+                  edit: '/blog-posts/edit/:id',
+                  show: '/blog-posts/show/:id',
                   meta: {
                     canDelete: true,
                   },
                 },
                 {
-                  name: "categories",
-                  list: "/categories",
-                  create: "/categories/create",
-                  edit: "/categories/edit/:id",
-                  show: "/categories/show/:id",
+                  name: 'categories',
+                  list: '/categories',
+                  create: '/categories/create',
+                  edit: '/categories/edit/:id',
+                  show: '/categories/show/:id',
                   meta: {
                     canDelete: true,
                   },
@@ -125,8 +125,8 @@ function App() {
                         type="login"
                         formProps={{
                           defaultValues: {
-                            email: "demo@refine.dev",
-                            password: "demodemo",
+                            email: 'demo@refine.dev',
+                            password: 'demodemo',
                           },
                         }}
                       />
