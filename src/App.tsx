@@ -1,8 +1,7 @@
-import { Authenticated, GitHubBanner, Refine } from '@refinedev/core';
+import { Authenticated, Refine } from '@refinedev/core';
 import { RefineKbar, RefineKbarProvider } from '@refinedev/kbar';
 
 import {
-  AuthPage,
   ErrorComponent,
   Layout,
   notificationProvider,
@@ -33,6 +32,7 @@ import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom';
 import { authProvider } from './authProvider';
 import { Header } from './components/header';
 import { ColorModeContextProvider } from './contexts/color-mode';
+import { Login } from './pages/login';
 
 function App() {
   const { t, i18n } = useTranslation();
@@ -45,7 +45,6 @@ function App() {
 
   return (
     <BrowserRouter>
-      <GitHubBanner />
       <RefineKbarProvider>
         <ColorModeContextProvider>
           <CssBaseline />
@@ -118,20 +117,7 @@ function App() {
                     </Authenticated>
                   }
                 >
-                  <Route
-                    path="/login"
-                    element={
-                      <AuthPage
-                        type="login"
-                        formProps={{
-                          defaultValues: {
-                            email: 'demo@refine.dev',
-                            password: 'demodemo',
-                          },
-                        }}
-                      />
-                    }
-                  />
+                  <Route path="/login" element={<Login />} />
                 </Route>
                 <Route
                   element={

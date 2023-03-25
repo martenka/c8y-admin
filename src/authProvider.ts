@@ -1,15 +1,53 @@
 import { AuthBindings } from '@refinedev/core';
+import { notNil } from './utils/validators';
+import {
+  AuthPermissions,
+  DefaultAuthPayload,
+  JwtAuthPayloadRuntype,
+  JwtAuthResponseRuntype,
+  User,
+} from './types/types';
+import {
+  AuthActionResponse,
+  CheckResponse,
+  OnErrorResponse,
+} from '@refinedev/core/dist/interfaces';
+import jwtDecode, { InvalidTokenError } from 'jwt-decode';
 
-export const TOKEN_KEY = 'refine-auth';
+export const AUTH_TOKEN = 'auth';
 
 export const authProvider: AuthBindings = {
-  login: async ({ username, email, password }) => {
-    if ((username || email) && password) {
-      localStorage.setItem(TOKEN_KEY, username);
-      return {
-        success: true,
-        redirectTo: '/',
-      };
+  login: async ({ username, password }): Promise<AuthActionResponse> => {
+    if (notNil(username) && notNil(password)) {
+      const url = new URL('/v1/auth/login', process.env.REACT_APP_DOMAIN);
+
+      const response = await fetch(url, {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const responseBody = await response.json();
+
+      if (JwtAuthResponseRuntype.guard(responseBody)) {
+        localStorage.setItem(AUTH_TOKEN, responseBody.access_token);
+        try {
+          JwtAuthPayloadRuntype.check(jwtDecode(responseBody.access_token));
+        } catch (e) {
+          if (e instanceof InvalidTokenError) {
+            throw new Error('Invalid auth token from backend');
+          }
+          throw e;
+        }
+
+        return {
+          success: true,
+          redirectTo: '/',
+        };
+      }
     }
 
     return {
@@ -20,15 +58,15 @@ export const authProvider: AuthBindings = {
       },
     };
   },
-  logout: async () => {
-    localStorage.removeItem(TOKEN_KEY);
+  logout: async (): Promise<AuthActionResponse> => {
+    localStorage.removeItem(AUTH_TOKEN);
     return {
       success: true,
       redirectTo: '/login',
     };
   },
-  check: async () => {
-    const token = localStorage.getItem(TOKEN_KEY);
+  check: async (): Promise<CheckResponse> => {
+    const token = localStorage.getItem(AUTH_TOKEN);
     if (token) {
       return {
         authenticated: true,
@@ -40,20 +78,29 @@ export const authProvider: AuthBindings = {
       redirectTo: '/login',
     };
   },
-  getPermissions: async () => null,
-  getIdentity: async () => {
-    const token = localStorage.getItem(TOKEN_KEY);
+  getPermissions: async (): Promise<AuthPermissions> => {
+    const token = localStorage.getItem(AUTH_TOKEN);
+    let isAdmin = false;
     if (token) {
+      const tokenPayload = jwtDecode<DefaultAuthPayload>(token);
+      isAdmin = tokenPayload.roles.includes('Admin');
+    }
+
+    return { isAdmin };
+  },
+  getIdentity: async (): Promise<User | null> => {
+    const token = localStorage.getItem(AUTH_TOKEN);
+    if (token) {
+      const tokenPayload = jwtDecode<DefaultAuthPayload>(token);
       return {
-        id: 1,
-        name: 'John Doe',
+        id: tokenPayload.sub,
+        name: tokenPayload.usr,
         avatar: 'https://i.pravatar.cc/300',
       };
     }
     return null;
   },
-  onError: async (error) => {
-    console.error(error);
-    return { error };
+  onError: async (error): Promise<OnErrorResponse> => {
+    return { error, redirectTo: '/v1/auth/login', logout: true };
   },
 };
