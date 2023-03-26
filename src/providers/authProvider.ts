@@ -1,12 +1,12 @@
 import { AuthBindings } from '@refinedev/core';
-import { notNil } from './utils/validators';
+import { notNil } from '../utils/validators';
 import {
   AuthPermissions,
   DefaultAuthPayload,
   JwtAuthPayloadRuntype,
   JwtAuthResponseRuntype,
-  User,
-} from './types/types';
+  UserIdentity,
+} from '../types/auth';
 import {
   AuthActionResponse,
   CheckResponse,
@@ -88,19 +88,23 @@ export const authProvider: AuthBindings = {
 
     return { isAdmin };
   },
-  getIdentity: async (): Promise<User | null> => {
+  getIdentity: async (): Promise<UserIdentity> => {
     const token = localStorage.getItem(AUTH_TOKEN);
     if (token) {
       const tokenPayload = jwtDecode<DefaultAuthPayload>(token);
       return {
         id: tokenPayload.sub,
         name: tokenPayload.usr,
+        token,
         avatar: 'https://i.pravatar.cc/300',
       };
     }
     return null;
   },
   onError: async (error): Promise<OnErrorResponse> => {
-    return { error, redirectTo: '/v1/auth/login', logout: true };
+    if ([401, 403].includes(error?.status)) {
+      return { error, redirectTo: '/v1/auth/login', logout: true };
+    }
+    return { error };
   },
 };

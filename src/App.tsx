@@ -14,23 +14,12 @@ import routerBindings, {
   NavigateToResource,
   UnsavedChangesNotifier,
 } from '@refinedev/react-router-v6';
-import dataProvider from '@refinedev/simple-rest';
-import {
-  BlogPostCreate,
-  BlogPostEdit,
-  BlogPostList,
-  BlogPostShow,
-} from 'pages/blog-posts';
-import {
-  CategoryCreate,
-  CategoryEdit,
-  CategoryList,
-  CategoryShow,
-} from 'pages/categories';
+import { SensorsList } from './pages/sensors';
+
 import { useTranslation } from 'react-i18next';
 import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom';
-import { authProvider } from './authProvider';
-import { Header } from './components/header';
+import { authProvider, createBaseDataProvider } from './providers';
+import { Header } from './components';
 import { ColorModeContextProvider } from './contexts/color-mode';
 import { Login } from './pages/login';
 
@@ -51,30 +40,19 @@ function App() {
           <GlobalStyles styles={{ html: { WebkitFontSmoothing: 'auto' } }} />
           <RefineSnackbarProvider>
             <Refine
-              dataProvider={dataProvider('https://api.fake-rest.refine.dev')}
+              dataProvider={{
+                ...createBaseDataProvider('http://localhost:3000/v1/'),
+              }}
               notificationProvider={notificationProvider}
               routerProvider={routerBindings}
               authProvider={authProvider}
               i18nProvider={i18nProvider}
               resources={[
                 {
-                  name: 'blog_posts',
-                  list: '/blog-posts',
-                  create: '/blog-posts/create',
-                  edit: '/blog-posts/edit/:id',
-                  show: '/blog-posts/show/:id',
+                  name: 'sensors',
+                  list: '/sensors',
                   meta: {
-                    canDelete: true,
-                  },
-                },
-                {
-                  name: 'categories',
-                  list: '/categories',
-                  create: '/categories/create',
-                  edit: '/categories/edit/:id',
-                  show: '/categories/show/:id',
-                  meta: {
-                    canDelete: true,
+                    canDelete: false,
                   },
                 },
               ]}
@@ -95,19 +73,10 @@ function App() {
                 >
                   <Route
                     index
-                    element={<NavigateToResource resource="blog_posts" />}
+                    element={<NavigateToResource resource="sensors" />}
                   />
-                  <Route path="/blog-posts">
-                    <Route index element={<BlogPostList />} />
-                    <Route path="create" element={<BlogPostCreate />} />
-                    <Route path="edit/:id" element={<BlogPostEdit />} />
-                    <Route path="show/:id" element={<BlogPostShow />} />
-                  </Route>
-                  <Route path="/categories">
-                    <Route index element={<CategoryList />} />
-                    <Route path="create" element={<CategoryCreate />} />
-                    <Route path="edit/:id" element={<CategoryEdit />} />
-                    <Route path="show/:id" element={<CategoryShow />} />
+                  <Route path="/sensors">
+                    <Route index element={<SensorsList />} />
                   </Route>
                 </Route>
                 <Route

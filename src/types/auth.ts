@@ -1,8 +1,5 @@
-import { Record, Static, String, Array } from 'runtypes';
-
-export const NonEmptyString = String.withConstraint(
-  (value) => value.length !== 0,
-);
+import { Array, Record, Static } from 'runtypes';
+import { NonEmptyString } from './general';
 
 export const UsernameAndPasswordRuntype = Record({
   username: NonEmptyString,
@@ -30,5 +27,8 @@ export type AuthPermissions = {
 export interface User {
   id: string;
   name: string;
+  token: string;
   avatar?: string;
 }
+
+export type UserIdentity = User | null;

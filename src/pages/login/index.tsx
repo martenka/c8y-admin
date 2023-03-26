@@ -12,7 +12,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useForm } from 'react-hook-form';
 import * as React from 'react';
 
-import { DefaultLoginCredentials } from '../../types/types';
+import { DefaultLoginCredentials } from '../../types/auth';
 import { FormContainer, TextFieldElement } from 'react-hook-form-mui';
 
 export const Login = () => {
