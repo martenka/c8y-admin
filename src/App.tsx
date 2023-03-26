@@ -22,6 +22,8 @@ import { authProvider, createBaseDataProvider } from './providers';
 import { Header } from './components';
 import { ColorModeContextProvider } from './contexts/color-mode';
 import { Login } from './pages/login';
+import { FilesList } from 'pages/files/list';
+import { TasksList } from './pages/tasks/list';
 
 function App() {
   const { t, i18n } = useTranslation();
@@ -55,6 +57,20 @@ function App() {
                     canDelete: false,
                   },
                 },
+                {
+                  name: 'files',
+                  list: '/files',
+                  meta: {
+                    canDelete: false,
+                  },
+                },
+                {
+                  name: 'tasks',
+                  list: '/tasks',
+                  meta: {
+                    canDelete: false,
+                  },
+                },
               ]}
               options={{
                 syncWithLocation: true,
@@ -77,6 +93,12 @@ function App() {
                   />
                   <Route path="/sensors">
                     <Route index element={<SensorsList />} />
+                  </Route>
+                  <Route path="/files">
+                    <Route index element={<FilesList />} />
+                  </Route>
+                  <Route path="/tasks">
+                    <Route index element={<TasksList />} />
                   </Route>
                 </Route>
                 <Route

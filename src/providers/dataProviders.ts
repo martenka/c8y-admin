@@ -21,7 +21,7 @@ export type ApiMetaQuery = MetaQuery & { token: string | undefined };
 
 export const createBaseDataProvider = (baseUrl: string): DataProvider => {
   return {
-    async create<TData, TVariables>(params: {
+    async create<TData, TVariables>(_params: {
       resource: string;
       variables: TVariables;
       meta?: MetaQuery;
@@ -75,7 +75,7 @@ export const createBaseDataProvider = (baseUrl: string): DataProvider => {
 
       return {
         data: responsePayload?.data as TData[],
-        total: responsePayload?.data?.length ?? 0,
+        total: responsePayload?.pageInfo?.totalElements ?? 0,
       };
     },
     async getOne<TData>(params: {
@@ -97,7 +97,7 @@ export const createBaseDataProvider = (baseUrl: string): DataProvider => {
 
       return { data: responsePayload as TData };
     },
-    async getMany<TData>(params: {
+    async getMany<TData>(_params: {
       resource: string;
       ids: BaseKey[];
       meta?: MetaQuery;
@@ -105,7 +105,7 @@ export const createBaseDataProvider = (baseUrl: string): DataProvider => {
     }): Promise<GetManyResponse<TData>> {
       return { data: [] };
     },
-    async update<TData, TVariables>(params: {
+    async update<TData, TVariables>(_params: {
       resource: string;
       id: BaseKey;
       variables: TVariables;
@@ -132,4 +132,5 @@ function setPaginationQueryParams(
       url.searchParams.set('pageSize', pagination.pageSize.toString());
     }
   }
+  url.searchParams.set('withTotalElements', 'true');
 }

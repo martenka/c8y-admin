@@ -1,5 +1,5 @@
 import { AuthBindings } from '@refinedev/core';
-import { notNil } from '../utils/validators';
+import { isNil, notNil } from '../utils/validators';
 import {
   AuthPermissions,
   DefaultAuthPayload,
@@ -15,6 +15,14 @@ import {
 import jwtDecode, { InvalidTokenError } from 'jwt-decode';
 
 export const AUTH_TOKEN = 'auth';
+
+export function hasAdminRole(roles?: string[]): boolean {
+  if (isNil(roles)) {
+    return false;
+  }
+
+  return roles.includes('Admin');
+}
 
 export const authProvider: AuthBindings = {
   login: async ({ username, password }): Promise<AuthActionResponse> => {
@@ -83,7 +91,7 @@ export const authProvider: AuthBindings = {
     let isAdmin = false;
     if (token) {
       const tokenPayload = jwtDecode<DefaultAuthPayload>(token);
-      isAdmin = tokenPayload.roles.includes('Admin');
+      isAdmin = hasAdminRole(tokenPayload.roles);
     }
 
     return { isAdmin };

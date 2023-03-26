@@ -24,11 +24,11 @@ export type AuthPermissions = {
   isAdmin: boolean;
 };
 
-export interface User {
+export interface UserToken {
   id: string;
   name: string;
   token: string;
   avatar?: string;
 }
 
-export type UserIdentity = User | null;
+export type UserIdentity = UserToken | null;
