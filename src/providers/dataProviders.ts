@@ -87,7 +87,7 @@ export const createBaseDataProvider = (baseUrl: string): DataProvider => {
       const url = new URL(`${params.resource}/${params.id}`, baseUrl);
       const token = (params.meta as ApiMetaQuery)?.token as string;
       if (isNil(token)) {
-        return { data: {} as TData };
+        return { data: undefined as TData };
       }
       const response = await fetch(url, {
         headers: { ...getAuthHeader(token) },

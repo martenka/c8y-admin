@@ -29,7 +29,12 @@ export const TasksList = () => {
 
   return (
     <List>
-      <DataGrid {...dataGridProps} columns={columns} autoHeight />
+      <DataGrid
+        {...dataGridProps}
+        columns={columns}
+        density="compact"
+        autoHeight
+      />
     </List>
   );
 };

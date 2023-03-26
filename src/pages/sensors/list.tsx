@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDataGrid, List } from '@refinedev/mui';
+import { useDataGrid, List, ShowButton } from '@refinedev/mui';
 import { DataGrid, GridColumns } from '@mui/x-data-grid';
 
 import { UserIdentity } from '../../types/auth';
@@ -31,6 +31,18 @@ export const SensorsList = () => {
       {
         field: 'description',
         headerName: 'Description',
+        flex: 1,
+      },
+      {
+        field: 'action',
+        headerName: 'Actions',
+        renderCell: function render({ row }) {
+          return (
+            <>
+              <ShowButton hideText recordItemId={row.id} />
+            </>
+          );
+        },
         flex: 1,
       },
     ],

@@ -24,6 +24,7 @@ import { ColorModeContextProvider } from './contexts/color-mode';
 import { Login } from './pages/login';
 import { FilesList } from 'pages/files/list';
 import { TasksList } from './pages/tasks/list';
+import { SensorShow } from './pages/sensors';
 
 function App() {
   const { t, i18n } = useTranslation();
@@ -53,6 +54,7 @@ function App() {
                 {
                   name: 'sensors',
                   list: '/sensors',
+                  show: '/sensors/show/:id',
                   meta: {
                     canDelete: false,
                   },
@@ -93,6 +95,7 @@ function App() {
                   />
                   <Route path="/sensors">
                     <Route index element={<SensorsList />} />
+                    <Route path="show/:id" element={<SensorShow />} />
                   </Route>
                   <Route path="/files">
                     <Route index element={<FilesList />} />
