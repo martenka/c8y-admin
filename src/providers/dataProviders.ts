@@ -43,7 +43,7 @@ export const createBaseDataProvider = (baseUrl: string): DataProvider => {
         headers: { ...getAuthHeader(token) },
       });
 
-      const responsePayload = await response.json();
+      const responsePayload = await getResponseJsonOrUndefined(response);
       return { data: responsePayload as TData };
     },
     getApiUrl(): string {
@@ -64,14 +64,15 @@ export const createBaseDataProvider = (baseUrl: string): DataProvider => {
       const token = (params.meta as ApiMetaQuery)?.token as string;
 
       if (isNil(token)) {
-        return { data: [], total: 0 };
+        throw new Error('Unable to get user auth token');
       }
 
       const response = await fetch(url, {
         headers: { ...getAuthHeader(token) },
       });
 
-      const responsePayload: GeneralApiResponse = await response.json();
+      const responsePayload =
+        await getResponseJsonOrUndefined<GeneralApiResponse>(response);
 
       return {
         data: responsePayload?.data as TData[],
@@ -87,13 +88,16 @@ export const createBaseDataProvider = (baseUrl: string): DataProvider => {
       const url = new URL(`${params.resource}/${params.id}`, baseUrl);
       const token = (params.meta as ApiMetaQuery)?.token as string;
       if (isNil(token)) {
-        return { data: undefined as TData };
+        throw new Error('Unable to get user auth token');
       }
+
       const response = await fetch(url, {
         headers: { ...getAuthHeader(token) },
       });
 
-      const responsePayload = await response.json();
+      const responsePayload = await getResponseJsonOrUndefined<
+        Record<string | number, unknown>
+      >(response);
 
       return { data: responsePayload as TData };
     },
@@ -105,14 +109,31 @@ export const createBaseDataProvider = (baseUrl: string): DataProvider => {
     }): Promise<GetManyResponse<TData>> {
       return { data: [] };
     },
-    async update<TData, TVariables>(_params: {
+    async update<TData, TVariables>(params: {
       resource: string;
       id: BaseKey;
       variables: TVariables;
       meta?: MetaQuery;
       metaData?: MetaQuery;
     }): Promise<UpdateResponse<TData>> {
-      return Promise.resolve({ data: {} as TData });
+      const url = new URL(`${params.resource}/${params.id}`, baseUrl);
+      const token = (params.meta as ApiMetaQuery)?.token as string;
+
+      if (isNil(token)) {
+        throw new Error('Unable to get user auth token');
+      }
+
+      const response = await fetch(url, {
+        method: 'PATCH',
+        headers: {
+          ...getAuthHeader(token),
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(params.variables),
+      });
+
+      const responsePayload = await getResponseJsonOrUndefined(response);
+      return { data: responsePayload as TData };
     },
   };
 };
@@ -133,4 +154,14 @@ function setPaginationQueryParams(
     }
   }
   url.searchParams.set('withTotalElements', 'true');
+}
+
+async function getResponseJsonOrUndefined<T>(
+  response: Response,
+): Promise<T | undefined> {
+  try {
+    return (await response.json()) as T;
+  } catch (e) {
+    return undefined;
+  }
 }

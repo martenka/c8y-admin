@@ -36,3 +36,6 @@ export function createPaginatedResponseRuntype<T>(dataType: Runtype<T>) {
 }
 
 export type GeneralApiResponse = Static<typeof GeneralApiResponseRuntype>;
+
+export type KeyValue = { key: string; value: string };
+export type ManyKeyValues = { [key: string]: KeyValue };

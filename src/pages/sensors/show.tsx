@@ -22,7 +22,7 @@ export const SensorShow = () => {
   const customAttributes = record?.customAttributes;
 
   return (
-    <Show isLoading={isLoading}>
+    <Show isLoading={isLoading} canEdit={true}>
       <Stack gap={1}>
         <Typography variant="body1" fontWeight="bold">
           Id

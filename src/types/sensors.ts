@@ -3,7 +3,7 @@ import {
   NonEmptyString,
   StringOrNumber,
 } from './general';
-import { Record, String, Partial, Static } from 'runtypes';
+import { Record, String, Partial, Static, Dictionary } from 'runtypes';
 
 export const SensorRuntype = Record({
   id: NonEmptyString,
@@ -14,7 +14,7 @@ export const SensorRuntype = Record({
 }).And(
   Partial({
     description: String,
-    customAttributes: Record({}),
+    customAttributes: Dictionary(NonEmptyString, String),
   }),
 );
 

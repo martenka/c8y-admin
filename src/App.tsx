@@ -14,7 +14,7 @@ import routerBindings, {
   NavigateToResource,
   UnsavedChangesNotifier,
 } from '@refinedev/react-router-v6';
-import { SensorsList } from './pages/sensors';
+import { SensorEdit, SensorsList } from './pages/sensors';
 
 import { useTranslation } from 'react-i18next';
 import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom';
@@ -55,6 +55,7 @@ function App() {
                   name: 'sensors',
                   list: '/sensors',
                   show: '/sensors/show/:id',
+                  edit: '/sensors/edit/:id',
                   meta: {
                     canDelete: false,
                   },
@@ -96,6 +97,7 @@ function App() {
                   <Route path="/sensors">
                     <Route index element={<SensorsList />} />
                     <Route path="show/:id" element={<SensorShow />} />
+                    <Route path="edit/:id" element={<SensorEdit />} />
                   </Route>
                   <Route path="/files">
                     <Route index element={<FilesList />} />
