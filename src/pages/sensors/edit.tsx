@@ -79,7 +79,8 @@ export const SensorEdit = () => {
         />
         <SimpleEditableObject
           form={form}
-          valueName={'customAttributes'}
+          objectDisplayName="Custom Attributes"
+          objectName="customAttributes"
           value={data?.customAttributes}
         />
       </FormContainer>

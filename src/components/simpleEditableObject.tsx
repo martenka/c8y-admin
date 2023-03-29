@@ -22,7 +22,8 @@ export const updateFormStateFromObject = (
 };
 
 export const SimpleEditableObject = (props: {
-  valueName: string;
+  objectName: string;
+  objectDisplayName: string;
   form: UseFormReturnType;
   value: Record<string | number, string> | undefined;
   direction?: ResponsiveStyleValue<
@@ -39,7 +40,7 @@ export const SimpleEditableObject = (props: {
   return (
     <>
       <Typography variant="body1" fontWeight="bold">
-        Custom Attributes
+        {props.objectDisplayName}
       </Typography>
       <Stack
         direction={props.direction ?? 'column'}
@@ -52,7 +53,7 @@ export const SimpleEditableObject = (props: {
             <Stack
               direction="row"
               spacing={1}
-              key={`${props.valueName}.${key}`}
+              key={`${props.objectName}.${key}`}
             >
               <TextField
                 fullWidth
@@ -63,13 +64,13 @@ export const SimpleEditableObject = (props: {
                   setAttributes((prevState) => {
                     const newState = { ...prevState };
                     newState[key].key = e.target.value;
+                    updateFormStateFromObject(
+                      props.objectName,
+                      attributes,
+                      props.form,
+                    );
                     return newState;
                   });
-                  updateFormStateFromObject(
-                    props.valueName,
-                    attributes,
-                    props.form,
-                  );
                 }}
               />
               <TextField
@@ -81,15 +82,31 @@ export const SimpleEditableObject = (props: {
                   setAttributes((prevState) => {
                     const newState = { ...prevState };
                     newState[key].value = e.target.value;
+                    updateFormStateFromObject(
+                      props.objectName,
+                      attributes,
+                      props.form,
+                    );
                     return newState;
                   });
-                  updateFormStateFromObject(
-                    props.valueName,
-                    attributes,
-                    props.form,
-                  );
                 }}
               />
+              <Button
+                onClick={() => {
+                  setAttributes((prevState) => {
+                    const newState = { ...prevState };
+                    delete newState[key];
+                    updateFormStateFromObject(
+                      props.objectName,
+                      newState,
+                      props.form,
+                    );
+                    return newState;
+                  });
+                }}
+              >
+                Delete
+              </Button>
             </Stack>
           );
         })}
