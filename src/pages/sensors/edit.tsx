@@ -6,7 +6,7 @@ import { useGetIdentity } from '@refinedev/core';
 import { UserIdentity } from '../../types/auth';
 import { notNil } from '../../utils/validators';
 import { Sensor } from '../../types/sensors';
-import { SimpleEditableObject } from '../../components/simpleEditableObject';
+import { SimpleFormObject } from '../../components/simpleFormObject';
 
 export const SensorEdit = () => {
   const auth = useGetIdentity<UserIdentity>();
@@ -34,7 +34,10 @@ export const SensorEdit = () => {
           description: '',
           customAttributes: {},
         }}
-        onSuccess={console.log}
+        handleSubmit={(e) => {
+          console.log(e);
+          return e;
+        }}
       >
         <TextFieldElement
           sx={{ color: 'black !important' }}
@@ -76,8 +79,9 @@ export const SensorEdit = () => {
           fullWidth
           name="description"
           label="Description"
+          validation={{ min: 1 }}
         />
-        <SimpleEditableObject
+        <SimpleFormObject
           form={form}
           objectDisplayName="Custom Attributes"
           objectName="customAttributes"

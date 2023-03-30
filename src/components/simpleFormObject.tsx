@@ -21,7 +21,7 @@ export const updateFormStateFromObject = (
   form.setValue(attributeName, levelObject, { shouldValidate: true });
 };
 
-export const SimpleEditableObject = (props: {
+export const SimpleFormObject = (props: {
   objectName: string;
   objectDisplayName: string;
   form: UseFormReturnType;

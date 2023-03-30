@@ -16,6 +16,8 @@ import { getAuthHeader } from '../utils/auth';
 
 import { GeneralApiResponse } from '../types/general';
 import { isNil, notNil } from '../utils/validators';
+import { ApiResponseErrorRuntype } from '../types/error';
+import { ApiResponseError } from '../utils/error';
 
 export type ApiMetaQuery = MetaQuery & { token: string | undefined };
 
@@ -44,6 +46,7 @@ export const createBaseDataProvider = (baseUrl: string): DataProvider => {
       });
 
       const responsePayload = await getResponseJsonOrUndefined(response);
+      checkApiError(response, responsePayload);
       return { data: responsePayload as TData };
     },
     getApiUrl(): string {
@@ -74,6 +77,7 @@ export const createBaseDataProvider = (baseUrl: string): DataProvider => {
       const responsePayload =
         await getResponseJsonOrUndefined<GeneralApiResponse>(response);
 
+      checkApiError(response, responsePayload);
       return {
         data: responsePayload?.data as TData[],
         total: responsePayload?.pageInfo?.totalElements ?? 0,
@@ -99,6 +103,7 @@ export const createBaseDataProvider = (baseUrl: string): DataProvider => {
         Record<string | number, unknown>
       >(response);
 
+      checkApiError(response, responsePayload);
       return { data: responsePayload as TData };
     },
     async getMany<TData>(_params: {
@@ -133,6 +138,7 @@ export const createBaseDataProvider = (baseUrl: string): DataProvider => {
       });
 
       const responsePayload = await getResponseJsonOrUndefined(response);
+      checkApiError(response, responsePayload);
       return { data: responsePayload as TData };
     },
   };
@@ -163,5 +169,21 @@ async function getResponseJsonOrUndefined<T>(
     return (await response.json()) as T;
   } catch (e) {
     return undefined;
+  }
+}
+
+function checkApiError<T>(response: Response, responsePayload: T) {
+  if (ApiResponseErrorRuntype.guard(responsePayload)) {
+    throw new ApiResponseError({
+      error: responsePayload.error,
+      statusCode: responsePayload.statusCode,
+      message: responsePayload.message,
+    });
+  } else if (response.status > 399) {
+    console.error(responsePayload, response.status, response.statusText);
+    throw new ApiResponseError({
+      statusCode: response.status,
+      message: `${response.status}, ${response.statusText}`,
+    });
   }
 }
