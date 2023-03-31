@@ -14,7 +14,7 @@ import {
 } from '@refinedev/core';
 import { getAuthHeader } from '../utils/auth';
 
-import { GeneralApiResponse } from '../types/general';
+import { GeneralApiResponse, KeyValuesRuntype } from '../types/general';
 import { isNil, notNil } from '../utils/validators';
 import { ApiResponseErrorRuntype } from '../types/error';
 import { ApiResponseError } from '../utils/error';
@@ -63,7 +63,7 @@ export const createBaseDataProvider = (baseUrl: string): DataProvider => {
     }): Promise<GetListResponse<TData>> {
       const url = new URL(`${params.resource}/search`, baseUrl);
       setPaginationQueryParams(url, params.pagination);
-
+      setFilterQueryParams(url, params.filters);
       const token = (params.meta as ApiMetaQuery)?.token as string;
 
       if (isNil(token)) {
@@ -160,6 +160,33 @@ function setPaginationQueryParams(
     }
   }
   url.searchParams.set('withTotalElements', 'true');
+}
+
+function setFilterQueryParams(url: URL, filters: CrudFilters | undefined) {
+  if (isNil(filters) || filters.length === 0) {
+    return;
+  }
+
+  filters.forEach((filter) => {
+    if ('field' in filter) {
+      if (KeyValuesRuntype.guard(filter.value)) {
+        const customAttributeFilters: string[] = [];
+        filter.value.forEach((item) => {
+          if (item.key.length > 0 && item.value.length > 0) {
+            customAttributeFilters.push(`${item.key}=${item.value}`);
+          }
+        });
+        if (customAttributeFilters.length > 0) {
+          url.searchParams.set(
+            'customAttributes',
+            customAttributeFilters.join(','),
+          );
+        }
+      } else {
+        url.searchParams.set(filter.field, filter.value);
+      }
+    }
+  });
 }
 
 async function getResponseJsonOrUndefined<T>(

@@ -110,7 +110,7 @@ export const authProvider: AuthBindings = {
     return null;
   },
   onError: async (error): Promise<OnErrorResponse> => {
-    if ([401, 403].includes(error?.status)) {
+    if ([401, 403].includes(error?.statusCode)) {
       return { error, redirectTo: '/v1/auth/login', logout: true };
     }
     return { error };

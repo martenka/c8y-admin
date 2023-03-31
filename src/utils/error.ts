@@ -4,6 +4,7 @@ export type ApiResponseErrorType = Omit<
   ApiResponseErrorRuntypeType,
   'message'
 > & {
+  message: string;
   errorMessage?: string | string[];
 };
 
