@@ -45,7 +45,9 @@ function App() {
           <RefineSnackbarProvider>
             <Refine
               dataProvider={{
-                ...createBaseDataProvider('http://localhost:3000/v1/'),
+                ...createBaseDataProvider(
+                  `${process.env.REACT_APP_DOMAIN}/v1/`,
+                ),
               }}
               notificationProvider={notificationProvider}
               routerProvider={routerBindings}

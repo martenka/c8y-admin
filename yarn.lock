@@ -2000,7 +2000,23 @@
     temp "^0.9.4"
     tslib "^2.3.1"
 
-"@refinedev/core@^4.1.2", "@refinedev/core@^4.5.0", "@refinedev/core@^4.5.2":
+"@refinedev/core@4.7.2", "@refinedev/core@^4.5.4":
+  version "4.7.2"
+  resolved "https://registry.yarnpkg.com/@refinedev/core/-/core-4.7.2.tgz#337b49b7b622124679ad31be63f9a700749ca124"
+  integrity sha512-kQ7szs2ms0ciZMX5V5dOjZqOBOGvea2uFrs96k4mV+FzDnU8nMqkNM12rLlgXDvWZ9KDF4nNTD03IcJ07y66kQ==
+  dependencies:
+    "@tanstack/react-query" "^4.10.1"
+    "@tanstack/react-query-devtools" "^4.10.1"
+    export-to-csv-fix-source-map "^0.2.1"
+    lodash "^4.17.21"
+    lodash-es "^4.17.21"
+    papaparse "^5.3.0"
+    pluralize "^8.0.0"
+    qs "^6.10.1"
+    tslib "^2.3.1"
+    warn-once "^0.1.0"
+
+"@refinedev/core@^4.1.2":
   version "4.5.2"
   resolved "https://registry.yarnpkg.com/@refinedev/core/-/core-4.5.2.tgz#bb2db375036432c56be0500d9127c792301bbbf8"
   integrity sha512-9oqn2I/SAabGnEbu9yglm7wY9zKeL07qtYrz/WTNUJlsWefbg9TYHNuyOx7AxxlVgScLg+KwZbDSqwRto/U4Yg==
@@ -2016,10 +2032,10 @@
     tslib "^2.3.1"
     warn-once "^0.1.0"
 
-"@refinedev/inferencer@^3.0.0":
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/@refinedev/inferencer/-/inferencer-3.1.2.tgz#a42261bea0cfc36f224cf1c1f0bfa924d75521ed"
-  integrity sha512-Z3FuONgk5OZ0/S6h+x3CgXD9DNxJx9HU6Orm6gwnNUi6/b/Atug8NCweRbqANvSm+O8Z1MAynktmu3FGmvqyYg==
+"@refinedev/inferencer@3.1.7":
+  version "3.1.7"
+  resolved "https://registry.yarnpkg.com/@refinedev/inferencer/-/inferencer-3.1.7.tgz#502ac13eb2d624a18c3f7954e692589ed11ee01e"
+  integrity sha512-fjoJtd2ZwuNHvhSItkWA2wxBMBY6K08fOIgC4aEa8N6lPgHAh3uMRo7FycDE0kF6S6QRNo0ExpkNBbnuW79fng==
   dependencies:
     "@aliemir/react-live" "^4.0.0"
     "@refinedev/core" "^4.1.2"
@@ -2041,10 +2057,10 @@
   dependencies:
     kbar "^0.1.0-beta.36"
 
-"@refinedev/mui@^4.5.0":
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/@refinedev/mui/-/mui-4.5.0.tgz#810d6db5815833ee545eceb85a1dc476a5adb3ca"
-  integrity sha512-NIfkXh+KwrrYhGjIw05mLtthjrvVH2vQ9zQhAV2OoKLoHNxi+BLGYs6vpOc2jHMETDDGLhtRmmfxAkt7buBM1g==
+"@refinedev/mui@4.7.0":
+  version "4.7.0"
+  resolved "https://registry.yarnpkg.com/@refinedev/mui/-/mui-4.7.0.tgz#b8cf79787551cb8e055fda8f2b0adf26ba4406aa"
+  integrity sha512-xPAr/+StYVMUiL3ilS3fDi7BTcLBwEhSyjsC9bvbd/KvYYgfAhsGg/fNirbmepbKkzmaGQVLt9WUWh/1tFhLAw==
   dependencies:
     "@emotion/react" "^11.8.2"
     "@emotion/styled" "^11.8.1"
@@ -2052,8 +2068,8 @@
     "@mui/lab" "^5.0.0-alpha.85"
     "@mui/material" "^5.8.6"
     "@mui/x-data-grid" "^5.12.1"
-    "@refinedev/react-hook-form" "^4.1.0"
-    "@refinedev/ui-types" "^1.3.0"
+    "@refinedev/react-hook-form" "^4.1.4"
+    "@refinedev/ui-types" "^1.5.0"
     dayjs "^1.10.7"
     lodash "^4.17.21"
     lodash-es "^4.17.21"
@@ -2064,10 +2080,10 @@
     tslib "^2.3.1"
     warn-once "^0.1.0"
 
-"@refinedev/react-hook-form@^4.1.0", "@refinedev/react-hook-form@^4.1.2":
-  version "4.1.2"
-  resolved "https://registry.yarnpkg.com/@refinedev/react-hook-form/-/react-hook-form-4.1.2.tgz#b60227e6cfe90fa8f41b497a86e2e81246035864"
-  integrity sha512-wFa0EIJ2c1gimqbZzwXOkuF8xp97gQCph7WeWSKU9+fTZCdBk9UENLypbidBqwvpPuVHoooVOeh7CJMPj64kxA==
+"@refinedev/react-hook-form@4.1.4", "@refinedev/react-hook-form@^4.1.4":
+  version "4.1.4"
+  resolved "https://registry.yarnpkg.com/@refinedev/react-hook-form/-/react-hook-form-4.1.4.tgz#47a947a6680600a9a3e3aa53c9ef2cb704f86d76"
+  integrity sha512-9o0BruMeRNhMnfGR2QuurtaNqzgYeGQ/Pi9bOeQex8NFE4RXfwUHMbGFqCcX3WBOvh438YBa32/MguiNgLgP2w==
   dependencies:
     react-hook-form "^7.30.0"
 
@@ -2087,12 +2103,12 @@
     axios "^0.26.1"
     query-string "^7.1.1"
 
-"@refinedev/ui-types@^1.3.0":
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/@refinedev/ui-types/-/ui-types-1.3.0.tgz#008a18425b241faa92f1a14bd467a5f017cbd466"
-  integrity sha512-k7fVPO5vj58BYxTx7tsmVeMg5AmBw1MStznBi2TfxJeMThIHnzCW8M9EQX27pwjjMMU0Fdh8jLI+spCOuDN5yg==
+"@refinedev/ui-types@^1.5.0":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@refinedev/ui-types/-/ui-types-1.5.0.tgz#a9593ea1a021d5e823c5ab2ed2717a12c110eeda"
+  integrity sha512-KNYvW9jOYXpBWU62IYpKKfU1Uxx34n2kh0mmQRmQgTK0KF+bHa57KMuR0Pa9B65UZmjNzKyMWGHNzh7Qp9scZA==
   dependencies:
-    "@refinedev/core" "^4.5.0"
+    "@refinedev/core" "^4.5.4"
     dayjs "^1.10.7"
     tslib "^2.3.1"
 

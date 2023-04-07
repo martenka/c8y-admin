@@ -3,14 +3,14 @@ import { Button, Stack, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { ResponsiveStyleValue, SxProps } from '@mui/system';
 import { Theme } from '@mui/material/styles/createTheme';
-import { UseFormReturnType } from '@refinedev/react-hook-form';
 import { getKeyValuePair, objectToKeyValues } from '../utils/transforms';
 import { ManyKeyValues } from '../types/general';
+import { UseFormReturn } from 'react-hook-form';
 
 export const updateFormStateFromObject = (
   attributeName: string,
   attributeValues: ManyKeyValues,
-  form: UseFormReturnType,
+  form: UseFormReturn,
 ) => {
   const levelObject: Record<string, string> = {};
 
@@ -24,7 +24,7 @@ export const updateFormStateFromObject = (
 export const SimpleFormObject = (props: {
   objectName: string;
   objectDisplayName: string;
-  form: UseFormReturnType;
+  form: UseFormReturn;
   value: Record<string | number, string> | undefined;
   direction?: ResponsiveStyleValue<
     'row' | 'row-reverse' | 'column' | 'column-reverse'
