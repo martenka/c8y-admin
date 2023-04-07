@@ -35,7 +35,6 @@ export const SensorEdit = () => {
           customAttributes: {},
         }}
         handleSubmit={(e) => {
-          console.log(e);
           return e;
         }}
       >

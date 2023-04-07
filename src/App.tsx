@@ -25,6 +25,7 @@ import { Login } from './pages/login';
 import { FilesList } from 'pages/files/list';
 import { TasksList } from './pages/tasks/list';
 import { SensorShow } from './pages/sensors';
+import { TaskCreate } from './pages/tasks/create';
 
 function App() {
   const { t, i18n } = useTranslation();
@@ -70,6 +71,7 @@ function App() {
                 {
                   name: 'tasks',
                   list: '/tasks',
+                  create: '/tasks/create',
                   meta: {
                     canDelete: false,
                   },
@@ -104,6 +106,7 @@ function App() {
                   </Route>
                   <Route path="/tasks">
                     <Route index element={<TasksList />} />
+                    <Route path="create" element={<TaskCreate />} />
                   </Route>
                 </Route>
                 <Route

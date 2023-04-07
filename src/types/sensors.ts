@@ -9,10 +9,10 @@ export const SensorRuntype = Record({
   id: NonEmptyString,
   managedObjectId: StringOrNumber,
   managedObjectName: String,
-  valueFragmentDisplayName: String,
   valueFragmentType: String,
 }).And(
   Partial({
+    valueFragmentDisplayName: String,
     description: String,
     customAttributes: Dictionary(NonEmptyString, String),
   }),

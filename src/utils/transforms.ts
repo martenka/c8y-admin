@@ -33,3 +33,15 @@ export const objectToKeyValues: (
   });
   return keyValues;
 };
+
+export function ensureArray<T>(value: T | T[]): Array<T> {
+  if (isNil(value)) {
+    return [];
+  }
+
+  if (Array.isArray(value)) {
+    return value;
+  }
+
+  return [value];
+}

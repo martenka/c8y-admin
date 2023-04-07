@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDataGrid, List, ShowButton } from '@refinedev/mui';
 import { DataGrid, GridColumns } from '@mui/x-data-grid';
 
@@ -25,12 +25,17 @@ import {
 import { ApiResponseErrorType } from '../../utils/error';
 import { SensorFilterVariables } from '../../types/filters';
 import { useForm } from '@refinedev/react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 export const SensorsList = () => {
   const auth = useGetIdentity<UserIdentity>();
   const token = notNil(auth.data) ? auth.data?.token : undefined;
 
-  const { dataGridProps, search, filters } = useDataGrid<
+  const navigate = useNavigate();
+
+  const [listSelection, setListSelection] = useState<Sensor[]>([]);
+
+  const { dataGridProps, search, filters, tableQueryResult } = useDataGrid<
     Sensor,
     ApiResponseErrorType,
     SensorFilterVariables
@@ -58,6 +63,8 @@ export const SensorsList = () => {
       return filters;
     },
   });
+
+  const dataGridData = tableQueryResult.data?.data ?? [];
 
   const columns = React.useMemo<GridColumns<Sensor>>(
     () => [
@@ -207,18 +214,6 @@ export const SensorsList = () => {
                         />
                       )}
                     />
-                    {/*                    <TextField
-                      fullWidth
-                      key={`customAttributes[${index}].key`}
-                      name={`customAttributes.${index}.key`}
-                      label={'key'}
-                    />*/}
-                    {/*    <TextField
-                      fullWidth
-                      key={`customAttributes2[${index}].value`}
-                      name={`customAttributes.[${index}].value`}
-                      label={'value'}
-                    />*/}
                     <Button
                       onClick={() => {
                         remove(index);
@@ -250,11 +245,37 @@ export const SensorsList = () => {
         </Card>
       </Grid>
       <Grid item xs={12} lg={9}>
-        <List>
+        <List
+          headerButtons={({ defaultButtons }) => {
+            return (
+              <>
+                {defaultButtons}
+                <Button
+                  variant="contained"
+                  onClick={() => {
+                    navigate('/tasks/create', {
+                      state: { sensors: listSelection },
+                    });
+                  }}
+                >
+                  Create Data Fetch task
+                </Button>
+              </>
+            );
+          }}
+        >
           <DataGrid
             {...dataGridProps}
             columns={columns}
             filterModel={undefined}
+            checkboxSelection
+            onSelectionModelChange={(model) => {
+              const selectedIds = new Set(model);
+              const selectedSensors = dataGridData.filter((item) =>
+                selectedIds.has(item.id),
+              );
+              setListSelection(selectedSensors);
+            }}
             autoHeight
           />
         </List>

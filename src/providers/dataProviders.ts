@@ -23,13 +23,34 @@ export type ApiMetaQuery = MetaQuery & { token: string | undefined };
 
 export const createBaseDataProvider = (baseUrl: string): DataProvider => {
   return {
-    async create<TData, TVariables>(_params: {
+    async create<TData, TVariables>(params: {
       resource: string;
       variables: TVariables;
       meta?: MetaQuery;
       metaData?: MetaQuery;
     }): Promise<CreateResponse<TData>> {
-      return Promise.resolve({ data: {} as TData });
+      const url = new URL(params.resource, baseUrl);
+      const token = (params.meta as ApiMetaQuery)?.token as string;
+
+      if (isNil(token)) {
+        throw new Error('Unable to get user auth token');
+      }
+
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          ...getAuthHeader(token),
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(params.variables),
+      });
+
+      const responsePayload = await getResponseJsonOrUndefined<
+        Record<string | number, unknown>
+      >(response);
+
+      checkApiError(response, responsePayload);
+      return { data: responsePayload as TData };
     },
     async deleteOne<TData, TVariables>(params: {
       resource: string;

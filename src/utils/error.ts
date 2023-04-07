@@ -25,3 +25,9 @@ export class ApiResponseError extends Error implements ApiResponseErrorType {
     this.errorMessage = message ?? '';
   }
 }
+
+export class CustomError extends Error {
+  constructor(message?: string) {
+    super(message);
+  }
+}
