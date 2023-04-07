@@ -34,6 +34,7 @@ export const FileRuntype = Record({
     customAttributes: Record({}),
     metadata: FileMetadataRuntype,
     storage: FileStorageRuntype,
+    url: String,
   }),
 );
 

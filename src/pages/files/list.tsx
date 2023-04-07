@@ -1,11 +1,13 @@
 import React from 'react';
-import { useDataGrid, List } from '@refinedev/mui';
-import { DataGrid, GridColumns } from '@mui/x-data-grid';
+import { useDataGrid, List, ShowButton } from '@refinedev/mui';
+import { DataGrid, GridColumns, GridRenderCellParams } from '@mui/x-data-grid';
 
 import { UserIdentity } from '../../types/auth';
 import { notNil } from '../../utils/validators';
-import { useGetIdentity } from '@refinedev/core';
-
+import { useDataProvider, useGetIdentity, useOne } from '@refinedev/core';
+import { IconButton, Link } from '@mui/material';
+import { FileDownload } from '@mui/icons-material';
+import { File } from '../../types/files';
 export const FilesList = () => {
   const auth = useGetIdentity<UserIdentity>();
   const token = notNil(auth.data) ? auth.data?.token : undefined;
@@ -22,6 +24,22 @@ export const FilesList = () => {
       { field: 'name', headerName: 'Name', flex: 1 },
       { field: 'createdByTask', headerName: 'CreatedByTask', flex: 1 },
       { field: 'description', headerName: 'Description', flex: 1 },
+      {
+        field: 'action',
+        headerName: 'Actions',
+        align: 'center',
+        renderCell: function render(props) {
+          return (
+            <>
+              <IconButton>
+                <Link href={props.row.url} download>
+                  <FileDownload />
+                </Link>
+              </IconButton>
+            </>
+          );
+        },
+      },
     ],
     [],
   );
