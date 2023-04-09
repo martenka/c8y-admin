@@ -3,7 +3,7 @@ import { useDataGrid, List, ShowButton } from '@refinedev/mui';
 import { DataGrid, GridColumns } from '@mui/x-data-grid';
 
 import { UserIdentity } from '../../types/auth';
-import { isNil, notNil } from '../../utils/validators';
+import { notNil } from '../../utils/validators';
 import { CrudFilters, getDefaultFilter, useGetIdentity } from '@refinedev/core';
 import { Sensor } from '../../types/sensors';
 import {
@@ -26,6 +26,7 @@ import { ApiResponseErrorType } from '../../utils/error';
 import { SensorFilterVariables } from '../../types/filters';
 import { useForm } from '@refinedev/react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { paramsToSimpleCrudFilters } from '../../utils/transforms';
 
 export const SensorsList = () => {
   const auth = useGetIdentity<UserIdentity>();
@@ -47,20 +48,13 @@ export const SensorsList = () => {
       const filters: CrudFilters = [];
 
       if (notNil(params)) {
-        Object.keys(params).forEach((key) => {
-          const value = params[key];
-          if (isNil(value) || (Array.isArray(value) && value.length === 0)) {
-            return;
-          }
-          filters.push({
-            field: key,
-            operator: 'eq',
-            value: value !== '' ? params[key] : undefined,
-          });
-        });
+        paramsToSimpleCrudFilters(params, filters);
       }
 
       return filters;
+    },
+    queryOptions: {
+      retry: false,
     },
   });
 
@@ -239,6 +233,15 @@ export const SensorsList = () => {
                 fullWidth
               >
                 Filter
+              </Button>
+              <Button
+                variant="contained"
+                color="secondary"
+                sx={{ mt: 3 }}
+                fullWidth
+                onClick={() => reset()}
+              >
+                Clear Filters
               </Button>
             </FormContainer>
           </CardContent>

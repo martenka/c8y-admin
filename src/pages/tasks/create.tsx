@@ -21,7 +21,11 @@ import {
 } from 'react-hook-form-mui';
 import React, { useState } from 'react';
 import { ApiResponseErrorType, CustomError } from '../../utils/error';
-import { TaskPayload, TaskTypes, TaskTypesArray } from '../../types/task';
+import {
+  TaskPayload,
+  TaskTypes,
+  TaskTypesSelectOptions,
+} from '../../types/task';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DataFetchTaskFields } from './dataFetchTaskFields';
@@ -46,12 +50,6 @@ export const TaskCreate = () => {
       isPeriodic: false,
       lg: 6,
     });
-  const taskTypes = React.useMemo(() => {
-    return TaskTypesArray.map((item, index) => ({
-      id: index,
-      label: item,
-    }));
-  }, [TaskTypesArray]);
 
   const auth = useGetIdentity<UserIdentity>();
   const token = notNil(auth.data) ? auth.data?.token : undefined;
@@ -114,7 +112,7 @@ export const TaskCreate = () => {
       <FormContainer formContext={{ handleSubmit, control, ...formRest }}>
         <GeneralTaskFormFields
           periodicTaskState={periodicTaskState}
-          taskTypes={taskTypes}
+          taskTypes={TaskTypesSelectOptions}
         />
         <TaskPayloadFormFieldsSwitcher
           taskType={inputData.type}
@@ -136,14 +134,7 @@ export const GeneralTaskFormFields = ({
           <Typography variant="body1" fontWeight="bold">
             General task information
           </Typography>
-          <SelectElement
-            name={'taskType'}
-            fullWidth
-            options={taskTypes}
-            onChange={(value: number) =>
-              console.log('New value', taskTypes[value])
-            }
-          />
+          <SelectElement name={'taskType'} fullWidth options={taskTypes} />
           <TextFieldElement name={`name`} label="Task name" fullWidth />
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DateTimePickerElement

@@ -33,6 +33,20 @@ export const TaskTypesArray = TaskTypesRuntype.alternatives.map(
   (item) => item.value,
 );
 
+export const TaskStatusArray = TaskStepsRuntype.alternatives.map(
+  (item) => item.value,
+);
+
+export const TaskTypesSelectOptions = TaskTypesArray.map((item, index) => ({
+  id: index,
+  label: item,
+}));
+
+export const TaskStatusSelectOptions = TaskStatusArray.map((item, index) => ({
+  id: index,
+  label: item,
+}));
+
 export const TaskRuntype = Record({
   id: NonEmptyString,
   name: NonEmptyString,
@@ -127,7 +141,7 @@ export const DataFetchTaskAPIInputRuntype = TaskAPIInputRuntype.And(
 );
 
 export type Task = Static<typeof TaskRuntype>;
-export type TaskSteps = Static<typeof TaskStepsRuntype>;
+export type TaskStatus = Static<typeof TaskStepsRuntype>;
 export type TaskTypes = Static<typeof TaskTypesRuntype> | 'UNKNOWN';
 export type TaskPayload = Static<typeof CreateTaskRuntype>;
 export type DataFetchTaskCreatePayload = Static<

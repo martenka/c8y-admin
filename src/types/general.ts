@@ -1,6 +1,6 @@
 import {
   Partial,
-  Record,
+  Record as RRecord,
   String,
   Number,
   Array,
@@ -15,14 +15,14 @@ export const NonEmptyString = String.withConstraint(
 );
 export const StringOrNumber = String.Or(Number);
 
-export const GeneralApiResponseRuntype = Record({
+export const GeneralApiResponseRuntype = RRecord({
   pageInfo: PageInfoRuntype,
   data: Array(Unknown),
 });
 
 export function createPaginatedResponseRuntype<T>(dataType: Runtype<T>) {
-  return Record({
-    pageInfo: Record({
+  return RRecord({
+    pageInfo: RRecord({
       pageSize: Number,
     }).And(
       Partial({
@@ -35,7 +35,7 @@ export function createPaginatedResponseRuntype<T>(dataType: Runtype<T>) {
   });
 }
 
-export const KeyValueRuntype = Record({
+export const KeyValueRuntype = RRecord({
   key: String,
   value: String,
 });

@@ -1,5 +1,7 @@
 import { isNil } from './validators';
 import { KeyValue, ManyKeyValues } from '../types/general';
+import { CrudFilters } from '@refinedev/core';
+import { TrueFalse, UnknownAttributes } from '../types/filters';
 
 export const getKeyValuePair = (
   key?: string,
@@ -44,4 +46,30 @@ export function ensureArray<T>(value: T | T[]): Array<T> {
   }
 
   return [value];
+}
+
+export function paramsToSimpleCrudFilters(
+  params: UnknownAttributes,
+  filters: CrudFilters,
+) {
+  Object.keys(params).forEach((key) => {
+    const value = params[key];
+    if (isNil(value) || (Array.isArray(value) && value.length === 0)) {
+      return;
+    }
+    filters.push({
+      field: key,
+      operator: 'eq',
+      value: value !== '' ? value : undefined,
+    });
+  });
+}
+
+export function getBooleanValue(
+  value: TrueFalse | undefined,
+): boolean | undefined {
+  if (isNil(value)) {
+    return undefined;
+  }
+  return value.toLowerCase() === 'true';
 }

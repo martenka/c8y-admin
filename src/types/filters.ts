@@ -1,8 +1,27 @@
 import { Sensor } from './sensors';
 import { KeyValue } from './general';
+import { Task } from './task';
+import { Dayjs } from 'dayjs';
+
+export const TrueFalseArray = ['true', 'false'] as const;
+export type TrueFalse = Lowercase<(typeof TrueFalseArray)[number]>;
+export const TrueFalseSelectOptions: {
+  id: number;
+  label: Capitalize<TrueFalse>;
+}[] = [
+  { id: 0, label: 'True' },
+  { id: 1, label: 'False' },
+];
 
 export type UnknownAttributes = {
-  [key: string]: string | KeyValue[] | undefined;
+  [key: string | number]:
+    | string
+    | boolean
+    | number
+    | KeyValue[]
+    | Dayjs
+    | undefined
+    | null;
 };
 export type CustomAttributesFilter = { customAttributes: KeyValue[] };
 
@@ -15,3 +34,15 @@ export type SensorFilterVariables = Omit<
 
 export type SensorFilterWithCustomAttributes = SensorFilterVariables &
   CustomAttributesFilter;
+
+export type TaskFilterVariables = Omit<
+  Task,
+  'createdAt' | 'taskType' | 'taskStatus'
+> &
+  Partial<{
+    firstRunAt: Dayjs | null;
+    isPeriodic: number;
+    taskStatus: number;
+    taskType: number;
+  }> &
+  UnknownAttributes;

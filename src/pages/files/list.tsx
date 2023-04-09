@@ -1,10 +1,10 @@
 import React from 'react';
-import { useDataGrid, List, ShowButton } from '@refinedev/mui';
-import { DataGrid, GridColumns, GridRenderCellParams } from '@mui/x-data-grid';
+import { useDataGrid, List } from '@refinedev/mui';
+import { DataGrid, GridColumns } from '@mui/x-data-grid';
 
 import { UserIdentity } from '../../types/auth';
 import { notNil } from '../../utils/validators';
-import { useDataProvider, useGetIdentity, useOne } from '@refinedev/core';
+import { useGetIdentity } from '@refinedev/core';
 import { IconButton, Link } from '@mui/material';
 import { FileDownload } from '@mui/icons-material';
 import { File } from '../../types/files';
