@@ -133,7 +133,7 @@ export const createBaseDataProvider = (baseUrl: string): DataProvider => {
       meta?: MetaQuery;
       dataProviderName?: string;
     }): Promise<GetManyResponse<TData>> {
-      return { data: [] };
+      throw new Error('getMany not implemented!');
     },
     async update<TData, TVariables>(params: {
       resource: string;

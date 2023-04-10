@@ -2,6 +2,7 @@ import { Sensor } from './sensors';
 import { KeyValue } from './general';
 import { Task } from './task';
 import { Dayjs } from 'dayjs';
+import { File } from './files';
 
 export const TrueFalseArray = ['true', 'false'] as const;
 export type TrueFalse = Lowercase<(typeof TrueFalseArray)[number]>;
@@ -45,4 +46,14 @@ export type TaskFilterVariables = Omit<
     taskStatus: number;
     taskType: number;
   }> &
+  UnknownAttributes;
+
+export type FileFilterVariables = Partial<
+  Pick<File, 'id' | 'createdByTask'> & {
+    sensorId: string;
+    fileName: string;
+    dateFrom: Dayjs | null;
+    dateTo: Dayjs | null;
+  } & Omit<Sensor, 'id' | 'customAttributes' | 'description'>
+> &
   UnknownAttributes;
