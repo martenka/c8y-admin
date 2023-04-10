@@ -2000,10 +2000,10 @@
     temp "^0.9.4"
     tslib "^2.3.1"
 
-"@refinedev/core@4.7.2", "@refinedev/core@^4.5.4":
-  version "4.7.2"
-  resolved "https://registry.yarnpkg.com/@refinedev/core/-/core-4.7.2.tgz#337b49b7b622124679ad31be63f9a700749ca124"
-  integrity sha512-kQ7szs2ms0ciZMX5V5dOjZqOBOGvea2uFrs96k4mV+FzDnU8nMqkNM12rLlgXDvWZ9KDF4nNTD03IcJ07y66kQ==
+"@refinedev/core@4.7.3":
+  version "4.7.3"
+  resolved "https://registry.yarnpkg.com/@refinedev/core/-/core-4.7.3.tgz#e82cb384782f6037b2f818f815ebde199addf955"
+  integrity sha512-xC8n/sBopOh1jjOYRMzbaHThkCgEBVSSV6H9IndTNkf1oGmVRNUMVXM1jh+lLNO4Jl/3HMQF3GJ4n4PICTgsdw==
   dependencies:
     "@tanstack/react-query" "^4.10.1"
     "@tanstack/react-query-devtools" "^4.10.1"
@@ -2020,6 +2020,22 @@
   version "4.5.2"
   resolved "https://registry.yarnpkg.com/@refinedev/core/-/core-4.5.2.tgz#bb2db375036432c56be0500d9127c792301bbbf8"
   integrity sha512-9oqn2I/SAabGnEbu9yglm7wY9zKeL07qtYrz/WTNUJlsWefbg9TYHNuyOx7AxxlVgScLg+KwZbDSqwRto/U4Yg==
+  dependencies:
+    "@tanstack/react-query" "^4.10.1"
+    "@tanstack/react-query-devtools" "^4.10.1"
+    export-to-csv-fix-source-map "^0.2.1"
+    lodash "^4.17.21"
+    lodash-es "^4.17.21"
+    papaparse "^5.3.0"
+    pluralize "^8.0.0"
+    qs "^6.10.1"
+    tslib "^2.3.1"
+    warn-once "^0.1.0"
+
+"@refinedev/core@^4.5.4":
+  version "4.7.2"
+  resolved "https://registry.yarnpkg.com/@refinedev/core/-/core-4.7.2.tgz#337b49b7b622124679ad31be63f9a700749ca124"
+  integrity sha512-kQ7szs2ms0ciZMX5V5dOjZqOBOGvea2uFrs96k4mV+FzDnU8nMqkNM12rLlgXDvWZ9KDF4nNTD03IcJ07y66kQ==
   dependencies:
     "@tanstack/react-query" "^4.10.1"
     "@tanstack/react-query-devtools" "^4.10.1"
@@ -2057,10 +2073,10 @@
   dependencies:
     kbar "^0.1.0-beta.36"
 
-"@refinedev/mui@4.7.0":
-  version "4.7.0"
-  resolved "https://registry.yarnpkg.com/@refinedev/mui/-/mui-4.7.0.tgz#b8cf79787551cb8e055fda8f2b0adf26ba4406aa"
-  integrity sha512-xPAr/+StYVMUiL3ilS3fDi7BTcLBwEhSyjsC9bvbd/KvYYgfAhsGg/fNirbmepbKkzmaGQVLt9WUWh/1tFhLAw==
+"@refinedev/mui@4.7.2":
+  version "4.7.2"
+  resolved "https://registry.yarnpkg.com/@refinedev/mui/-/mui-4.7.2.tgz#f8134988dd0488f47768e11fd5fc9b1a4c22b779"
+  integrity sha512-wK9W/f7/OhXBrJDCymauEtMRNKpVHhmsqCUT5YnR9WP9mLZdLhHnMpNdsL5T9LzVvVegplxEJp7BJVUwHZv8rg==
   dependencies:
     "@emotion/react" "^11.8.2"
     "@emotion/styled" "^11.8.1"
@@ -2068,7 +2084,7 @@
     "@mui/lab" "^5.0.0-alpha.85"
     "@mui/material" "^5.8.6"
     "@mui/x-data-grid" "^5.12.1"
-    "@refinedev/react-hook-form" "^4.1.4"
+    "@refinedev/react-hook-form" "^4.1.6"
     "@refinedev/ui-types" "^1.5.0"
     dayjs "^1.10.7"
     lodash "^4.17.21"
@@ -2080,10 +2096,10 @@
     tslib "^2.3.1"
     warn-once "^0.1.0"
 
-"@refinedev/react-hook-form@4.1.4", "@refinedev/react-hook-form@^4.1.4":
-  version "4.1.4"
-  resolved "https://registry.yarnpkg.com/@refinedev/react-hook-form/-/react-hook-form-4.1.4.tgz#47a947a6680600a9a3e3aa53c9ef2cb704f86d76"
-  integrity sha512-9o0BruMeRNhMnfGR2QuurtaNqzgYeGQ/Pi9bOeQex8NFE4RXfwUHMbGFqCcX3WBOvh438YBa32/MguiNgLgP2w==
+"@refinedev/react-hook-form@4.1.6", "@refinedev/react-hook-form@^4.1.6":
+  version "4.1.6"
+  resolved "https://registry.yarnpkg.com/@refinedev/react-hook-form/-/react-hook-form-4.1.6.tgz#e36be2c41757a8fd79442e9b21f329b696a2bb5e"
+  integrity sha512-bVBsWxs01Rtrf0GKRb9sx0uYTT5FDlv+dp2cC7SutuD4THWAEoLb2RpXc69shAXHMgcw5ZVBTSI1yTpV5vOmjg==
   dependencies:
     react-hook-form "^7.30.0"
 
