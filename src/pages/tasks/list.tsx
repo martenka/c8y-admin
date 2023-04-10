@@ -39,10 +39,13 @@ import {
   getBooleanValue,
   paramsToSimpleCrudFilters,
 } from '../../utils/transforms';
+import { useNavigate } from 'react-router-dom';
 
 export const TasksList = () => {
   const auth = useGetIdentity<UserIdentity>();
   const token = notNil(auth.data) ? auth.data?.token : undefined;
+
+  const navigate = useNavigate();
 
   const { dataGridProps, filters, search } = useDataGrid<
     Task,
@@ -179,7 +182,22 @@ export const TasksList = () => {
         </Card>
       </Grid>
       <Grid item xs={12} lg={9}>
-        <List>
+        <List
+          headerButtons={() => {
+            return (
+              <Button
+                variant="contained"
+                onClick={() => {
+                  navigate('/tasks/create', {
+                    state: { taskType: 'OBJECT_SYNC' },
+                  });
+                }}
+              >
+                Sync sensors and groups
+              </Button>
+            );
+          }}
+        >
           <DataGrid
             {...dataGridProps}
             columns={columns}

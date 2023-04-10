@@ -1,9 +1,13 @@
 import {
+  BaseTaskTypes,
   CreateDataFetchTaskFormDataRuntype,
-  DataFetchTaskAPIInput,
+  CreateObjectSyncTaskFormDataRuntype,
   DataFetchTaskCreateInputRuntype,
   DataFetchTaskCreatePayload,
-  DataFetchTaskInput,
+  DataFetchTaskCreateInput,
+  ObjectSyncTaskCreateInputRuntype,
+  TaskAPIInput,
+  TaskInput,
   TaskPayload,
   TaskTypes,
   TaskTypesArray,
@@ -14,18 +18,16 @@ import { TaskTypeAndDefaultValues } from './types';
 import { notNil } from '../../../utils/validators';
 import { CustomError } from '../../../utils/error';
 
-export const isDataFetchTaskInput = (
-  value: unknown,
-): value is DataFetchTaskInput => {
-  return DataFetchTaskCreateInputRuntype.guard(value);
+export const getTaskIndex = (taskType: BaseTaskTypes): number => {
+  return TaskTypesArray.indexOf(taskType);
 };
 
-export const createTaskDefaultValues = (): Partial<
-  Pick<TaskPayload, 'firstRunAt' | 'taskType'>
-> => {
+export const createTaskDefaultValues = (
+  index?: number,
+): Partial<Pick<TaskPayload, 'firstRunAt' | 'taskType'>> => {
   return {
     firstRunAt: dayjs(),
-    taskType: 0, //Take first task type from the array
+    taskType: index ?? 0, //Fall back to first task type value if index is not provided
   };
 };
 
@@ -44,6 +46,9 @@ export const getTaskType = (value: unknown): TaskTypes => {
   if (DataFetchTaskCreateInputRuntype.guard(value)) {
     return 'DATA_FETCH';
   }
+  if (ObjectSyncTaskCreateInputRuntype.guard(value)) {
+    return 'OBJECT_SYNC';
+  }
   return 'UNKNOWN';
 };
 
@@ -55,15 +60,22 @@ export const getTaskTypeAndDefaultValues = (
       return {
         type: 'DATA_FETCH',
         defaultValues: createDataFetchTaskDefaultValues(
-          (value as DataFetchTaskInput).sensors,
+          (value as DataFetchTaskCreateInput).sensors,
         ),
       };
+    case 'OBJECT_SYNC':
+      return {
+        type: 'OBJECT_SYNC',
+        defaultValues: createTaskDefaultValues(
+          getTaskIndex((value as TaskInput).taskType),
+        ),
+      };
+    default:
+      return { type: 'UNKNOWN', defaultValues: { firstRunAt: dayjs() } };
   }
-
-  return { type: 'UNKNOWN', defaultValues: { firstRunAt: dayjs() } };
 };
 
-export const taskSubmitHandler = (task: TaskPayload): DataFetchTaskAPIInput => {
+export const taskSubmitHandler = (task: TaskPayload): TaskAPIInput => {
   if (CreateDataFetchTaskFormDataRuntype.guard(task)) {
     const entities = task.sensors;
     let periodicData;
@@ -86,6 +98,22 @@ export const taskSubmitHandler = (task: TaskPayload): DataFetchTaskAPIInput => {
         })),
         dateTo: task.dateTo?.toISOString(),
         dateFrom: task.dateFrom?.toISOString(),
+      },
+    };
+  } else if (CreateObjectSyncTaskFormDataRuntype.guard(task)) {
+    let periodicData;
+    if (notNil(task.pattern)) {
+      periodicData = {
+        pattern: task.pattern,
+      };
+    }
+    return {
+      name: task.name,
+      taskType: TaskTypesArray[task.taskType],
+      firstRunAt: task.firstRunAt?.toISOString(),
+      periodicData,
+      taskPayload: {
+        groupTypeIdentifier: task.groupTypeIdentifier,
       },
     };
   }

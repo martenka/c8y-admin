@@ -24,11 +24,12 @@ import { ApiResponseErrorType, CustomError } from '../../utils/error';
 import {
   TaskPayload,
   TaskTypes,
+  TaskTypesArray,
   TaskTypesSelectOptions,
 } from '../../types/task';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DataFetchTaskFields } from './dataFetchTaskFields';
+import { DataFetchTaskFields, ObjectSyncTaskFields } from './fields';
 import {
   getTaskTypeAndDefaultValues,
   taskSubmitHandler,
@@ -42,6 +43,7 @@ interface PeriodicTaskUIState {
 export interface GeneralTaskFormFieldsProps {
   periodicTaskState: PeriodicTaskUIState;
   taskTypes: Required<SelectElementProps<object>>['options'];
+  selectedTask: TaskTypes;
 }
 
 export const TaskCreate = () => {
@@ -113,6 +115,7 @@ export const TaskCreate = () => {
         <GeneralTaskFormFields
           periodicTaskState={periodicTaskState}
           taskTypes={TaskTypesSelectOptions}
+          selectedTask={TaskTypesArray[formRest.getValues('taskType')]}
         />
         <TaskPayloadFormFieldsSwitcher
           taskType={inputData.type}
@@ -126,15 +129,21 @@ export const TaskCreate = () => {
 export const GeneralTaskFormFields = ({
   periodicTaskState,
   taskTypes,
+  selectedTask,
 }: GeneralTaskFormFieldsProps): JSX.Element => {
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={2} marginBottom={2}>
       <Grid item xs={12} lg={periodicTaskState.isPeriodic}>
         <Stack direction="column" spacing={2}>
           <Typography variant="body1" fontWeight="bold">
             General task information
           </Typography>
-          <SelectElement name={'taskType'} fullWidth options={taskTypes} />
+          <SelectElement
+            name={'taskType'}
+            fullWidth
+            options={taskTypes}
+            disabled={true}
+          />
           <TextFieldElement name={`name`} label="Task name" fullWidth />
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DateTimePickerElement
@@ -153,11 +162,13 @@ export const GeneralTaskFormFields = ({
               Periodic task information
             </Typography>
             <TextFieldElement name={'pattern'} label="Pattern" />
-            <TextFieldElement
-              type="number"
-              name={'fetchDurationSeconds'}
-              label="Duration (seconds)"
-            />
+            {selectedTask === 'DATA_FETCH' && (
+              <TextFieldElement
+                type="number"
+                name={'fetchDurationSeconds'}
+                label="Duration (seconds)"
+              />
+            )}
           </Stack>
         </Grid>
       )}
@@ -175,6 +186,8 @@ export const TaskPayloadFormFieldsSwitcher = ({
   switch (taskType) {
     case 'DATA_FETCH':
       return <DataFetchTaskFields control={control} />;
+    case 'OBJECT_SYNC':
+      return <ObjectSyncTaskFields control={control} />;
   }
   return null;
 };

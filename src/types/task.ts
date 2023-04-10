@@ -58,8 +58,18 @@ export const TaskRuntype = Record({
   }),
 );
 export const DataFetchTaskCreateInputRuntype = Record({
+  taskType: TaskTypesRuntype.alternatives[0],
   sensors: Array(SensorRuntype),
 });
+
+export const ObjectSyncTaskCreateInputRuntype = Record({
+  taskType: TaskTypesRuntype.alternatives[1],
+});
+
+export const TaskInputRuntype = Union(
+  DataFetchTaskCreateInputRuntype,
+  ObjectSyncTaskCreateInputRuntype,
+);
 
 export const BaseCreateTaskFormData = Record({
   taskType: Number,
@@ -68,7 +78,6 @@ export const BaseCreateTaskFormData = Record({
     firstRunAt: Unknown.withGuard(isDayjs),
     name: String,
     pattern: String,
-    fetchDurationSeconds: Number,
   }),
 );
 
@@ -85,6 +94,7 @@ export const CreateDataFetchTaskFormDataRuntype = BaseCreateTaskFormData.And(
     Partial({
       dateFrom: Unknown.withGuard(isDayjs).Or(Null),
       dateTo: Unknown.withGuard(isDayjs).Or(Null),
+      fetchDurationSeconds: Number,
     }),
   ),
 );
@@ -140,16 +150,34 @@ export const DataFetchTaskAPIInputRuntype = TaskAPIInputRuntype.And(
   DataFetchTaskPayloadAPIInputRuntype,
 );
 
+export const ObjectSyncTaskAPIInputRuntype = TaskAPIInputRuntype.And(
+  Record({
+    taskPayload: Partial({
+      groupTypeIdentifier: String,
+    }),
+  }),
+);
+
 export type Task = Static<typeof TaskRuntype>;
 export type TaskStatus = Static<typeof TaskStepsRuntype>;
-export type TaskTypes = Static<typeof TaskTypesRuntype> | 'UNKNOWN';
+export type BaseTaskTypes = Static<typeof TaskTypesRuntype>;
+export type TaskTypes = BaseTaskTypes | 'UNKNOWN';
+
 export type TaskPayload = Static<typeof CreateTaskRuntype>;
 export type DataFetchTaskCreatePayload = Static<
   typeof CreateDataFetchTaskFormDataRuntype
 >;
-export type ObjectSynctaskCreatePayload = Static<
+export type ObjectSyncTaskCreatePayload = Static<
   typeof CreateObjectSyncTaskFormDataRuntype
 >;
 
-export type DataFetchTaskInput = Static<typeof DataFetchTaskCreateInputRuntype>;
+export type TaskInput = Static<typeof TaskInputRuntype>;
+export type DataFetchTaskCreateInput = Static<
+  typeof DataFetchTaskCreateInputRuntype
+>;
+
 export type DataFetchTaskAPIInput = Static<typeof DataFetchTaskAPIInputRuntype>;
+export type ObjectSyncTaskAPIInput = Static<
+  typeof ObjectSyncTaskAPIInputRuntype
+>;
+export type TaskAPIInput = DataFetchTaskAPIInput | ObjectSyncTaskAPIInput;

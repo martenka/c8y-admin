@@ -257,11 +257,11 @@ export const SensorsList = () => {
                   variant="contained"
                   onClick={() => {
                     navigate('/tasks/create', {
-                      state: { sensors: listSelection },
+                      state: { taskType: 'DATA_FETCH', sensors: listSelection },
                     });
                   }}
                 >
-                  Create Data Fetch task
+                  Fetch sensor data
                 </Button>
               </>
             );
