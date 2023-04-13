@@ -1,5 +1,5 @@
-import React from 'react';
-import { useDataGrid, List } from '@refinedev/mui';
+import React, { useState } from 'react';
+import { useDataGrid, List, DeleteButton } from '@refinedev/mui';
 import { DataGrid, GridColumns } from '@mui/x-data-grid';
 
 import { UserIdentity } from '../../types/auth';
@@ -28,12 +28,14 @@ import {
 } from 'react-hook-form-mui';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DeleteManyButton } from '../../components/deleteManyButton';
 
 export const FilesList = () => {
   const auth = useGetIdentity<UserIdentity>();
   const token = notNil(auth.data) ? auth.data?.token : undefined;
+  const [listSelection, setListSelection] = useState<string[]>([]);
 
-  const { dataGridProps, filters, search } = useDataGrid<
+  const { dataGridProps, filters, search, tableQueryResult } = useDataGrid<
     File,
     ApiResponseErrorType,
     FileFilterVariables
@@ -98,6 +100,7 @@ export const FilesList = () => {
         field: 'action',
         headerName: 'Actions',
         align: 'center',
+        flex: 1,
         renderCell: function render(props) {
           return (
             <>
@@ -106,6 +109,13 @@ export const FilesList = () => {
                   <FileDownload />
                 </Link>
               </IconButton>
+              <DeleteButton
+                recordItemId={props.row.id}
+                hideText={true}
+                meta={{
+                  token,
+                }}
+              />
             </>
           );
         },
@@ -213,11 +223,23 @@ export const FilesList = () => {
         </Card>
       </Grid>
       <Grid item xs={12} lg={9}>
-        <List>
+        <List
+          headerButtons={() => {
+            if (listSelection?.length > 0) {
+              return <DeleteManyButton ids={listSelection} meta={{ token }} />;
+            }
+
+            return null;
+          }}
+        >
           <DataGrid
             {...dataGridProps}
             columns={columns}
             filterModel={undefined}
+            checkboxSelection
+            onSelectionModelChange={(model) => {
+              setListSelection(model.map((item) => item.toString()));
+            }}
             autoHeight
           />
         </List>

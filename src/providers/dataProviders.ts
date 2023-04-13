@@ -11,6 +11,7 @@ import {
   MetaQuery,
   Pagination,
   UpdateResponse,
+  DeleteManyResponse,
 } from '@refinedev/core';
 import { getAuthHeader } from '../utils/auth';
 
@@ -62,13 +63,48 @@ export const createBaseDataProvider = (baseUrl: string): DataProvider => {
       const url = new URL(`${params.resource}/${params.id}`, baseUrl);
       const token = (params.meta as ApiMetaQuery)?.token as string;
 
+      if (isNil(token)) {
+        throw new Error('Unable to get user auth token');
+      }
+
       const response = await fetch(url, {
+        method: 'DELETE',
         headers: { ...getAuthHeader(token) },
       });
 
       const responsePayload = await getResponseJsonOrUndefined(response);
       checkApiError(response, responsePayload);
       return { data: responsePayload as TData };
+    },
+    async deleteMany<TData, TVariables>(params: {
+      resource: string;
+      ids: BaseKey[];
+      variables?: TVariables;
+      meta?: MetaQuery;
+    }): Promise<DeleteManyResponse<TData>> {
+      const url = new URL(`${params.resource}/delete`, baseUrl);
+      const token = (params.meta as ApiMetaQuery)?.token as string;
+
+      if (isNil(token)) {
+        throw new Error('Unable to get user auth token');
+      }
+
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          ...getAuthHeader(token),
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          items: params.ids.map((item) => item.toString()),
+        }),
+      });
+
+      const responsePayload = await getResponseJsonOrUndefined(response);
+      checkApiError(response, responsePayload);
+      return {
+        data: [],
+      };
     },
     getApiUrl(): string {
       return baseUrl;
