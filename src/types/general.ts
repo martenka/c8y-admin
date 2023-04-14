@@ -7,6 +7,7 @@ import {
   Runtype,
   Unknown,
   Static,
+  Dictionary,
 } from 'runtypes';
 import { PageInfoRuntype } from './query';
 
@@ -41,8 +42,12 @@ export const KeyValueRuntype = RRecord({
 });
 
 export const KeyValuesRuntype = Array(KeyValueRuntype);
+export const CustomAttributesRuntype = Partial({
+  customAttributes: Dictionary(NonEmptyString, String),
+});
 
 export type GeneralApiResponse = Static<typeof GeneralApiResponseRuntype>;
 
 export type KeyValue = Static<typeof KeyValueRuntype>;
 export type ManyKeyValues = { [key: string]: KeyValue };
+export type CustomAttributes = Static<typeof CustomAttributesRuntype>;

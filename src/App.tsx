@@ -26,6 +26,7 @@ import { FilesList } from 'pages/files/list';
 import { TasksList } from './pages/tasks/list';
 import { SensorShow } from './pages/sensors';
 import { TaskCreate } from './pages/tasks/create';
+import { GroupsList } from './pages/groups/list';
 
 function App() {
   const { t, i18n } = useTranslation();
@@ -78,6 +79,10 @@ function App() {
                     canDelete: false,
                   },
                 },
+                {
+                  name: 'groups',
+                  list: '/groups',
+                },
               ]}
               options={{
                 syncWithLocation: true,
@@ -103,6 +108,9 @@ function App() {
                     <Route path="show/:id" element={<SensorShow />} />
                     <Route path="edit/:id" element={<SensorEdit />} />
                   </Route>
+                  <Route path="/groups">
+                    <Route index element={<GroupsList />} />
+                  </Route>
                   <Route path="/files">
                     <Route index element={<FilesList />} />
                   </Route>
@@ -114,7 +122,7 @@ function App() {
                 <Route
                   element={
                     <Authenticated fallback={<Outlet />}>
-                      <NavigateToResource />
+                      <NavigateToResource resource={'sensors'} />
                     </Authenticated>
                   }
                 >

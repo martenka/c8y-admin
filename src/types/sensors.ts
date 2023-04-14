@@ -14,6 +14,7 @@ export const SensorRuntype = Record({
   Partial({
     valueFragmentDisplayName: String,
     description: String,
+    type: String,
     customAttributes: Dictionary(NonEmptyString, String),
   }),
 );

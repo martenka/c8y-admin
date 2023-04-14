@@ -3,6 +3,7 @@ import { KeyValue } from './general';
 import { Task } from './task';
 import { Dayjs } from 'dayjs';
 import { File } from './files';
+import { Group } from './group';
 
 export const TrueFalseArray = ['true', 'false'] as const;
 export type TrueFalse = Lowercase<(typeof TrueFalseArray)[number]>;
@@ -24,17 +25,18 @@ export type UnknownAttributes = {
     | undefined
     | null;
 };
-export type CustomAttributesFilter = { customAttributes: KeyValue[] };
+export type CustomAttributesFilterVariablesType = {
+  customAttributes: KeyValue[];
+};
+
+export type CustomAndUnknownFilterVariables =
+  CustomAttributesFilterVariablesType & UnknownAttributes;
 
 export type SensorFilterVariables = Omit<
   Sensor,
   'description' | 'customAttributes'
 > &
-  CustomAttributesFilter &
-  UnknownAttributes;
-
-export type SensorFilterWithCustomAttributes = SensorFilterVariables &
-  CustomAttributesFilter;
+  CustomAndUnknownFilterVariables;
 
 export type TaskFilterVariables = Omit<
   Task,
@@ -57,3 +59,8 @@ export type FileFilterVariables = Partial<
   } & Omit<Sensor, 'id' | 'customAttributes' | 'description'>
 > &
   UnknownAttributes;
+
+export type GroupFilterVariables = Partial<
+  Pick<Omit<Group, 'customAttributes'>, 'id' | 'name'>
+> &
+  CustomAndUnknownFilterVariables;
