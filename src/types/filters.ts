@@ -32,9 +32,8 @@ export type CustomAttributesFilterVariablesType = {
 export type CustomAndUnknownFilterVariables =
   CustomAttributesFilterVariablesType & UnknownAttributes;
 
-export type SensorFilterVariables = Omit<
-  Sensor,
-  'description' | 'customAttributes'
+export type SensorFilterVariables = Partial<
+  Omit<Sensor, 'description' | 'customAttributes'>
 > &
   CustomAndUnknownFilterVariables;
 

@@ -2,9 +2,9 @@ import { TextFieldComponent as TextField } from '@refinedev/mui';
 import { Stack, Typography } from '@mui/material';
 
 export const SimpleObject = (props: {
-  value: Record<string | number, string>;
+  value: Record<string | number, string> | undefined | null;
 }): JSX.Element => {
-  const value = props?.value;
+  const value = props?.value ?? {};
   return (
     <>
       <Stack direction="column" contentEditable={false} spacing={1}>

@@ -4,7 +4,7 @@ import { Typography, Stack } from '@mui/material';
 import { Sensor } from '../../types/sensors';
 import { UserIdentity } from '../../types/auth';
 import { notNil } from '../../utils/validators';
-import { SimpleObject } from '../../components/simpleObject';
+import { CustomAttributes } from '../../components/CustomAttributes';
 
 export const SensorShow = () => {
   const auth = useGetIdentity<UserIdentity>();
@@ -49,12 +49,7 @@ export const SensorShow = () => {
         </Typography>
         <TextField value={record?.description} />
         {notNil(customAttributes) && (
-          <>
-            <Typography variant="body1" fontWeight="bold">
-              Custom Attributes
-            </Typography>
-            <SimpleObject value={customAttributes} />
-          </>
+          <CustomAttributes value={customAttributes} />
         )}
       </Stack>
     </Show>
