@@ -1966,10 +1966,10 @@
   resolved "https://registry.yarnpkg.com/@reach/observe-rect/-/observe-rect-1.2.0.tgz#d7a6013b8aafcc64c778a0ccb83355a11204d3b2"
   integrity sha512-Ba7HmkFgfQxZqqaeIWWkNK0rEhpxVQHIoVyW1YDSkGsGIXzcaW4deC8B0pZrNSSyLTdIk7y+5olKt5+g0GmFIQ==
 
-"@refinedev/cli@^2.1.2":
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/@refinedev/cli/-/cli-2.1.2.tgz#8bdde40eba26bcb250f2fabb42ce2fb69995f3a3"
-  integrity sha512-yNfxp3nqvxpznbqs5OI4Jz7AtftTPldQU3ZL1dItcMA7WDgBHpAnvEWSfGdYYFBHxSxrJJPtpoIPEtr53/dnZg==
+"@refinedev/cli@2.5.3":
+  version "2.5.3"
+  resolved "https://registry.yarnpkg.com/@refinedev/cli/-/cli-2.5.3.tgz#c0d0796077d402609f701cbef2079f3ea9261e43"
+  integrity sha512-QvPW66JEzgoSSAL4JBzjZqhxb6i+0hKeXlSrWrGEjin6QVlhe/9nJoAwt12aC6+ePPjB6VOj7TcYqC/rlebq3A==
   dependencies:
     boxen "^5.1.2"
     cardinal "^2.1.1"
@@ -2000,10 +2000,10 @@
     temp "^0.9.4"
     tslib "^2.3.1"
 
-"@refinedev/core@4.7.3":
-  version "4.7.3"
-  resolved "https://registry.yarnpkg.com/@refinedev/core/-/core-4.7.3.tgz#e82cb384782f6037b2f818f815ebde199addf955"
-  integrity sha512-xC8n/sBopOh1jjOYRMzbaHThkCgEBVSSV6H9IndTNkf1oGmVRNUMVXM1jh+lLNO4Jl/3HMQF3GJ4n4PICTgsdw==
+"@refinedev/core@4.10.0":
+  version "4.10.0"
+  resolved "https://registry.yarnpkg.com/@refinedev/core/-/core-4.10.0.tgz#bb602f7ad9cf39077fafa9bba381e0788e24bd45"
+  integrity sha512-kfwavfo5GMod6WPwvWG//s8XvMyy2qJVHWTQmTHLUhISmtQS2UyOacHBtFvkjRfefIQ99xQ7vrH8XcbwvynccA==
   dependencies:
     "@tanstack/react-query" "^4.10.1"
     "@tanstack/react-query-devtools" "^4.10.1"
@@ -2048,10 +2048,10 @@
     tslib "^2.3.1"
     warn-once "^0.1.0"
 
-"@refinedev/inferencer@3.1.7":
-  version "3.1.7"
-  resolved "https://registry.yarnpkg.com/@refinedev/inferencer/-/inferencer-3.1.7.tgz#502ac13eb2d624a18c3f7954e692589ed11ee01e"
-  integrity sha512-fjoJtd2ZwuNHvhSItkWA2wxBMBY6K08fOIgC4aEa8N6lPgHAh3uMRo7FycDE0kF6S6QRNo0ExpkNBbnuW79fng==
+"@refinedev/inferencer@3.3.0":
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@refinedev/inferencer/-/inferencer-3.3.0.tgz#527756836e4b0c97aa3a6ecbb72fdc6393f4e342"
+  integrity sha512-Z4xNJyIrdJxK5x7RItTjbt5hWJuwJ2cOHKWJnp/6A7QgTYuR6+1XWVVoM0qAgDEIuErLozbcL4B4Z1Zs9UdTYg==
   dependencies:
     "@aliemir/react-live" "^4.0.0"
     "@refinedev/core" "^4.1.2"
@@ -2073,10 +2073,10 @@
   dependencies:
     kbar "^0.1.0-beta.36"
 
-"@refinedev/mui@4.7.2":
-  version "4.7.2"
-  resolved "https://registry.yarnpkg.com/@refinedev/mui/-/mui-4.7.2.tgz#f8134988dd0488f47768e11fd5fc9b1a4c22b779"
-  integrity sha512-wK9W/f7/OhXBrJDCymauEtMRNKpVHhmsqCUT5YnR9WP9mLZdLhHnMpNdsL5T9LzVvVegplxEJp7BJVUwHZv8rg==
+"@refinedev/mui@4.10.3":
+  version "4.10.3"
+  resolved "https://registry.yarnpkg.com/@refinedev/mui/-/mui-4.10.3.tgz#ea05fe9daf49d63531a42a1be151330e3486fd3e"
+  integrity sha512-TX4zlmLNI8Ttnydg3ar1lVkC8BWkeEcYslKN5cb/Fk/fK6exxN5knng/z+wSYYeUBz8Q0y9tp3NsMWT5NiCbrQ==
   dependencies:
     "@emotion/react" "^11.8.2"
     "@emotion/styled" "^11.8.1"
@@ -2084,8 +2084,8 @@
     "@mui/lab" "^5.0.0-alpha.85"
     "@mui/material" "^5.8.6"
     "@mui/x-data-grid" "^5.12.1"
-    "@refinedev/react-hook-form" "^4.1.6"
-    "@refinedev/ui-types" "^1.5.0"
+    "@refinedev/react-hook-form" "^4.2.0"
+    "@refinedev/ui-types" "^1.10.0"
     dayjs "^1.10.7"
     lodash "^4.17.21"
     lodash-es "^4.17.21"
@@ -2096,10 +2096,17 @@
     tslib "^2.3.1"
     warn-once "^0.1.0"
 
-"@refinedev/react-hook-form@4.1.6", "@refinedev/react-hook-form@^4.1.6":
+"@refinedev/react-hook-form@4.1.6":
   version "4.1.6"
   resolved "https://registry.yarnpkg.com/@refinedev/react-hook-form/-/react-hook-form-4.1.6.tgz#e36be2c41757a8fd79442e9b21f329b696a2bb5e"
   integrity sha512-bVBsWxs01Rtrf0GKRb9sx0uYTT5FDlv+dp2cC7SutuD4THWAEoLb2RpXc69shAXHMgcw5ZVBTSI1yTpV5vOmjg==
+  dependencies:
+    react-hook-form "^7.30.0"
+
+"@refinedev/react-hook-form@^4.2.0":
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/@refinedev/react-hook-form/-/react-hook-form-4.2.0.tgz#121ac407dd7d1ccd8d92e15e78dcd7c678a13daa"
+  integrity sha512-h9oH3dpyWLEmbtY2cYf9DCQK73tF4Ry5tGq+6r1fUDtaY55PFDT4KJ+jT40g+EcnxHFR0fruXj6J4WrLhSh1pg==
   dependencies:
     react-hook-form "^7.30.0"
 
@@ -2111,18 +2118,18 @@
     qs "^6.10.1"
     react-router-dom "^6.8.1"
 
-"@refinedev/simple-rest@^4.0.0":
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/@refinedev/simple-rest/-/simple-rest-4.1.0.tgz#62849333defa9d64263f90c83b7959f1052ec635"
-  integrity sha512-8RRpg+QVW26IS5Ql41/TLeQhOa1toNRuo4PjrUaH2DbwBdPfu/Z1JX4r8JpQdWqCfIBI2X6Ky1Mb24dYdnzMgg==
+"@refinedev/simple-rest@4.5.0":
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/@refinedev/simple-rest/-/simple-rest-4.5.0.tgz#0e9ca41268411b50adcbe1b969adba5653bf2c7d"
+  integrity sha512-T915EZy+GucLoTY1ODXgnuJ1B8QVPyFG3xOaNRYFwLeANkIYhkGYNItczU9JprWciXh/soIdaJciAmJDfpd5Ig==
   dependencies:
     axios "^0.26.1"
     query-string "^7.1.1"
 
-"@refinedev/ui-types@^1.5.0":
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/@refinedev/ui-types/-/ui-types-1.5.0.tgz#a9593ea1a021d5e823c5ab2ed2717a12c110eeda"
-  integrity sha512-KNYvW9jOYXpBWU62IYpKKfU1Uxx34n2kh0mmQRmQgTK0KF+bHa57KMuR0Pa9B65UZmjNzKyMWGHNzh7Qp9scZA==
+"@refinedev/ui-types@^1.10.0":
+  version "1.10.0"
+  resolved "https://registry.yarnpkg.com/@refinedev/ui-types/-/ui-types-1.10.0.tgz#992107fc7726a97a191b480d1d1f70cc7096d96b"
+  integrity sha512-QPjJjXlFXXyNdjJpOP83XpXZktHXtyaD1riVA4zjhGS14S2FmSbv8KcxGy4VVAi3QGquT9HFKvAh5yrrDKyD0w==
   dependencies:
     "@refinedev/core" "^4.5.4"
     dayjs "^1.10.7"

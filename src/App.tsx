@@ -3,9 +3,9 @@ import { RefineKbar, RefineKbarProvider } from '@refinedev/kbar';
 
 import {
   ErrorComponent,
-  Layout,
   notificationProvider,
   RefineSnackbarProvider,
+  ThemedLayoutV2,
 } from '@refinedev/mui';
 
 import { CssBaseline, GlobalStyles } from '@mui/material';
@@ -97,9 +97,9 @@ function App() {
                 <Route
                   element={
                     <Authenticated fallback={<CatchAllNavigate to="/login" />}>
-                      <Layout Header={Header}>
+                      <ThemedLayoutV2 Header={Header}>
                         <Outlet />
-                      </Layout>
+                      </ThemedLayoutV2>
                     </Authenticated>
                   }
                 >
@@ -137,9 +137,9 @@ function App() {
                 <Route
                   element={
                     <Authenticated>
-                      <Layout Header={Header}>
+                      <ThemedLayoutV2 Header={Header}>
                         <Outlet />
-                      </Layout>
+                      </ThemedLayoutV2>
                     </Authenticated>
                   }
                 >
