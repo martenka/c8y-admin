@@ -33,6 +33,16 @@ export const TaskTypesArray = TaskTypesRuntype.alternatives.map(
   (item) => item.value,
 );
 
+export const TaskTypesMap = TaskTypesArray.reduce(
+  (memo, currentValue, currentIndex) => ({
+    ...memo,
+    [currentValue]: currentIndex,
+  }),
+  {},
+) as {
+  [K in (typeof TaskTypesArray)[number]]: number;
+};
+
 export const TaskStatusArray = TaskStepsRuntype.alternatives.map(
   (item) => item.value,
 );

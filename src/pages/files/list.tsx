@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
-import { useDataGrid, List, DeleteButton } from '@refinedev/mui';
+import { DeleteButton, List, useDataGrid } from '@refinedev/mui';
 import { DataGrid, GridColumns } from '@mui/x-data-grid';
 
 import { UserIdentity } from '../../types/auth';
 import { notNil } from '../../utils/validators';
-import { CrudFilters, getDefaultFilter, useGetIdentity } from '@refinedev/core';
+import {
+  CrudFilters,
+  getDefaultFilter,
+  useCreate,
+  useGetIdentity,
+} from '@refinedev/core';
 import {
   Button,
   Card,
@@ -16,7 +21,7 @@ import {
   Stack,
 } from '@mui/material';
 import { FileDownload } from '@mui/icons-material';
-import { File } from '../../types/files';
+import { File, VisibilityStateValues } from '../../types/files';
 import { ApiResponseErrorType } from '../../utils/error';
 import { FileFilterVariables, UnknownAttributes } from '../../types/filters';
 import { paramsToSimpleCrudFilters } from '../../utils/transforms';
@@ -29,13 +34,17 @@ import {
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DeleteManyButton } from '../../components/deleteManyButton';
+import { LoadingButton } from '@mui/lab';
 
 export const FilesList = () => {
   const auth = useGetIdentity<UserIdentity>();
   const token = notNil(auth.data) ? auth.data?.token : undefined;
   const [listSelection, setListSelection] = useState<string[]>([]);
+  const { mutate } = useCreate({
+    mutationOptions: { retry: false },
+  });
 
-  const { dataGridProps, filters, search, tableQueryResult } = useDataGrid<
+  const { dataGridProps, filters, search } = useDataGrid<
     File,
     ApiResponseErrorType,
     FileFilterVariables
@@ -65,6 +74,7 @@ export const FilesList = () => {
     },
     queryOptions: {
       retry: false,
+      refetchInterval: 5000,
     },
   });
 
@@ -96,6 +106,48 @@ export const FilesList = () => {
       { field: 'name', headerName: 'Name', flex: 1 },
       { field: 'createdByTask', headerName: 'CreatedByTask', flex: 1 },
       { field: 'description', headerName: 'Description', flex: 1 },
+      {
+        field: 'visibilityState',
+        headerName: 'VisibilityState',
+        align: 'center',
+        flex: 1,
+        renderCell: (params) => {
+          const visibilityState = params.row.visibilityState;
+          return (
+            <>
+              <LoadingButton
+                disabled={visibilityState.stateChanging}
+                loading={visibilityState.stateChanging}
+                sx={{
+                  color: 'black',
+                  backgroundColor: visibilityState.published
+                    ? '#adebad'
+                    : '#ff9999',
+                }}
+                onClick={() => {
+                  if (!visibilityState.stateChanging) {
+                    mutate({
+                      meta: {
+                        token,
+                        additionalPath: `${params.row.id}/visibility-state`,
+                      },
+                      resource: 'files',
+                      values: {
+                        newVisibilityState: visibilityState.published
+                          ? VisibilityStateValues.PRIVATE
+                          : VisibilityStateValues.PUBLIC,
+                      },
+                    });
+                    visibilityState.stateChanging = true;
+                  }
+                }}
+              >
+                <span>{visibilityState.published ? 'PUBLIC' : 'PRIVATE'}</span>
+              </LoadingButton>
+            </>
+          );
+        },
+      },
       {
         field: 'action',
         headerName: 'Actions',

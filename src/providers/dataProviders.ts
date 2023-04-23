@@ -30,7 +30,11 @@ export const createBaseDataProvider = (baseUrl: string): DataProvider => {
       meta?: MetaQuery;
       metaData?: MetaQuery;
     }): Promise<CreateResponse<TData>> {
-      const url = new URL(params.resource, baseUrl);
+      const additionalPath = params.meta?.additionalPath;
+      const path = notNil(additionalPath)
+        ? `${params.resource}/${additionalPath}`
+        : params.resource;
+      const url = new URL(path, baseUrl);
       const token = (params.meta as ApiMetaQuery)?.token as string;
 
       if (isNil(token)) {

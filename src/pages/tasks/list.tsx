@@ -84,6 +84,7 @@ export const TasksList = () => {
     },
     queryOptions: {
       retry: false,
+      refetchInterval: 5000,
     },
   });
 

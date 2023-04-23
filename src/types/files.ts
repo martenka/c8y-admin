@@ -1,4 +1,4 @@
-import { Partial, Record, String, Array, Static } from 'runtypes';
+import { Partial, Record, String, Array, Static, Boolean } from 'runtypes';
 import { NonEmptyString, StringOrNumber } from './general';
 
 export const FileStorageRuntype = Record({
@@ -9,6 +9,11 @@ export const FileStorageRuntype = Record({
     url: String,
   }),
 );
+
+export enum VisibilityStateValues {
+  PRIVATE = 'PRIVATE',
+  PUBLIC = 'PUBLIC',
+}
 
 export const FileValueFragmentRuntype = Record({
   type: NonEmptyString,
@@ -24,9 +29,15 @@ export const FileMetadataRuntype = Partial({
   valueFragments: Array(FileValueFragmentRuntype),
 });
 
+export const FileVisibilityStateRuntype = Record({
+  published: Boolean,
+  stateChanging: Boolean,
+}).And(Partial({ errorMessage: String }));
+
 export const FileRuntype = Record({
   id: NonEmptyString,
   name: NonEmptyString,
+  visibilityState: FileVisibilityStateRuntype,
 }).And(
   Partial({
     createdByTask: String,
@@ -39,3 +50,4 @@ export const FileRuntype = Record({
 );
 
 export type File = Static<typeof FileRuntype>;
+export type FileVisibilityState = Static<typeof FileVisibilityStateRuntype>;
