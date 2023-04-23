@@ -21,8 +21,8 @@ export const FileValueFragmentRuntype = Record({
 });
 
 export const FileMetadataRuntype = Partial({
-  fromDate: String,
-  toDate: String,
+  dateFrom: String,
+  dateTo: String,
   managedObjectId: StringOrNumber,
   managedObjectName: String,
   sensors: Array(String),
@@ -46,6 +46,7 @@ export const FileRuntype = Record({
     metadata: FileMetadataRuntype,
     storage: FileStorageRuntype,
     url: String,
+    createdAt: String,
   }),
 );
 

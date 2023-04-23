@@ -28,6 +28,7 @@ import { SensorShow } from './pages/sensors';
 import { TaskCreate } from './pages/tasks/create';
 import { GroupsList } from './pages/groups/list';
 import { GroupShow } from './pages/groups/show';
+import { FileShow } from './pages/files/show';
 
 function App() {
   const { t, i18n } = useTranslation();
@@ -68,6 +69,7 @@ function App() {
                 {
                   name: 'files',
                   list: '/files',
+                  show: '/files/show/:id',
                   meta: {
                     canDelete: false,
                   },
@@ -116,6 +118,7 @@ function App() {
                   </Route>
                   <Route path="/files">
                     <Route index element={<FilesList />} />
+                    <Route path="show/:id" element={<FileShow />} />
                   </Route>
                   <Route path="/tasks">
                     <Route index element={<TasksList />} />
