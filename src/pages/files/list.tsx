@@ -14,6 +14,7 @@ import {
   IconButton,
   Link,
   Stack,
+  Typography,
 } from '@mui/material';
 import { FileDownload } from '@mui/icons-material';
 import { File } from '../../types/files';
@@ -30,13 +31,17 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DeleteManyButton } from '../../components/deleteManyButton';
 import { FileVisibilityButton } from './components/visibility-button';
+import { useNavigate } from 'react-router-dom';
 
 export const FilesList = () => {
   const auth = useGetIdentity<UserIdentity>();
   const token = notNil(auth.data) ? auth.data?.token : undefined;
-  const [listSelection, setListSelection] = useState<string[]>([]);
+  const navigate = useNavigate();
 
-  const { dataGridProps, filters, search } = useDataGrid<
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [selectedFileIds, setSelectedFileIds] = useState<string[]>([]);
+
+  const { dataGridProps, filters, search, tableQueryResult } = useDataGrid<
     File,
     ApiResponseErrorType,
     FileFilterVariables
@@ -70,6 +75,8 @@ export const FilesList = () => {
     },
   });
 
+  const dataGridData = tableQueryResult.data?.data ?? [];
+
   const { handleSubmit, control, reset, ...rest } = useForm<
     File,
     ApiResponseErrorType,
@@ -94,10 +101,19 @@ export const FilesList = () => {
   });
   const columns = React.useMemo<GridColumns<File>>(
     () => [
-      { field: 'id', headerName: 'ID', flex: 1 },
       { field: 'name', headerName: 'Name', flex: 1 },
       { field: 'createdByTask', headerName: 'CreatedByTask', flex: 1 },
       { field: 'description', headerName: 'Description', flex: 1 },
+      {
+        field: 'visibilityState.exposedToPlatforms',
+        headerName: 'Uploaded to',
+        align: 'center',
+        flex: 1,
+        renderCell: (params) => {
+          const platforms = params.row.visibilityState.exposedToPlatforms ?? [];
+          return <Typography>{platforms.join(' , ')}</Typography>;
+        },
+      },
       {
         field: 'visibilityState',
         headerName: 'VisibilityState',
@@ -244,10 +260,26 @@ export const FilesList = () => {
       <Grid item xs={12} lg={9}>
         <List
           headerButtons={() => {
-            if (listSelection?.length > 0) {
-              return <DeleteManyButton ids={listSelection} meta={{ token }} />;
+            if (selectedFiles?.length > 0) {
+              return (
+                <>
+                  <Button
+                    variant="contained"
+                    onClick={() => {
+                      navigate('/tasks/create', {
+                        state: {
+                          taskType: 'DATA_UPLOAD',
+                          files: selectedFiles,
+                        },
+                      });
+                    }}
+                  >
+                    Upload files to CKAN
+                  </Button>
+                  <DeleteManyButton ids={selectedFileIds} meta={{ token }} />
+                </>
+              );
             }
-
             return null;
           }}
         >
@@ -257,7 +289,12 @@ export const FilesList = () => {
             filterModel={undefined}
             checkboxSelection
             onSelectionModelChange={(model) => {
-              setListSelection(model.map((item) => item.toString()));
+              const selectedIds = new Set(model);
+              const selectedSensors = dataGridData.filter((item) =>
+                selectedIds.has(item.id),
+              );
+              setSelectedFiles(selectedSensors);
+              setSelectedFileIds(model.map((item) => item.toString()));
             }}
             autoHeight
           />

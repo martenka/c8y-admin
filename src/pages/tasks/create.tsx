@@ -29,7 +29,11 @@ import {
 } from '../../types/task';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DataFetchTaskFields, ObjectSyncTaskFields } from './fields';
+import {
+  DataFetchTaskFields,
+  DataUploadTaskFields,
+  ObjectSyncTaskFields,
+} from './fields';
 import {
   getTaskTypeAndDefaultValues,
   taskSubmitHandler,
@@ -94,20 +98,22 @@ export const TaskCreate = () => {
       headerButtons={({ defaultButtons }) => (
         <>
           {defaultButtons}
-          <FormControlLabel
-            control={
-              <Checkbox
-                value={periodicTaskState}
-                onChange={() =>
-                  setPeriodicTaskState((prevState) => ({
-                    isPeriodic: !prevState.isPeriodic,
-                    lg: prevState.lg >= 6 ? 12 : 6,
-                  }))
-                }
-              />
-            }
-            label={'Periodic'}
-          />
+          {inputData.type === 'DATA_FETCH' && (
+            <FormControlLabel
+              control={
+                <Checkbox
+                  value={periodicTaskState}
+                  onChange={() =>
+                    setPeriodicTaskState((prevState) => ({
+                      isPeriodic: !prevState.isPeriodic,
+                      lg: prevState.lg >= 6 ? 12 : 6,
+                    }))
+                  }
+                />
+              }
+              label={'Periodic'}
+            />
+          )}
         </>
       )}
     >
@@ -188,6 +194,8 @@ export const TaskPayloadFormFieldsSwitcher = ({
       return <DataFetchTaskFields control={control} />;
     case 'OBJECT_SYNC':
       return <ObjectSyncTaskFields control={control} />;
+    case 'DATA_UPLOAD':
+      return <DataUploadTaskFields control={control} />;
   }
   return null;
 };

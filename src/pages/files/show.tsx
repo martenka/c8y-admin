@@ -148,6 +148,12 @@ export const FileStorageInfo = (props: FileCardProps) => {
             <Typography fontWeight="bold">URL</Typography>
             <Typography>{file?.url}</Typography>
           </Stack>
+          <Stack direction="row" spacing={2}>
+            <Typography fontWeight="bold">Uploaded to</Typography>
+            <Typography>
+              {file?.visibilityState.exposedToPlatforms?.join(' , ')}
+            </Typography>
+          </Stack>
         </Stack>
       </CardContent>
     </Card>

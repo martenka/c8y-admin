@@ -32,6 +32,7 @@ export const FileMetadataRuntype = Partial({
 export const FileVisibilityStateRuntype = Record({
   published: Boolean,
   stateChanging: Boolean,
+  exposedToPlatforms: Array(String),
 }).And(Partial({ errorMessage: String }));
 
 export const FileRuntype = Record({

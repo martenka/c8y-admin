@@ -11,7 +11,13 @@ import {
   TaskPayload,
   TaskTypes,
   TaskTypesArray,
+  CreateDataUploadTaskFormDataRuntype,
+  DataUploadTaskCreateInputRuntype,
+  DataUploadTaskCreatePayload,
+  TaskTypesMap,
+  DataUploadTaskCreateInput,
 } from '../../../types/task';
+import { File } from '../../../types/files';
 import dayjs from 'dayjs';
 import { Sensor } from '../../../types/sensors';
 import { TaskTypeAndDefaultValues } from './types';
@@ -42,12 +48,24 @@ export const createDataFetchTaskDefaultValues = (
   };
 };
 
+export const createDataUploadTaskDefaultValues = (
+  files: File[],
+): Partial<DataUploadTaskCreatePayload> => {
+  return {
+    ...createTaskDefaultValues(TaskTypesMap['DATA_UPLOAD']),
+    files,
+  };
+};
+
 export const getTaskType = (value: unknown): TaskTypes => {
   if (DataFetchTaskCreateInputRuntype.guard(value)) {
     return 'DATA_FETCH';
   }
   if (ObjectSyncTaskCreateInputRuntype.guard(value)) {
     return 'OBJECT_SYNC';
+  }
+  if (DataUploadTaskCreateInputRuntype.guard(value)) {
+    return 'DATA_UPLOAD';
   }
   return 'UNKNOWN';
 };
@@ -70,13 +88,23 @@ export const getTaskTypeAndDefaultValues = (
           getTaskIndex((value as TaskInput).taskType),
         ),
       };
+    case 'DATA_UPLOAD':
+      return {
+        type: 'DATA_UPLOAD',
+        defaultValues: createDataUploadTaskDefaultValues(
+          (value as DataUploadTaskCreateInput).files,
+        ),
+      };
     default:
       return { type: 'UNKNOWN', defaultValues: { firstRunAt: dayjs() } };
   }
 };
 
 export const taskSubmitHandler = (task: TaskPayload): TaskAPIInput => {
-  if (CreateDataFetchTaskFormDataRuntype.guard(task)) {
+  if (
+    task.taskType === TaskTypesMap['DATA_FETCH'] &&
+    CreateDataFetchTaskFormDataRuntype.guard(task)
+  ) {
     const entities = task.sensors;
     let periodicData;
     if (notNil(task.pattern)) {
@@ -100,7 +128,10 @@ export const taskSubmitHandler = (task: TaskPayload): TaskAPIInput => {
         dateFrom: task.dateFrom?.toISOString(),
       },
     };
-  } else if (CreateObjectSyncTaskFormDataRuntype.guard(task)) {
+  } else if (
+    task.taskType === TaskTypesMap['OBJECT_SYNC'] &&
+    CreateObjectSyncTaskFormDataRuntype.guard(task)
+  ) {
     let periodicData;
     if (notNil(task.pattern)) {
       periodicData = {
@@ -114,6 +145,25 @@ export const taskSubmitHandler = (task: TaskPayload): TaskAPIInput => {
       periodicData,
       taskPayload: {
         groupTypeIdentifier: task.groupTypeIdentifier,
+      },
+    };
+  } else if (
+    task.taskType === TaskTypesMap['DATA_UPLOAD'] &&
+    CreateDataUploadTaskFormDataRuntype.guard(task)
+  ) {
+    let periodicData;
+    if (notNil(task.pattern)) {
+      periodicData = {
+        pattern: task.pattern,
+      };
+    }
+    return {
+      name: task.name,
+      taskType: TaskTypesArray[task.taskType],
+      firstRunAt: task.firstRunAt?.toISOString(),
+      periodicData,
+      taskPayload: {
+        fileIds: task.files.map((file) => file.id),
       },
     };
   }
