@@ -6,13 +6,6 @@ import { UserIdentity } from '../../types/auth';
 import { notNil } from '../../utils/validators';
 import { CrudFilters, getDefaultFilter, useGetIdentity } from '@refinedev/core';
 import {
-  Task,
-  TaskStatusArray,
-  TaskStatusSelectOptions,
-  TaskTypesArray,
-  TaskTypesSelectOptions,
-} from '../../types/task';
-import {
   Button,
   Card,
   CardContent,
@@ -40,6 +33,13 @@ import {
   paramsToSimpleCrudFilters,
 } from '../../utils/transforms';
 import { useNavigate } from 'react-router-dom';
+import {
+  Task,
+  TaskStatusArray,
+  TaskStatusSelectOptions,
+  TaskTypesArray,
+  TaskTypesSelectOptions
+} from "../../types/tasks/base";
 
 export const TasksList = () => {
   const auth = useGetIdentity<UserIdentity>();

@@ -1,28 +1,26 @@
 import {
-  BaseTaskTypes,
-  CreateDataFetchTaskFormDataRuntype,
-  CreateObjectSyncTaskFormDataRuntype,
-  DataFetchTaskCreateInputRuntype,
-  DataFetchTaskCreatePayload,
-  DataFetchTaskCreateInput,
-  ObjectSyncTaskCreateInputRuntype,
-  TaskAPIInput,
   TaskInput,
   TaskPayload,
-  TaskTypes,
-  TaskTypesArray,
-  CreateDataUploadTaskFormDataRuntype,
-  DataUploadTaskCreateInputRuntype,
-  DataUploadTaskCreatePayload,
-  TaskTypesMap,
-  DataUploadTaskCreateInput,
-} from '../../../types/task';
+  TaskAPIInput,
+} from '../../../types/tasks/task';
 import { File } from '../../../types/files';
 import dayjs from 'dayjs';
 import { Sensor } from '../../../types/sensors';
 import { TaskTypeAndDefaultValues } from './types';
 import { notNil } from '../../../utils/validators';
 import { CustomError } from '../../../utils/error';
+import {BaseTaskTypes, TaskTypes, TaskTypesArray, TaskTypesMap} from "../../../types/tasks/base";
+import {
+  CreateDataFetchTaskFormDataRuntype,
+  DataFetchTaskCreateInput, DataFetchTaskCreateInputRuntype,
+  DataFetchTaskCreatePayload
+} from "../../../types/tasks/data-fetch";
+import {CreateObjectSyncTaskFormDataRuntype, ObjectSyncTaskCreateInputRuntype} from "../../../types/tasks/object-sync";
+import {
+  CreateDataUploadTaskFormDataRuntype,
+  DataUploadTaskCreateInput, DataUploadTaskCreateInputRuntype,
+  DataUploadTaskCreatePayload
+} from "../../../types/tasks/data-upload";
 
 export const getTaskIndex = (taskType: BaseTaskTypes): number => {
   return TaskTypesArray.indexOf(taskType);

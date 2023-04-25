@@ -6,7 +6,7 @@ import {
   useFieldArray,
 } from 'react-hook-form-mui';
 import React from 'react';
-import { TaskPayload } from '../../../types/task';
+import { TaskPayload } from '../../../types/tasks/task';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 

@@ -1,9 +1,9 @@
 import { Sensor } from './sensors';
 import { KeyValue } from './general';
-import { Task } from './task';
 import { Dayjs } from 'dayjs';
 import { File } from './files';
 import { Group } from './group';
+import { Task } from './tasks/base';
 
 export const TrueFalseArray = ['true', 'false'] as const;
 export type TrueFalse = Lowercase<(typeof TrueFalseArray)[number]>;

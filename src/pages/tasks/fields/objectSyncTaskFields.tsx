@@ -1,7 +1,7 @@
 import { Stack } from '@mui/material';
 import { Control, TextFieldElement } from 'react-hook-form-mui';
 import React from 'react';
-import { TaskPayload } from '../../../types/task';
+import { TaskPayload } from '../../../types/tasks/task';
 
 interface ObjectSyncTaskProps {
   control: Control<TaskPayload>;

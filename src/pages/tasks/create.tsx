@@ -23,10 +23,8 @@ import React, { useState } from 'react';
 import { ApiResponseErrorType, CustomError } from '../../utils/error';
 import {
   TaskPayload,
-  TaskTypes,
-  TaskTypesArray,
-  TaskTypesSelectOptions,
-} from '../../types/task';
+
+} from '../../types/tasks/task';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import {
@@ -38,6 +36,7 @@ import {
   getTaskTypeAndDefaultValues,
   taskSubmitHandler,
 } from './helpers/helpers';
+import {TaskTypes, TaskTypesArray, TaskTypesSelectOptions} from "../../types/tasks/base";
 
 interface PeriodicTaskUIState {
   isPeriodic: boolean;
