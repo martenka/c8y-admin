@@ -58,14 +58,14 @@ export const TaskRuntype = Record({
   id: NonEmptyString,
   name: NonEmptyString,
   status: TaskStepsRuntype,
-  taskType: TaskTypesRuntype,
+  taskType: TaskTypesRuntype.Or(String),
 }).And(
   Partial({
     createdAt: String,
     metadata: TaskMetadataRuntype,
   }),
 );
-export type Task = Static<typeof TaskRuntype>;
+export type BaseTask = Static<typeof TaskRuntype>;
 export const TaskTypesSelectOptions = TaskTypesArray.map((item, index) => ({
   id: index,
   label: item,

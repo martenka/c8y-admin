@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDataGrid, List } from '@refinedev/mui';
+import { useDataGrid, List, ShowButton } from '@refinedev/mui';
 import { DataGrid, GridColumns } from '@mui/x-data-grid';
 
 import { UserIdentity } from '../../types/auth';
@@ -34,7 +34,7 @@ import {
 } from '../../utils/transforms';
 import { useNavigate } from 'react-router-dom';
 import {
-  Task,
+  BaseTask,
   TaskStatusArray,
   TaskStatusSelectOptions,
   TaskTypesArray,
@@ -48,7 +48,7 @@ export const TasksList = () => {
   const navigate = useNavigate();
 
   const { dataGridProps, filters, search } = useDataGrid<
-    Task,
+    BaseTask,
     ApiResponseErrorType,
     TaskFilterVariables
   >({
@@ -88,18 +88,30 @@ export const TasksList = () => {
     },
   });
 
-  const columns = React.useMemo<GridColumns<Task>>(
+  const columns = React.useMemo<GridColumns<BaseTask>>(
     () => [
       { field: 'id', headerName: 'ID', flex: 1 },
       { field: 'name', headerName: 'Name', flex: 1 },
       { field: 'taskType', headerName: 'Type', flex: 1 },
       { field: 'status', headerName: 'Status', flex: 1 },
+      {
+        field: 'actions',
+        headerName: 'Actions',
+        flex: 1,
+        renderCell: function render(props) {
+          return (
+            <>
+              <ShowButton hideText recordItemId={props.row.id} />
+            </>
+          );
+        },
+      },
     ],
     [],
   );
 
   const { handleSubmit, control, reset, ...rest } = useForm<
-    Task,
+    BaseTask,
     ApiResponseErrorType,
     TaskFilterVariables
   >({

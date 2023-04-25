@@ -30,7 +30,7 @@ import {
   ObjectSyncTaskFields,
 } from './fields';
 import {
-  getTaskTypeAndDefaultValues,
+  getTaskInputTypeAndDefaultValues,
   taskSubmitHandler,
 } from './helpers/helpers';
 import {
@@ -62,7 +62,7 @@ export const TaskCreate = () => {
 
   const notification = useNotification();
   const locationState = useLocation().state;
-  const inputData = getTaskTypeAndDefaultValues(locationState);
+  const inputData = getTaskInputTypeAndDefaultValues(locationState);
 
   const { handleSubmit, control, ...formRest } = useForm<
     TaskPayload,

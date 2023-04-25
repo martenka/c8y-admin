@@ -3,7 +3,7 @@ import { KeyValue } from './general';
 import { Dayjs } from 'dayjs';
 import { File } from './files';
 import { Group } from './group';
-import { Task } from './tasks/base';
+import { BaseTask } from './tasks/base';
 
 export const TrueFalseArray = ['true', 'false'] as const;
 export type TrueFalse = Lowercase<(typeof TrueFalseArray)[number]>;
@@ -38,7 +38,7 @@ export type SensorFilterVariables = Partial<
   CustomAndUnknownFilterVariables;
 
 export type TaskFilterVariables = Omit<
-  Task,
+  BaseTask,
   'createdAt' | 'taskType' | 'taskStatus' | 'metadata'
 > &
   Partial<{

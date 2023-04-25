@@ -65,6 +65,7 @@ const SensorData = Record({
   sensor: SensorRuntype.Or(String),
 }).And(
   Partial({
+    fileId: String,
     fileName: String,
     bucket: String,
     filePath: String,
@@ -95,3 +96,4 @@ export type DataFetchTaskCreateInput = Static<
 >;
 export type DataFetchTaskAPIInput = Static<typeof DataFetchTaskAPIInputRuntype>;
 export type DataFetchTask = Static<typeof DataFetchTaskRuntype>;
+export type DataFetchTaskPayload = Static<typeof DataFetchTaskPayloadRuntype>;

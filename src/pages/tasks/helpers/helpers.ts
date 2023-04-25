@@ -10,10 +10,12 @@ import { TaskTypeAndDefaultValues } from './types';
 import { notNil } from '../../../utils/validators';
 import { CustomError } from '../../../utils/error';
 import {
+  BaseTask,
   BaseTaskTypes,
   TaskTypes,
   TaskTypesArray,
   TaskTypesMap,
+  TaskTypesRuntype,
 } from '../../../types/tasks/base';
 import {
   CreateDataFetchTaskFormDataRuntype,
@@ -65,7 +67,15 @@ export const createDataUploadTaskDefaultValues = (
   };
 };
 
-export const getTaskType = (value: unknown): TaskTypes => {
+export const getTaskType = (task: BaseTask): TaskTypes => {
+  if (TaskTypesRuntype.guard(task?.taskType)) {
+    return task.taskType;
+  }
+
+  return 'UNKNOWN';
+};
+
+export const getTaskInputType = (value: unknown): TaskTypes => {
   if (DataFetchTaskCreateInputRuntype.guard(value)) {
     return 'DATA_FETCH';
   }
@@ -78,10 +88,10 @@ export const getTaskType = (value: unknown): TaskTypes => {
   return 'UNKNOWN';
 };
 
-export const getTaskTypeAndDefaultValues = (
+export const getTaskInputTypeAndDefaultValues = (
   value: unknown,
 ): TaskTypeAndDefaultValues => {
-  switch (getTaskType(value)) {
+  switch (getTaskInputType(value)) {
     case 'DATA_FETCH':
       return {
         type: 'DATA_FETCH',

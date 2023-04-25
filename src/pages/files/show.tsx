@@ -20,6 +20,8 @@ import {
 import { FileVisibilityButton } from './components/visibility-button';
 import { FileDownload } from '@mui/icons-material';
 import React from 'react';
+import { DateCard } from '../../components/dateCard';
+import { BaseSensorInfo } from '../../components/baseSensorInfo';
 
 interface FileCardProps {
   file?: File;
@@ -41,7 +43,7 @@ export const FileShow = () => {
   const { data, isLoading } = queryResult;
 
   const record = data?.data;
-
+  const recordMetadata = record?.metadata;
   return (
     <Show
       isLoading={isLoading}
@@ -67,10 +69,22 @@ export const FileShow = () => {
           <FileStorageInfo file={record} token={token} />
         </Grid>
         <Grid item xs={12} lg={6}>
-          <FileSensorInfo file={record} />
+          <BaseSensorInfo
+            sensor={{
+              id: record?.id,
+              managedObjectId: recordMetadata?.managedObjectId,
+              managedObjectName: recordMetadata?.managedObjectName,
+              valueFragmentType: recordMetadata?.valueFragments?.[0].type,
+              valueFragmentDisplayName:
+                recordMetadata?.valueFragments?.[0].description,
+            }}
+          />
         </Grid>
         <Grid item xs={12} lg={6}>
-          <FileDateInfo file={record} />
+          <DateCard
+            dateFrom={record?.metadata?.dateFrom}
+            dateTo={record?.metadata?.dateTo}
+          />
         </Grid>
       </Grid>
     </Show>
@@ -155,37 +169,6 @@ export const FileStorageInfo = (props: FileCardProps) => {
             </Typography>
           </Stack>
         </Stack>
-      </CardContent>
-    </Card>
-  );
-};
-
-export const FileDateInfo = (props: FileCardProps) => {
-  const file = props?.file;
-  return (
-    <Card>
-      <CardHeader title="Data date range" />
-      <CardContent>
-        <Table>
-          <TableBody>
-            <TableRow>
-              <TableCell>
-                <Typography fontWeight="bold">From</Typography>
-              </TableCell>
-              <TableCell>
-                <Typography>{file?.metadata?.dateFrom}</Typography>
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>
-                <Typography fontWeight="bold">To</Typography>
-              </TableCell>
-              <TableCell>
-                <Typography>{file?.metadata?.dateTo}</Typography>
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
       </CardContent>
     </Card>
   );

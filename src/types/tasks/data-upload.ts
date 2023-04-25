@@ -39,7 +39,7 @@ const FileMetadata = Record({
   }),
 );
 
-const DataUploadFileRuntype = Record({
+export const DataUploadFileRuntype = Record({
   fileId: String,
   fileName: String,
   storage: FileStorageRuntype,
@@ -77,3 +77,4 @@ export type DataUploadTaskAPIInput = Static<
 
 export type DataUploadTask = Static<typeof DataUploadTaskRuntype>;
 export type DataUploadTaskPayload = Static<typeof DataUploadTaskPayload>;
+export type DataUploadFile = Static<typeof DataUploadFileRuntype>;

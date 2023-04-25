@@ -53,3 +53,4 @@ export const FileRuntype = Record({
 
 export type File = Static<typeof FileRuntype>;
 export type FileVisibilityState = Static<typeof FileVisibilityStateRuntype>;
+export type FileStorage = Static<typeof FileStorageRuntype>;

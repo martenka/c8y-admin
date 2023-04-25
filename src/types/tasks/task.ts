@@ -1,6 +1,7 @@
 import { Static, Union } from 'runtypes';
 import {
   CreateDataFetchTaskFormDataRuntype,
+  DataFetchTask,
   DataFetchTaskAPIInput,
   DataFetchTaskCreateInputRuntype,
 } from './data-fetch';
@@ -11,9 +12,11 @@ import {
 } from './object-sync';
 import {
   CreateDataUploadTaskFormDataRuntype,
+  DataUploadTask,
   DataUploadTaskAPIInput,
   DataUploadTaskCreateInputRuntype,
 } from './data-upload';
+import { BaseTask } from './base';
 
 export const TaskInputRuntype = Union(
   DataFetchTaskCreateInputRuntype,
@@ -35,3 +38,5 @@ export type TaskAPIInput =
   | DataFetchTaskAPIInput
   | ObjectSyncTaskAPIInput
   | DataUploadTaskAPIInput;
+
+export type Task = DataFetchTask | DataUploadTask | BaseTask;

@@ -29,6 +29,7 @@ import { TaskCreate } from './pages/tasks/create';
 import { GroupsList } from './pages/groups/list';
 import { GroupShow } from './pages/groups/show';
 import { FileShow } from './pages/files/show';
+import { TaskShow } from './pages/tasks/show';
 
 function App() {
   const { t, i18n } = useTranslation();
@@ -78,6 +79,7 @@ function App() {
                   name: 'tasks',
                   list: '/tasks',
                   create: '/tasks/create',
+                  show: '/tasks/show/:id',
                   meta: {
                     canDelete: false,
                   },
@@ -123,6 +125,7 @@ function App() {
                   <Route path="/tasks">
                     <Route index element={<TasksList />} />
                     <Route path="create" element={<TaskCreate />} />
+                    <Route path="show/:id" element={<TaskShow />} />
                   </Route>
                 </Route>
                 <Route
