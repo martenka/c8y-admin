@@ -39,6 +39,21 @@ export const TaskTypesMap = TaskTypesArray.reduce(
 export const TaskStatusArray = TaskStepsRuntype.alternatives.map(
   (item) => item.value,
 );
+
+const TaskPeriodicDataRuntype = Partial({
+  pattern: String,
+  fetchDurationSeconds: String,
+});
+
+export const TaskMetadataRuntype = Partial({
+  lastRanAt: String,
+  lastCompletedAt: String,
+  lastFailedAt: String,
+  lastFailReason: String,
+  firstRunAt: String,
+  periodicData: TaskPeriodicDataRuntype,
+});
+
 export const TaskRuntype = Record({
   id: NonEmptyString,
   name: NonEmptyString,
@@ -47,6 +62,7 @@ export const TaskRuntype = Record({
 }).And(
   Partial({
     createdAt: String,
+    metadata: TaskMetadataRuntype,
   }),
 );
 export type Task = Static<typeof TaskRuntype>;

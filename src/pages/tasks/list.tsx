@@ -38,8 +38,8 @@ import {
   TaskStatusArray,
   TaskStatusSelectOptions,
   TaskTypesArray,
-  TaskTypesSelectOptions
-} from "../../types/tasks/base";
+  TaskTypesSelectOptions,
+} from '../../types/tasks/base';
 
 export const TasksList = () => {
   const auth = useGetIdentity<UserIdentity>();

@@ -12,6 +12,7 @@ import {
   BaseCreateTaskFormData,
   TaskAPIInputRuntype,
   TaskEntityTypes,
+  TaskRuntype,
   TaskTypesRuntype,
 } from './base';
 import { SensorRuntype } from '../sensors';
@@ -59,6 +60,33 @@ export const DataFetchTaskPayloadAPIInputRuntype = Record({
 export const DataFetchTaskAPIInputRuntype = TaskAPIInputRuntype.And(
   DataFetchTaskPayloadAPIInputRuntype,
 );
+
+const SensorData = Record({
+  sensor: SensorRuntype.Or(String),
+}).And(
+  Partial({
+    fileName: String,
+    bucket: String,
+    filePath: String,
+    fileURL: String,
+  }),
+);
+export const DataFetchTaskPayloadRuntype = Record({
+  data: Array(SensorData),
+}).And(
+  Partial({
+    dateFrom: String,
+    dateTo: String,
+    group: String,
+  }),
+);
+
+export const DataFetchTaskRuntype = TaskRuntype.And(
+  Record({
+    payload: DataFetchTaskPayloadRuntype,
+  }),
+);
+
 export type DataFetchTaskCreatePayload = Static<
   typeof CreateDataFetchTaskFormDataRuntype
 >;
@@ -66,3 +94,4 @@ export type DataFetchTaskCreateInput = Static<
   typeof DataFetchTaskCreateInputRuntype
 >;
 export type DataFetchTaskAPIInput = Static<typeof DataFetchTaskAPIInputRuntype>;
+export type DataFetchTask = Static<typeof DataFetchTaskRuntype>;

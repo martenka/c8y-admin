@@ -1,9 +1,10 @@
 import {
   BaseCreateTaskFormData,
   TaskAPIInputRuntype,
+  TaskRuntype,
   TaskTypesRuntype,
 } from './base';
-import { Array, Record, Static, String } from 'runtypes';
+import { Array, Partial, Record, Static, String } from 'runtypes';
 import { FileRuntype } from '../files';
 
 const Files = Record({ files: Array(FileRuntype) });
@@ -19,6 +20,51 @@ export const DataUploadTaskAPIInputRuntype = TaskAPIInputRuntype.And(
     }),
   }),
 );
+
+const FileStorageRuntype = Record({
+  bucket: String,
+  path: String,
+});
+
+const FileMetadata = Record({
+  dateFrom: String,
+  dateTo: String,
+  managedObjectId: String,
+  valueFragmentType: String,
+}).And(
+  Partial({
+    valueFragmentDescription: String,
+    managedObjectName: String,
+    description: String,
+  }),
+);
+
+const DataUploadFileRuntype = Record({
+  fileId: String,
+  fileName: String,
+  storage: FileStorageRuntype,
+  metadata: FileMetadata,
+}).And(
+  Partial({
+    customAttributes: Record({}),
+  }),
+);
+
+const PlatformRuntype = Record({
+  platformIdentifier: String,
+});
+
+export const DataUploadTaskPayload = Record({
+  files: Array(DataUploadFileRuntype),
+  platform: PlatformRuntype,
+});
+
+export const DataUploadTaskRuntype = TaskRuntype.And(
+  Record({
+    payload: DataUploadTaskPayload,
+  }),
+);
+
 export type DataUploadTaskCreatePayload = Static<
   typeof CreateDataUploadTaskFormDataRuntype
 >;
@@ -28,3 +74,6 @@ export type DataUploadTaskCreateInput = Static<
 export type DataUploadTaskAPIInput = Static<
   typeof DataUploadTaskAPIInputRuntype
 >;
+
+export type DataUploadTask = Static<typeof DataUploadTaskRuntype>;
+export type DataUploadTaskPayload = Static<typeof DataUploadTaskPayload>;

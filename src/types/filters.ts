@@ -39,7 +39,7 @@ export type SensorFilterVariables = Partial<
 
 export type TaskFilterVariables = Omit<
   Task,
-  'createdAt' | 'taskType' | 'taskStatus'
+  'createdAt' | 'taskType' | 'taskStatus' | 'metadata'
 > &
   Partial<{
     firstRunAt: Dayjs | null;

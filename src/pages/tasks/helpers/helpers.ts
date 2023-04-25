@@ -9,18 +9,28 @@ import { Sensor } from '../../../types/sensors';
 import { TaskTypeAndDefaultValues } from './types';
 import { notNil } from '../../../utils/validators';
 import { CustomError } from '../../../utils/error';
-import {BaseTaskTypes, TaskTypes, TaskTypesArray, TaskTypesMap} from "../../../types/tasks/base";
+import {
+  BaseTaskTypes,
+  TaskTypes,
+  TaskTypesArray,
+  TaskTypesMap,
+} from '../../../types/tasks/base';
 import {
   CreateDataFetchTaskFormDataRuntype,
-  DataFetchTaskCreateInput, DataFetchTaskCreateInputRuntype,
-  DataFetchTaskCreatePayload
-} from "../../../types/tasks/data-fetch";
-import {CreateObjectSyncTaskFormDataRuntype, ObjectSyncTaskCreateInputRuntype} from "../../../types/tasks/object-sync";
+  DataFetchTaskCreateInput,
+  DataFetchTaskCreateInputRuntype,
+  DataFetchTaskCreatePayload,
+} from '../../../types/tasks/data-fetch';
+import {
+  CreateObjectSyncTaskFormDataRuntype,
+  ObjectSyncTaskCreateInputRuntype,
+} from '../../../types/tasks/object-sync';
 import {
   CreateDataUploadTaskFormDataRuntype,
-  DataUploadTaskCreateInput, DataUploadTaskCreateInputRuntype,
-  DataUploadTaskCreatePayload
-} from "../../../types/tasks/data-upload";
+  DataUploadTaskCreateInput,
+  DataUploadTaskCreateInputRuntype,
+  DataUploadTaskCreatePayload,
+} from '../../../types/tasks/data-upload';
 
 export const getTaskIndex = (taskType: BaseTaskTypes): number => {
   return TaskTypesArray.indexOf(taskType);
