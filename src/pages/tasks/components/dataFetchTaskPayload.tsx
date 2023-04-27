@@ -25,7 +25,7 @@ export const DataFetchTaskPayload = (props: DataFetchTaskPayloadProps) => {
     <>
       <Grid item xs={12} lg={9}>
         <Card>
-          <CardHeader title="Sensors" />
+          <CardHeader title="Payload" />
           <CardContent>
             <Typography>
               Data in this table is not updated after task has completed

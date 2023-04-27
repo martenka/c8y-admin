@@ -45,8 +45,8 @@ export const DataUploadTaskPayload = (props: DataUploadTaskPayloadProps) => {
               <TableHead>
                 <TableRow>
                   <TableCell />
-                  <TableCell key="fileId">File ID</TableCell>
                   <TableCell key="fileName">File Name</TableCell>
+                  <TableCell key="fileId">File ID</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -92,6 +92,7 @@ const DataUploadTaskRow = ({
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
+        <TableCell>{data.fileName}</TableCell>
         <TableCell>
           <Stack direction="row" spacing={1} alignItems="center">
             {data.fileId}
@@ -105,7 +106,6 @@ const DataUploadTaskRow = ({
             }
           </Stack>
         </TableCell>
-        <TableCell>{data.fileName}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ borderBottom: 'unset' }} colSpan={3}>

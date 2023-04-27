@@ -1,6 +1,6 @@
 import { useGetIdentity, useShow } from '@refinedev/core';
 import { Show, ShowButton } from '@refinedev/mui';
-import { Typography, Stack, Grid } from '@mui/material';
+import { Typography, Stack, Grid, Button } from '@mui/material';
 import { UserIdentity } from '../../types/auth';
 import { isNil, notNil } from '../../utils/validators';
 import { Group } from '../../types/group';
@@ -8,10 +8,14 @@ import { DataGrid, GridColumns } from '@mui/x-data-grid';
 import React, { useState } from 'react';
 import { Sensor } from '../../types/sensors';
 import { CustomAttributes } from '../../components/CustomAttributes';
+import { useNavigate } from 'react-router-dom';
 
 export const GroupShow = () => {
   const auth = useGetIdentity<UserIdentity>();
   const token = notNil(auth.data) ? auth.data?.token : undefined;
+  const navigate = useNavigate();
+
+  const [listSelection, setListSelection] = useState<Sensor[]>([]);
   const [gridColumnAmount, setGridColumnAmount] = useState({
     left: 0,
     right: 12,
@@ -67,6 +71,23 @@ export const GroupShow = () => {
       isLoading={isLoading}
       contentProps={{ sx: { height: '100%' } }}
       wrapperProps={{ sx: { height: '100%' } }}
+      headerButtons={({ defaultButtons }) => {
+        return (
+          <>
+            {defaultButtons}
+            <Button
+              variant="contained"
+              onClick={() => {
+                navigate('/tasks/create', {
+                  state: { taskType: 'DATA_FETCH', sensors: listSelection },
+                });
+              }}
+            >
+              Fetch sensor data
+            </Button>
+          </>
+        );
+      }}
     >
       <Stack gap={1} height="100%">
         <Stack direction="row" gap={1}>
@@ -105,7 +126,19 @@ export const GroupShow = () => {
             lg={gridColumnAmount.right}
             sx={{ height: '100%', mt: 2 }}
           >
-            <DataGrid columns={columns} rows={rows} autoHeight />
+            <DataGrid
+              columns={columns}
+              rows={rows}
+              checkboxSelection
+              onSelectionModelChange={(model) => {
+                const selectedIds = new Set(model);
+                const selectedSensors = rows.filter((item) =>
+                  selectedIds.has(item.id),
+                );
+                setListSelection(selectedSensors ?? []);
+              }}
+              autoHeight
+            />
           </Grid>
         </Grid>
       </Stack>
