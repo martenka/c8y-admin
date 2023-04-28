@@ -14,7 +14,6 @@ import {
 import { ApiResponseErrorType } from '../../utils/error';
 import {
   GroupFilterVariables,
-  SearchTypesArray,
   SearchTypesMap,
   SearchTypesSelectOptions,
 } from '../../types/filters';
@@ -22,6 +21,7 @@ import { useForm } from '@refinedev/react-hook-form';
 import { paramsToSimpleCrudFilters } from '../../utils/transforms';
 import { Group } from '../../types/group';
 import { CustomAttributesFilter } from '../../components/customAttributesFilter';
+import { addSearchTypeIfNotFirstOption } from '../../utils/helpers';
 
 export const GroupsList = () => {
   const auth = useGetIdentity<UserIdentity>();
@@ -42,17 +42,7 @@ export const GroupsList = () => {
         const { searchType, ...rest } = params;
         paramsToSimpleCrudFilters(rest, filters);
 
-        // First search type is the default setting, this does not need to be sent to backend
-        if (notNil(searchType) && searchType > 0) {
-          const searchTypeValue = SearchTypesArray[searchType];
-          if (notNil(searchTypeValue)) {
-            filters.push({
-              field: 'searchType',
-              operator: 'eq',
-              value: searchTypeValue,
-            });
-          }
-        }
+        addSearchTypeIfNotFirstOption(filters, searchType);
       }
 
       return filters;

@@ -29,6 +29,9 @@ export const SearchTypesSelectOptions = SearchTypesArray.map((item, index) => ({
   label: item,
 }));
 
+export const SearchTypesWithoutTokenSelectOptions =
+  SearchTypesSelectOptions.filter((_, index) => index !== 1);
+
 export const TrueFalseArray = ['true', 'false'] as const;
 export type TrueFalse = Lowercase<(typeof TrueFalseArray)[number]>;
 export const TrueFalseSelectOptions: {
@@ -57,7 +60,10 @@ export type CustomAndUnknownFilterVariables =
   CustomAttributesFilterVariablesType & UnknownAttributes;
 
 export type SensorFilterVariables = Partial<
-  Omit<Sensor, 'description' | 'customAttributes'>
+  Omit<Sensor, 'description' | 'customAttributes'> & {
+    query: string;
+    searchType: number;
+  }
 > &
   CustomAndUnknownFilterVariables;
 

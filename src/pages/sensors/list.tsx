@@ -7,13 +7,21 @@ import { notNil } from '../../utils/validators';
 import { CrudFilters, getDefaultFilter, useGetIdentity } from '@refinedev/core';
 import { Sensor } from '../../types/sensors';
 import { Button, Card, CardContent, CardHeader, Grid } from '@mui/material';
-import { FormContainer, TextFieldElement } from 'react-hook-form-mui';
+import {
+  FormContainer,
+  SelectElement,
+  TextFieldElement,
+} from 'react-hook-form-mui';
 import { ApiResponseErrorType } from '../../utils/error';
-import { SensorFilterVariables } from '../../types/filters';
+import {
+  SearchTypesWithoutTokenSelectOptions,
+  SensorFilterVariables,
+} from '../../types/filters';
 import { useForm } from '@refinedev/react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { paramsToSimpleCrudFilters } from '../../utils/transforms';
 import { CustomAttributesFilter } from '../../components/customAttributesFilter';
+import { addSearchTypeIfNotFirstOption } from '../../utils/helpers';
 
 export const SensorsList = () => {
   const auth = useGetIdentity<UserIdentity>();
@@ -35,7 +43,9 @@ export const SensorsList = () => {
       const filters: CrudFilters = [];
 
       if (notNil(params)) {
-        paramsToSimpleCrudFilters(params, filters);
+        const { searchType, ...rest } = params;
+        paramsToSimpleCrudFilters(rest, filters);
+        addSearchTypeIfNotFirstOption(filters, searchType);
       }
 
       return filters;
@@ -93,6 +103,7 @@ export const SensorsList = () => {
         filters,
         'eq',
       ),
+      searchType: 0,
       customAttributes: [],
     },
   });
@@ -115,6 +126,21 @@ export const SensorsList = () => {
               }}
               handleSubmit={handleSubmit(search)}
             >
+              <TextFieldElement
+                name="query"
+                label="Token query"
+                margin="normal"
+                size="small"
+                fullWidth
+              />
+              <SelectElement
+                name="searchType"
+                label="Search type"
+                margin="normal"
+                size="small"
+                options={SearchTypesWithoutTokenSelectOptions}
+                fullWidth
+              />
               <TextFieldElement
                 name="id"
                 label="Id"
