@@ -6,9 +6,18 @@ import { UserIdentity } from '../../types/auth';
 import { notNil } from '../../utils/validators';
 import { CrudFilters, getDefaultFilter, useGetIdentity } from '@refinedev/core';
 import { Button, Card, CardContent, CardHeader, Grid } from '@mui/material';
-import { FormContainer, TextFieldElement } from 'react-hook-form-mui';
+import {
+  FormContainer,
+  SelectElement,
+  TextFieldElement,
+} from 'react-hook-form-mui';
 import { ApiResponseErrorType } from '../../utils/error';
-import { GroupFilterVariables } from '../../types/filters';
+import {
+  GroupFilterVariables,
+  SearchTypesArray,
+  SearchTypesMap,
+  SearchTypesSelectOptions,
+} from '../../types/filters';
 import { useForm } from '@refinedev/react-hook-form';
 import { paramsToSimpleCrudFilters } from '../../utils/transforms';
 import { Group } from '../../types/group';
@@ -30,7 +39,20 @@ export const GroupsList = () => {
       const filters: CrudFilters = [];
 
       if (notNil(params)) {
-        paramsToSimpleCrudFilters(params, filters);
+        const { searchType, ...rest } = params;
+        paramsToSimpleCrudFilters(rest, filters);
+
+        // First search type is the default setting, this does not need to be sent to backend
+        if (notNil(searchType) && searchType > 0) {
+          const searchTypeValue = SearchTypesArray[searchType];
+          if (notNil(searchTypeValue)) {
+            filters.push({
+              field: 'searchType',
+              operator: 'eq',
+              value: searchTypeValue,
+            });
+          }
+        }
       }
 
       return filters;
@@ -68,7 +90,8 @@ export const GroupsList = () => {
   >({
     defaultValues: {
       id: getDefaultFilter('id', filters, 'eq'),
-      name: getDefaultFilter('id', filters, 'eq'),
+      name: getDefaultFilter('name', filters, 'eq'),
+      searchType: SearchTypesMap['EXACT'],
       customAttributes: [],
     },
   });
@@ -95,6 +118,14 @@ export const GroupsList = () => {
                 label="Name"
                 margin="normal"
                 size="small"
+                fullWidth
+              />
+              <SelectElement
+                name="searchType"
+                label="Search type"
+                margin="normal"
+                size="small"
+                options={SearchTypesSelectOptions}
                 fullWidth
               />
               <CustomAttributesFilter control={control} />

@@ -4,6 +4,30 @@ import { Dayjs } from 'dayjs';
 import { File } from './files';
 import { Group } from './group';
 import { BaseTask } from './tasks/base';
+import { Literal, Union } from 'runtypes';
+
+export const SearchType = Union(
+  Literal('EXACT'),
+  Literal('TOKEN'),
+  Literal('PREFIX'),
+);
+export const SearchTypesArray = SearchType.alternatives.map(
+  (item) => item.value,
+);
+export const SearchTypesMap = SearchTypesArray.reduce(
+  (memo, currentValue, currentIndex) => ({
+    ...memo,
+    [currentValue]: currentIndex,
+  }),
+  {},
+) as {
+  [K in (typeof SearchTypesArray)[number]]: number;
+};
+
+export const SearchTypesSelectOptions = SearchTypesArray.map((item, index) => ({
+  id: index,
+  label: item,
+}));
 
 export const TrueFalseArray = ['true', 'false'] as const;
 export type TrueFalse = Lowercase<(typeof TrueFalseArray)[number]>;
@@ -60,6 +84,7 @@ export type FileFilterVariables = Partial<
   UnknownAttributes;
 
 export type GroupFilterVariables = Partial<
-  Pick<Omit<Group, 'customAttributes'>, 'id' | 'name'>
+  Pick<Omit<Group, 'customAttributes'>, 'id' | 'name'> & { searchType: number }
 > &
+  CustomAttributesFilterVariablesType &
   CustomAndUnknownFilterVariables;
