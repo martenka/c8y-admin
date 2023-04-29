@@ -37,12 +37,6 @@ export const DataUploadTaskFields = ({
               disabled={true}
               sx={{ flex: 1 }}
             />
-            <TextFieldElement
-              name={`files.${index}.visibilityState.exposedToPlatforms`}
-              label={`Uploaded to`}
-              disabled={true}
-              sx={{ flex: 1 }}
-            />
           </Stack>
         );
       })}

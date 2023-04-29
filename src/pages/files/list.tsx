@@ -103,7 +103,6 @@ export const FilesList = () => {
     () => [
       { field: 'name', headerName: 'Name', flex: 1 },
       { field: 'createdByTask', headerName: 'CreatedByTask', flex: 1 },
-      { field: 'description', headerName: 'Description', flex: 1 },
       {
         field: 'visibilityState.exposedToPlatforms',
         headerName: 'Uploaded to',

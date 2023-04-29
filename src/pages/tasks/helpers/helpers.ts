@@ -33,6 +33,7 @@ import {
   DataUploadTaskCreateInputRuntype,
   DataUploadTaskCreatePayload,
 } from '../../../types/tasks/data-upload';
+import { getDefaultTaskName } from '../../../utils/helpers';
 
 export const getTaskIndex = (taskType: BaseTaskTypes): number => {
   return TaskTypesArray.indexOf(taskType);
@@ -53,6 +54,7 @@ export const createDataFetchTaskDefaultValues = (
   return {
     ...createTaskDefaultValues(),
     sensors,
+    name: getDefaultTaskName('DATA_FETCH'),
     dateFrom: null,
     dateTo: null,
   };
@@ -63,6 +65,7 @@ export const createDataUploadTaskDefaultValues = (
 ): Partial<DataUploadTaskCreatePayload> => {
   return {
     ...createTaskDefaultValues(TaskTypesMap['DATA_UPLOAD']),
+    name: getDefaultTaskName('DATA_UPLOAD'),
     files,
   };
 };
@@ -102,9 +105,12 @@ export const getTaskInputTypeAndDefaultValues = (
     case 'OBJECT_SYNC':
       return {
         type: 'OBJECT_SYNC',
-        defaultValues: createTaskDefaultValues(
-          getTaskIndex((value as TaskInput).taskType),
-        ),
+        defaultValues: {
+          ...createTaskDefaultValues(
+            getTaskIndex((value as TaskInput).taskType),
+          ),
+          name: getDefaultTaskName('OBJECT_SYNC'),
+        },
       };
     case 'DATA_UPLOAD':
       return {
