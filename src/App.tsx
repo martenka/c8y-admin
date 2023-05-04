@@ -30,6 +30,7 @@ import { GroupsList } from './pages/groups/list';
 import { GroupShow } from './pages/groups/show';
 import { FileShow } from './pages/files/show';
 import { TaskShow } from './pages/tasks/show';
+import { CustomSider } from './components/sider/sider';
 
 function App() {
   const { t, i18n } = useTranslation();
@@ -99,7 +100,7 @@ function App() {
                 <Route
                   element={
                     <Authenticated fallback={<CatchAllNavigate to="/login" />}>
-                      <ThemedLayoutV2 Header={Header}>
+                      <ThemedLayoutV2 Header={Header} Sider={CustomSider}>
                         <Outlet />
                       </ThemedLayoutV2>
                     </Authenticated>
