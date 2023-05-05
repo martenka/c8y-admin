@@ -103,6 +103,7 @@ export const authProvider: AuthBindings = {
       return {
         id: tokenPayload.sub,
         name: tokenPayload.usr,
+        isAdmin: hasAdminRole(tokenPayload.roles ?? []),
         token,
         avatar: 'https://i.pravatar.cc/300',
       };
@@ -110,7 +111,7 @@ export const authProvider: AuthBindings = {
     return null;
   },
   onError: async (error): Promise<OnErrorResponse> => {
-    if ([401, 403].includes(error?.statusCode)) {
+    if (error?.statusCode === 401) {
       return { error, redirectTo: '/login', logout: true };
     }
     return { error };

@@ -25,7 +25,8 @@ import { addSearchTypeIfNotFirstOption } from '../../utils/helpers';
 
 export const SensorsList = () => {
   const auth = useGetIdentity<UserIdentity>();
-  const token = notNil(auth.data) ? auth.data?.token : undefined;
+  const token = auth.data?.token;
+  const isAdmin = auth.data?.isAdmin;
 
   const navigate = useNavigate();
 
@@ -204,16 +205,21 @@ export const SensorsList = () => {
             return (
               <>
                 {defaultButtons}
-                <Button
-                  variant="contained"
-                  onClick={() => {
-                    navigate('/tasks/create', {
-                      state: { taskType: 'DATA_FETCH', sensors: listSelection },
-                    });
-                  }}
-                >
-                  Fetch sensor data
-                </Button>
+                {isAdmin && (
+                  <Button
+                    variant="contained"
+                    onClick={() => {
+                      navigate('/tasks/create', {
+                        state: {
+                          taskType: 'DATA_FETCH',
+                          sensors: listSelection,
+                        },
+                      });
+                    }}
+                  >
+                    Fetch sensor data
+                  </Button>
+                )}
               </>
             );
           }}

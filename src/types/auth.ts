@@ -24,7 +24,7 @@ export type AuthPermissions = {
   isAdmin: boolean;
 };
 
-export interface UserToken {
+export interface UserToken extends AuthPermissions {
   id: string;
   name: string;
   token: string;

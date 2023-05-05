@@ -8,7 +8,8 @@ import { CustomAttributes } from '../../components/CustomAttributes';
 
 export const SensorShow = () => {
   const auth = useGetIdentity<UserIdentity>();
-  const token = notNil(auth.data) ? auth.data?.token : undefined;
+  const token = auth.data?.token;
+  const isAdmin = auth.data?.isAdmin;
 
   const { queryResult } = useShow<Sensor>({
     meta: {
@@ -22,7 +23,7 @@ export const SensorShow = () => {
   const customAttributes = record?.customAttributes;
 
   return (
-    <Show isLoading={isLoading} canEdit={true}>
+    <Show isLoading={isLoading} canEdit={isAdmin}>
       <Stack gap={1}>
         <Typography variant="body1" fontWeight="bold">
           Id

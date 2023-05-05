@@ -41,6 +41,12 @@ export const FileVisibilityButton = ({
                 type: 'success',
                 message: 'Successfully started visibility state change',
               },
+              errorNotification: (props) => {
+                return {
+                  type: 'error',
+                  message: `${props?.message} - ${props?.statusCode}`,
+                };
+              },
               meta: {
                 token,
                 additionalPath: `${fileId}/visibility-state`,

@@ -71,7 +71,7 @@ export const FileShow = () => {
         <Grid item xs={12} lg={6}>
           <BaseSensorInfo
             sensor={{
-              id: record?.id,
+              id: record?.metadata?.sensors?.[0],
               managedObjectId: recordMetadata?.managedObjectId,
               managedObjectName: recordMetadata?.managedObjectName,
               valueFragmentType: recordMetadata?.valueFragments?.[0].type,

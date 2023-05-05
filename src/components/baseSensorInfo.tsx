@@ -2,6 +2,7 @@ import {
   Card,
   CardContent,
   CardHeader,
+  Stack,
   Table,
   TableBody,
   TableCell,
@@ -10,6 +11,8 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { Sensor } from '../types/sensors';
+import { notNil } from '../utils/validators';
+import { ShowButton } from '@refinedev/mui';
 interface BaseSensorInfoProps {
   sensor: Partial<Sensor>;
   sensorIdFallback?: string;
@@ -18,6 +21,7 @@ export const BaseSensorInfo = ({
   sensor,
   sensorIdFallback,
 }: BaseSensorInfoProps) => {
+  const sensorId = sensor.id ?? sensorIdFallback;
   return (
     <Card>
       <CardHeader title="Sensor" />
@@ -29,7 +33,17 @@ export const BaseSensorInfo = ({
                 <Typography fontWeight="bold">Local sensor ID</Typography>
               </TableCell>
               <TableCell>
-                <Typography>{sensor.id ?? sensorIdFallback}</Typography>
+                <Stack direction={'row'} spacing={2}>
+                  <Typography>{sensorId}</Typography>
+                  {notNil(sensorId) && (
+                    <ShowButton
+                      sx={{ padding: 0 }}
+                      hideText
+                      resource={'sensors'}
+                      recordItemId={sensorId}
+                    />
+                  )}
+                </Stack>
               </TableCell>
             </TableRow>
             <TableRow>

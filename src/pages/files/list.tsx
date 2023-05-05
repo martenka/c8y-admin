@@ -35,7 +35,9 @@ import { useNavigate } from 'react-router-dom';
 
 export const FilesList = () => {
   const auth = useGetIdentity<UserIdentity>();
-  const token = notNil(auth.data) ? auth.data?.token : undefined;
+  const token = auth.data?.token;
+  const isAdmin = auth.data?.isAdmin;
+
   const navigate = useNavigate();
 
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
@@ -143,13 +145,15 @@ export const FilesList = () => {
                   <FileDownload />
                 </Link>
               </IconButton>
-              <DeleteButton
-                recordItemId={props.row.id}
-                hideText={true}
-                meta={{
-                  token,
-                }}
-              />
+              {isAdmin && (
+                <DeleteButton
+                  recordItemId={props.row.id}
+                  hideText={true}
+                  meta={{
+                    token,
+                  }}
+                />
+              )}
             </>
           );
         },
@@ -259,7 +263,7 @@ export const FilesList = () => {
       <Grid item xs={12} lg={9}>
         <List
           headerButtons={() => {
-            if (selectedFiles?.length > 0) {
+            if (isAdmin && selectedFiles?.length > 0) {
               return (
                 <>
                   <Button

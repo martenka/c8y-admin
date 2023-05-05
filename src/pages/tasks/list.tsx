@@ -43,7 +43,8 @@ import {
 
 export const TasksList = () => {
   const auth = useGetIdentity<UserIdentity>();
-  const token = notNil(auth.data) ? auth.data?.token : undefined;
+  const token = auth.data?.token;
+  const isAdmin = auth.data?.isAdmin;
 
   const navigate = useNavigate();
 
@@ -198,16 +199,20 @@ export const TasksList = () => {
         <List
           headerButtons={() => {
             return (
-              <Button
-                variant="contained"
-                onClick={() => {
-                  navigate('/tasks/create', {
-                    state: { taskType: 'OBJECT_SYNC' },
-                  });
-                }}
-              >
-                Sync sensors and groups
-              </Button>
+              <>
+                {isAdmin && (
+                  <Button
+                    variant="contained"
+                    onClick={() => {
+                      navigate('/tasks/create', {
+                        state: { taskType: 'OBJECT_SYNC' },
+                      });
+                    }}
+                  >
+                    Sync sensors and groups
+                  </Button>
+                )}
+              </>
             );
           }}
         >
