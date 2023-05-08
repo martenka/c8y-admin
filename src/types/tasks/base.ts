@@ -42,7 +42,7 @@ export const TaskStatusArray = TaskStepsRuntype.alternatives.map(
 
 const TaskPeriodicDataRuntype = Partial({
   pattern: String,
-  fetchDurationSeconds: String,
+  fetchDurationSeconds: Number.Or(String),
 });
 
 export const TaskMetadataRuntype = Partial({
