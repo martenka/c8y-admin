@@ -31,7 +31,8 @@
     "react-i18next": "^11.8.11",
     "react-router-dom": "^6.8.1",
     "react-scripts": "^5.0.0",
-    "runtypes": "^6.6.0"
+    "runtypes": "^6.6.0",
+    "serve": "^14.2.0"
   },
   "devDependencies": {
     "@types/jest": "^29.2.4",
@@ -48,6 +49,7 @@
     "prettier:fix": "prettier --write \"src/**/*{.ts,.tsx}\"",
     "fix": "yarn prettier:fix && eslint \"{src,test}/**/*.ts\" --fix",
     "start:dev": "refine start",
+    "start:prod": "yarn serve -s build",
     "build": "refine build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
