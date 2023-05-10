@@ -12,7 +12,6 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import { DateCard } from '../../../components/dateCard';
 import { ShowButton } from '@refinedev/mui';
 
 interface DataFetchTaskPayloadProps {
@@ -23,7 +22,7 @@ export const DataFetchTaskPayload = (props: DataFetchTaskPayloadProps) => {
   const payload = props.task.payload;
   return (
     <>
-      <Grid item xs={12} lg={9}>
+      <Grid item xs={12}>
         <Card>
           <CardHeader title="Payload" />
           <CardContent>
@@ -42,10 +41,7 @@ export const DataFetchTaskPayload = (props: DataFetchTaskPayloadProps) => {
               </TableHead>
               <TableBody>
                 {payload.data.map((file) => {
-                  const rowId =
-                    typeof file.sensor === 'string'
-                      ? file.sensor
-                      : file.sensor.id;
+                  const rowId = file.fileId;
                   return (
                     <TableRow key={`sensor.${rowId}`}>
                       <TableCell>
@@ -88,11 +84,6 @@ export const DataFetchTaskPayload = (props: DataFetchTaskPayloadProps) => {
             </Table>
           </CardContent>
         </Card>
-      </Grid>
-      <Grid item xs={12} lg={3}>
-        <Stack direction="row" spacing={2}>
-          <DateCard dateFrom={payload.dateFrom} dateTo={payload.dateTo} />
-        </Stack>
       </Grid>
     </>
   );
