@@ -12,7 +12,7 @@ The solution consists of three services: c8y-admin(this), [c8y-data-service](htt
 $ yarn install
 ```
 
-## Running the solution
+## Running all services
 
 To run the whole solution, git clone this service,  [c8y-data-service](https://github.com/martenka/c8y-data-service) and [c8y-admin](https://github.com/martenka/c8y-admin),  
 fill out necessary ENV variables and run the commands below. Dependencies (mongo, min.io, rabbitmq) will be run through  
@@ -23,9 +23,11 @@ You can use [nvm](https://github.com/nvm-sh/nvm) or [nvm-windows](https://github
 The order of starting the services should be:
 1. docker dependencies
 2. c8y-data-service
-3. c8y-core-service **Important:** Make sure data-service is running before starting core-service, otherwise the default user  
-   may not be synced to data-service
+3. c8y-core-service **Important:** For first run make sure data-service is running before starting core-service, otherwise the default user
+   is not synced to data-service.
 4. c8y-admin
+
+## Running this service
 
 ### ENV variables
 Cumulocity account (that works with its API) is necessary for the solution to work.  
@@ -36,26 +38,13 @@ that REACT_APP_DOMAIN is using the port where c8y-core-service is running at
 
 ## Commands
 ```bash
-# Databases
-$ yarn docker:start
-
-# Service in watch mode
+# Service in watch mode OR
 $ yarn start:dev
 
 # Production mode
 $ yarn build && yarn start:prod
 ```
 
-## Test
-
-```bash
-# Tests
-$ yarn test
-
-# Tests with coverage
-$ yarn test:cov
-```
-
 ## License
 
-[MIT license](LICENSE).
+[MIT license](LICENSE.md).
