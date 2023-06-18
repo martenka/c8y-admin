@@ -17,7 +17,11 @@ export const TaskStepsRuntype = Union(
   Literal('PROCESSING'),
   Literal('DONE'),
   Literal('FAILED'),
+  Literal('DISABLED'),
 );
+
+export const TaskModesRuntype = Union(Literal('ENABLED'), Literal('DISABLED'));
+
 export const TaskTypesRuntype = Union(
   Literal('DATA_FETCH'),
   Literal('OBJECT_SYNC'),
@@ -27,6 +31,13 @@ export const TaskEntityTypes = Union(Literal('GROUP'), Literal('SENSOR'));
 export const TaskTypesArray = TaskTypesRuntype.alternatives.map(
   (item) => item.value,
 );
+export const TaskStatusArray = TaskStepsRuntype.alternatives.map(
+  (item) => item.value,
+);
+export const TaskModesArray = TaskModesRuntype.alternatives.map(
+  (item) => item.value,
+);
+
 export const TaskTypesMap = TaskTypesArray.reduce(
   (memo, currentValue, currentIndex) => ({
     ...memo,
@@ -36,9 +47,26 @@ export const TaskTypesMap = TaskTypesArray.reduce(
 ) as {
   [K in (typeof TaskTypesArray)[number]]: number;
 };
-export const TaskStatusArray = TaskStepsRuntype.alternatives.map(
-  (item) => item.value,
-);
+
+export const TaskStepsMap = TaskStatusArray.reduce(
+  (memo, currentValue, currentIndex) => ({
+    ...memo,
+    [currentValue]: currentIndex,
+  }),
+  {},
+) as {
+  [K in (typeof TaskStatusArray)[number]]: number;
+};
+
+export const TaskModesMap = TaskModesArray.reduce(
+  (memo, currentValue, currentIndex) => ({
+    ...memo,
+    [currentValue]: currentIndex,
+  }),
+  {},
+) as {
+  [K in (typeof TaskModesArray)[number]]: number;
+};
 
 const TaskPeriodicDataRuntype = Partial({
   pattern: String,
@@ -63,6 +91,7 @@ export const TaskRuntype = Record({
   Partial({
     createdAt: String,
     metadata: TaskMetadataRuntype,
+    mode: TaskModesRuntype,
   }),
 );
 export type BaseTask = Static<typeof TaskRuntype>;

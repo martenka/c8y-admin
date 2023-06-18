@@ -34,6 +34,12 @@ export const GeneralTaskInfo = ({ task }: TaskProps) => {
             <Chip label={task.status} variant="filled" />
           </Stack>
           <Stack direction="row" spacing={2}>
+            <Typography fontWeight="bold" alignItems="center" display="flex">
+              Mode
+            </Typography>
+            <Chip label={task.mode} variant="filled" />
+          </Stack>
+          <Stack direction="row" spacing={2}>
             <Typography fontWeight="bold">Created At</Typography>
             <Typography>{task.createdAt}</Typography>
           </Stack>

@@ -1,16 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDataGrid, List, ShowButton } from '@refinedev/mui';
 import { DataGrid, GridColumns } from '@mui/x-data-grid';
 
 import { UserIdentity } from '../../types/auth';
 import { notNil } from '../../utils/validators';
-import { CrudFilters, getDefaultFilter, useGetIdentity } from '@refinedev/core';
+import {
+  CrudFilters,
+  getDefaultFilter,
+  useCustomMutation,
+  useGetIdentity,
+} from '@refinedev/core';
 import {
   Button,
   Card,
   CardContent,
   CardHeader,
   Grid,
+  IconButton,
   Stack,
 } from '@mui/material';
 import {
@@ -35,11 +41,15 @@ import {
 import { useNavigate } from 'react-router-dom';
 import {
   BaseTask,
+  TaskModesArray,
+  TaskModesMap,
   TaskStatusArray,
   TaskStatusSelectOptions,
   TaskTypesArray,
   TaskTypesSelectOptions,
 } from '../../types/tasks/base';
+
+import { PlayArrow, Stop } from '@mui/icons-material';
 
 export const TasksList = () => {
   const auth = useGetIdentity<UserIdentity>();
@@ -48,7 +58,10 @@ export const TasksList = () => {
 
   const navigate = useNavigate();
 
-  const { dataGridProps, filters, search } = useDataGrid<
+  const { mutate: taskModeMutation } = useCustomMutation();
+  const [listSelection, setListSelection] = useState<BaseTask[]>([]);
+
+  const { dataGridProps, filters, search, tableQueryResult } = useDataGrid<
     BaseTask,
     ApiResponseErrorType,
     TaskFilterVariables
@@ -95,6 +108,7 @@ export const TasksList = () => {
       { field: 'name', headerName: 'Name', flex: 1 },
       { field: 'taskType', headerName: 'Type', flex: 1 },
       { field: 'status', headerName: 'Status', flex: 1 },
+      { field: 'mode', headerName: 'Mode', flex: 1 },
       {
         field: 'actions',
         headerName: 'Actions',
@@ -110,6 +124,8 @@ export const TasksList = () => {
     ],
     [],
   );
+
+  const dataGridData = tableQueryResult.data?.data ?? [];
 
   const { handleSubmit, control, reset, ...rest } = useForm<
     BaseTask,
@@ -201,16 +217,56 @@ export const TasksList = () => {
             return (
               <>
                 {isAdmin && (
-                  <Button
-                    variant="contained"
-                    onClick={() => {
-                      navigate('/tasks/create', {
-                        state: { taskType: 'OBJECT_SYNC' },
-                      });
-                    }}
-                  >
-                    Sync sensors and groups
-                  </Button>
+                  <>
+                    <Button
+                      variant="contained"
+                      onClick={() => {
+                        navigate('/tasks/create', {
+                          state: { taskType: 'OBJECT_SYNC' },
+                        });
+                      }}
+                    >
+                      Sync sensors and groups
+                    </Button>
+                    <IconButton
+                      onClick={() => {
+                        taskModeMutation({
+                          method: 'put',
+                          url: 'tasks/mode',
+                          values: {
+                            type: TaskModesArray[TaskModesMap['DISABLED']],
+                            taskIds: listSelection.map((item) => item.id),
+                          },
+                          meta: { token },
+                          successNotification: {
+                            message: 'Tasks disabled',
+                            type: 'success',
+                          },
+                        });
+                      }}
+                    >
+                      <Stop fontSize="large" htmlColor="red" />
+                    </IconButton>
+                    <IconButton
+                      onClick={() => {
+                        taskModeMutation({
+                          method: 'put',
+                          url: 'tasks/mode',
+                          values: {
+                            type: TaskModesArray[TaskModesMap['ENABLED']],
+                            taskIds: listSelection.map((item) => item.id),
+                          },
+                          meta: { token },
+                          successNotification: {
+                            message: 'Tasks enabled',
+                            type: 'success',
+                          },
+                        });
+                      }}
+                    >
+                      <PlayArrow fontSize="large" color="primary" />
+                    </IconButton>
+                  </>
                 )}
               </>
             );
@@ -220,6 +276,14 @@ export const TasksList = () => {
             {...dataGridProps}
             columns={columns}
             filterModel={undefined}
+            checkboxSelection
+            onSelectionModelChange={(model) => {
+              const selectedIds = new Set(model);
+              const selectedItems = dataGridData.filter((item) =>
+                selectedIds.has(item.id),
+              );
+              setListSelection(selectedItems);
+            }}
             autoHeight
           />
         </List>

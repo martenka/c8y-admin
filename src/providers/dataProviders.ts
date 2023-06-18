@@ -12,6 +12,9 @@ import {
   Pagination,
   UpdateResponse,
   DeleteManyResponse,
+  BaseRecord,
+  CrudFilter,
+  CustomResponse,
 } from '@refinedev/core';
 import { getAuthHeader } from '../utils/auth';
 
@@ -199,6 +202,45 @@ export const createBaseDataProvider = (baseUrl: string): DataProvider => {
       });
 
       const responsePayload = await getResponseJsonOrUndefined(response);
+      checkApiError(response, responsePayload);
+      return { data: responsePayload as TData };
+    },
+    async custom<
+      TData extends BaseRecord = BaseRecord,
+      TQuery = object,
+      TPayload = unknown,
+    >(params: {
+      url: string;
+      method: 'get' | 'delete' | 'head' | 'options' | 'post' | 'put' | 'patch';
+      sorters?: CrudSorting;
+      filters?: CrudFilter[];
+      payload?: TPayload;
+      query?: TQuery;
+      headers?: Record<string, string>;
+      meta?: MetaQuery;
+    }): Promise<CustomResponse<TData>> {
+      const url = new URL(params.url, baseUrl);
+
+      const token = (params.meta as ApiMetaQuery)?.token as string;
+
+      if (isNil(token)) {
+        throw new Error('Unable to get user auth token');
+      }
+
+      const response = await fetch(url, {
+        method: params.method,
+        headers: {
+          ...params.headers,
+          ...getAuthHeader(token),
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(params.payload),
+      });
+
+      const responsePayload = await getResponseJsonOrUndefined<
+        Record<string | number, unknown>
+      >(response);
+
       checkApiError(response, responsePayload);
       return { data: responsePayload as TData };
     },

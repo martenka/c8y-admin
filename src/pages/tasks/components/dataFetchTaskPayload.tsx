@@ -50,7 +50,7 @@ export const DataFetchTaskPayload = (props: DataFetchTaskPayloadProps) => {
                           {
                             <ShowButton
                               hideText
-                              recordItemId={rowId}
+                              recordItemId={file.sensor as string}
                               resource="sensors"
                               meta={{ token: props.token }}
                             />
