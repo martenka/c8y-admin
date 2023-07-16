@@ -5,12 +5,15 @@ import { ResponsiveStyleValue, SxProps } from '@mui/system';
 import { Theme } from '@mui/material/styles/createTheme';
 import { getKeyValuePair, objectToKeyValues } from '../utils/transforms';
 import { ManyKeyValues } from '../types/general';
-import { UseFormReturn } from 'react-hook-form';
+import { FieldValues, Path, PathValue, UseFormReturn } from 'react-hook-form';
 
-export const updateFormStateFromObject = (
-  attributeName: string,
+export const updateFormStateFromObject = <
+  TFields extends FieldValues,
+  TContext,
+>(
+  attributeName: keyof TFields,
   attributeValues: ManyKeyValues,
-  form: UseFormReturn,
+  form: UseFormReturn<TFields, TContext>,
 ) => {
   const levelObject: Record<string, string> = {};
 
@@ -18,13 +21,19 @@ export const updateFormStateFromObject = (
     levelObject[attributeValues[key].key] = attributeValues[key].value;
   });
 
-  form.setValue(attributeName, levelObject, { shouldValidate: true });
+  form.setValue(
+    attributeName as Path<TFields>,
+    levelObject as PathValue<TFields, Path<TFields>>,
+    {
+      shouldValidate: true,
+    },
+  );
 };
 
-export const SimpleFormObject = (props: {
-  objectName: string;
+export function SimpleFormObject<TFields extends FieldValues, TContext>(props: {
+  objectName: keyof TFields & string;
   objectDisplayName: string;
-  form: UseFormReturn;
+  form: UseFormReturn<TFields, TContext>;
   value: Record<string | number, string> | undefined;
   direction?: ResponsiveStyleValue<
     'row' | 'row-reverse' | 'column' | 'column-reverse'
@@ -32,7 +41,7 @@ export const SimpleFormObject = (props: {
   spacing?: ResponsiveStyleValue<number | string>;
   divider?: React.ReactNode;
   sx?: SxProps<Theme>;
-}): JSX.Element => {
+}): JSX.Element {
   const [attributes, setAttributes] = useState(
     objectToKeyValues(props?.value ?? {}),
   );
@@ -45,7 +54,10 @@ export const SimpleFormObject = (props: {
       <Stack
         direction={props.direction ?? 'column'}
         spacing={props.spacing ?? 1}
-        sx={{ ...(props?.sx ?? {}), mt: 2 }}
+        sx={{
+          mt: 2,
+          ...(props?.sx ?? {}),
+        }}
         divider={props.divider}
       >
         {Object.keys(attributes).map((key) => {
@@ -56,6 +68,7 @@ export const SimpleFormObject = (props: {
               key={`${props.objectName}.${key}`}
             >
               <TextField
+                required
                 fullWidth
                 key={`${key}.key`}
                 label={'key'}
@@ -110,25 +123,27 @@ export const SimpleFormObject = (props: {
             </Stack>
           );
         })}
-        <Button
-          color="primary"
-          variant="contained"
-          onClick={() => {
-            setAttributes((prevState) => {
-              const newState = { ...prevState };
-              const keyValuePair = getKeyValuePair();
-
-              Object.keys(keyValuePair).forEach(
-                (key) => (newState[key] = keyValuePair[key]),
-              );
-
-              return newState;
-            });
-          }}
-        >
-          Add
-        </Button>
       </Stack>
+      <Button
+        fullWidth
+        color="primary"
+        variant="contained"
+        onClick={() => {
+          setAttributes((prevState) => {
+            const newState = { ...prevState };
+            const keyValuePair = getKeyValuePair();
+
+            Object.keys(keyValuePair).forEach(
+              (key) => (newState[key] = keyValuePair[key]),
+            );
+
+            return newState;
+          });
+        }}
+        sx={{ mt: 1 }}
+      >
+        Add
+      </Button>
     </>
   );
-};
+}

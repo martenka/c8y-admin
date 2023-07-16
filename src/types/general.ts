@@ -51,3 +51,5 @@ export type GeneralApiResponse = Static<typeof GeneralApiResponseRuntype>;
 export type KeyValue = Static<typeof KeyValueRuntype>;
 export type ManyKeyValues = { [key: string]: KeyValue };
 export type CustomAttributes = Static<typeof CustomAttributesRuntype>;
+export type BaseCustomAttributes = CustomAttributes['customAttributes'];
+export type ValueObject<T> = { value: T };

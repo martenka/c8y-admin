@@ -183,7 +183,6 @@ export const createBaseDataProvider = (baseUrl: string): DataProvider => {
       id: BaseKey;
       variables: TVariables;
       meta?: MetaQuery;
-      metaData?: MetaQuery;
     }): Promise<UpdateResponse<TData>> {
       const url = new URL(`${params.resource}/${params.id}`, baseUrl);
       const token = (params.meta as ApiMetaQuery)?.token as string;
@@ -228,7 +227,7 @@ export const createBaseDataProvider = (baseUrl: string): DataProvider => {
       }
 
       const response = await fetch(url, {
-        method: params.method,
+        method: params.method.toUpperCase(),
         headers: {
           ...params.headers,
           ...getAuthHeader(token),
