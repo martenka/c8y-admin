@@ -1961,10 +1961,10 @@
   resolved "https://registry.yarnpkg.com/@reach/observe-rect/-/observe-rect-1.2.0.tgz#d7a6013b8aafcc64c778a0ccb83355a11204d3b2"
   integrity sha512-Ba7HmkFgfQxZqqaeIWWkNK0rEhpxVQHIoVyW1YDSkGsGIXzcaW4deC8B0pZrNSSyLTdIk7y+5olKt5+g0GmFIQ==
 
-"@refinedev/cli@2.5.3":
-  version "2.5.3"
-  resolved "https://registry.yarnpkg.com/@refinedev/cli/-/cli-2.5.3.tgz#c0d0796077d402609f701cbef2079f3ea9261e43"
-  integrity sha512-QvPW66JEzgoSSAL4JBzjZqhxb6i+0hKeXlSrWrGEjin6QVlhe/9nJoAwt12aC6+ePPjB6VOj7TcYqC/rlebq3A==
+"@refinedev/cli@2.7.2":
+  version "2.7.2"
+  resolved "https://registry.yarnpkg.com/@refinedev/cli/-/cli-2.7.2.tgz#561f1dd695292a0a89ca35ef2a56a72c0aa3347b"
+  integrity sha512-1yTU8yM7DKXmxd914WcQNkcsDRJcN16KZm7EaUHhlM6Jjo5tB3noMEqrq7zkMDgc3zqE8XRLClpDCaxL7r3ZPQ==
   dependencies:
     boxen "^5.1.2"
     cardinal "^2.1.1"
@@ -1975,10 +1975,12 @@
     dotenv "^16.0.3"
     envinfo "^7.8.1"
     execa "^5.1.1"
+    express "^4.18.2"
     figlet "^1.5.2"
     fs-extra "^10.1.0"
     globby "^11.1.0"
     handlebars "^4.7.7"
+    http-proxy-middleware "^2.0.6"
     ink "^3.2.0"
     ink-markdown "^1.0.1"
     ink-table "^3.0.0"
@@ -1995,42 +1997,10 @@
     temp "^0.9.4"
     tslib "^2.3.1"
 
-"@refinedev/core@4.10.0":
-  version "4.10.0"
-  resolved "https://registry.yarnpkg.com/@refinedev/core/-/core-4.10.0.tgz#bb602f7ad9cf39077fafa9bba381e0788e24bd45"
-  integrity sha512-kfwavfo5GMod6WPwvWG//s8XvMyy2qJVHWTQmTHLUhISmtQS2UyOacHBtFvkjRfefIQ99xQ7vrH8XcbwvynccA==
-  dependencies:
-    "@tanstack/react-query" "^4.10.1"
-    "@tanstack/react-query-devtools" "^4.10.1"
-    export-to-csv-fix-source-map "^0.2.1"
-    lodash "^4.17.21"
-    lodash-es "^4.17.21"
-    papaparse "^5.3.0"
-    pluralize "^8.0.0"
-    qs "^6.10.1"
-    tslib "^2.3.1"
-    warn-once "^0.1.0"
-
-"@refinedev/core@^4.1.2":
-  version "4.5.2"
-  resolved "https://registry.yarnpkg.com/@refinedev/core/-/core-4.5.2.tgz#bb2db375036432c56be0500d9127c792301bbbf8"
-  integrity sha512-9oqn2I/SAabGnEbu9yglm7wY9zKeL07qtYrz/WTNUJlsWefbg9TYHNuyOx7AxxlVgScLg+KwZbDSqwRto/U4Yg==
-  dependencies:
-    "@tanstack/react-query" "^4.10.1"
-    "@tanstack/react-query-devtools" "^4.10.1"
-    export-to-csv-fix-source-map "^0.2.1"
-    lodash "^4.17.21"
-    lodash-es "^4.17.21"
-    papaparse "^5.3.0"
-    pluralize "^8.0.0"
-    qs "^6.10.1"
-    tslib "^2.3.1"
-    warn-once "^0.1.0"
-
-"@refinedev/core@^4.5.4":
-  version "4.7.2"
-  resolved "https://registry.yarnpkg.com/@refinedev/core/-/core-4.7.2.tgz#337b49b7b622124679ad31be63f9a700749ca124"
-  integrity sha512-kQ7szs2ms0ciZMX5V5dOjZqOBOGvea2uFrs96k4mV+FzDnU8nMqkNM12rLlgXDvWZ9KDF4nNTD03IcJ07y66kQ==
+"@refinedev/core@4.28.0", "@refinedev/core@^4.1.2", "@refinedev/core@^4.28.0":
+  version "4.28.0"
+  resolved "https://registry.yarnpkg.com/@refinedev/core/-/core-4.28.0.tgz#3d2883abef3a1751073740730f8a9b7ca3264a65"
+  integrity sha512-VzjlGFDd3zBbZPdRCRiDRPcu3Of96/QxpZvTpg3pengKmgt4YIDxA67t4Yfob39yWlPuJOGSx/fo8SYfKblmKQ==
   dependencies:
     "@tanstack/react-query" "^4.10.1"
     "@tanstack/react-query-devtools" "^4.10.1"
@@ -2061,12 +2031,12 @@
     remark-gfm "^1.0.0"
     tslib "^2.3.1"
 
-"@refinedev/kbar@^1.0.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@refinedev/kbar/-/kbar-1.1.0.tgz#6e55c636323e5f775538fdebbc64b2573ff63e3e"
-  integrity sha512-BnGhoyiRR1clHRKs9XnLEJkS6WoNJpZHg2r+Ez6iJpdtiaGnrz4+S9HN5XJukd57NCL/yt+CXD01SHlc3KrnPA==
+"@refinedev/kbar@1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@refinedev/kbar/-/kbar-1.1.2.tgz#3bb2fd09f598f3046315edc043694b82ba66bd25"
+  integrity sha512-IPq8SQ+Oe4jOFq0aSVQ3Rg03Yoltez3evqZvjyw4X3PbCqyeatGD9Iarg8DQ8rEHO2YoXM1BipI3Bo0l1lXMiQ==
   dependencies:
-    kbar "^0.1.0-beta.36"
+    kbar "^0.1.0-beta.40"
 
 "@refinedev/mui@4.10.3":
   version "4.10.3"
@@ -2091,24 +2061,17 @@
     tslib "^2.3.1"
     warn-once "^0.1.0"
 
-"@refinedev/react-hook-form@4.1.6":
-  version "4.1.6"
-  resolved "https://registry.yarnpkg.com/@refinedev/react-hook-form/-/react-hook-form-4.1.6.tgz#e36be2c41757a8fd79442e9b21f329b696a2bb5e"
-  integrity sha512-bVBsWxs01Rtrf0GKRb9sx0uYTT5FDlv+dp2cC7SutuD4THWAEoLb2RpXc69shAXHMgcw5ZVBTSI1yTpV5vOmjg==
+"@refinedev/react-hook-form@4.6.0", "@refinedev/react-hook-form@^4.2.0":
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/@refinedev/react-hook-form/-/react-hook-form-4.6.0.tgz#57e45e424e3b7cd69a4e710e768aaad088ff7208"
+  integrity sha512-5voyuO4LTeohuAQpRVKEWpTBAu2QN4CnnnVK7b8i8qYP4EzZ5ZQth9VkVoa0O2yqHJ3Tyf0dD5KkjRsK/esiuw==
   dependencies:
     react-hook-form "^7.30.0"
 
-"@refinedev/react-hook-form@^4.2.0":
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/@refinedev/react-hook-form/-/react-hook-form-4.2.0.tgz#121ac407dd7d1ccd8d92e15e78dcd7c678a13daa"
-  integrity sha512-h9oH3dpyWLEmbtY2cYf9DCQK73tF4Ry5tGq+6r1fUDtaY55PFDT4KJ+jT40g+EcnxHFR0fruXj6J4WrLhSh1pg==
-  dependencies:
-    react-hook-form "^7.30.0"
-
-"@refinedev/react-router-v6@^4.1.0":
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/@refinedev/react-router-v6/-/react-router-v6-4.1.0.tgz#41c44b992ecb3a37342223af577de18cbd660868"
-  integrity sha512-I6cjLX7vSrpI9i598aQV4eusD7uAeShuzhULKXXb9Ou/kcs+aLDjpICUJQqpEfhQg2mQTNt5i3xg6BpXDDHK6w==
+"@refinedev/react-router-v6@4.3.2":
+  version "4.3.2"
+  resolved "https://registry.yarnpkg.com/@refinedev/react-router-v6/-/react-router-v6-4.3.2.tgz#8331a88f7b0615e686be53db711adb7b237a523d"
+  integrity sha512-ip40qVj0YV0GWwUEN6aMK277kU8Jb+vqFFfIBQYLMcq6vOxgL0gzNpQ46zsCsKheRY6xpKD3JruG2J922jZQMQ==
   dependencies:
     qs "^6.10.1"
     react-router-dom "^6.8.1"
@@ -2122,11 +2085,11 @@
     query-string "^7.1.1"
 
 "@refinedev/ui-types@^1.10.0":
-  version "1.10.0"
-  resolved "https://registry.yarnpkg.com/@refinedev/ui-types/-/ui-types-1.10.0.tgz#992107fc7726a97a191b480d1d1f70cc7096d96b"
-  integrity sha512-QPjJjXlFXXyNdjJpOP83XpXZktHXtyaD1riVA4zjhGS14S2FmSbv8KcxGy4VVAi3QGquT9HFKvAh5yrrDKyD0w==
+  version "1.20.0"
+  resolved "https://registry.yarnpkg.com/@refinedev/ui-types/-/ui-types-1.20.0.tgz#773194610eee12f27249dbdbcd4a00c0e7ff8283"
+  integrity sha512-TL2n4oHofD+V8/NS5fIe2tuZqIidXbWSbVhIhRSsuF01Yik36cTfCKxux/BlTlKFhl4MFOjLVS1+Wz/dUywHrw==
   dependencies:
-    "@refinedev/core" "^4.5.4"
+    "@refinedev/core" "^4.28.0"
     dayjs "^1.10.7"
     tslib "^2.3.1"
 
@@ -5394,7 +5357,7 @@ export-to-csv-fix-source-map@^0.2.1:
   resolved "https://registry.yarnpkg.com/export-to-csv-fix-source-map/-/export-to-csv-fix-source-map-0.2.1.tgz#820020401ae7a29e3d08b9f863c03a112038bb8e"
   integrity sha512-02CGZG9Kduc0l9ErJ5b+99+PjeQIyoeVGz+f7/Yc04V4YKNPbdT63sQqBC5RW05va4w0MZen7pQpf92H3funYw==
 
-express@^4.17.3:
+express@^4.17.3, express@^4.18.2:
   version "4.18.2"
   resolved "https://registry.yarnpkg.com/express/-/express-4.18.2.tgz#3fabe08296e930c796c19e3c516979386ba9fd59"
   integrity sha512-5/PsL6iGPdfQ/lKM1UuielYgv3BUoJfz1aUwU9vHZ+J7gyvwdQXFEBIEIaxeGf0GIcreATNyBExtalisDbuMqQ==
@@ -6190,7 +6153,7 @@ http-proxy-agent@^4.0.1:
     agent-base "6"
     debug "4"
 
-http-proxy-middleware@^2.0.3:
+http-proxy-middleware@^2.0.3, http-proxy-middleware@^2.0.6:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/http-proxy-middleware/-/http-proxy-middleware-2.0.6.tgz#e1a4dd6979572c7ab5a4e4b55095d1f32a74963f"
   integrity sha512-ya/UeJ6HVBYxrgYotAZo1KvPWlgB48kUJLDePFeneHsVujFaW5WNj2NgWCAE//B1Dl02BIfYlpNgBy8Kf8Rjmw==
@@ -7590,10 +7553,10 @@ jwt-decode@^3.1.2:
   resolved "https://registry.yarnpkg.com/jwt-decode/-/jwt-decode-3.1.2.tgz#3fb319f3675a2df0c2895c8f5e9fa4b67b04ed59"
   integrity sha512-UfpWE/VZn0iP50d8cz9NrZLM9lSWhcJ+0Gt/nm4by88UL+J1SiKN8/5dkjMmbEzwL2CAe+67GsegCbIKtbp75A==
 
-kbar@^0.1.0-beta.36:
-  version "0.1.0-beta.40"
-  resolved "https://registry.yarnpkg.com/kbar/-/kbar-0.1.0-beta.40.tgz#89747e3c1538375fef779af986b6614bb441ae7c"
-  integrity sha512-vEV02WuEBvKaSivO2DnNtyd3gUAbruYrZCax5fXcLcVTFV6q0/w6Ew3z6Qy+AqXxbZdWguwQ3POIwgdHevp+6A==
+kbar@^0.1.0-beta.40:
+  version "0.1.0-beta.41"
+  resolved "https://registry.yarnpkg.com/kbar/-/kbar-0.1.0-beta.41.tgz#7a6ad1a5a51c401d7ee8b1e5de0f5c1766784bb6"
+  integrity sha512-rxVcKz6pN9YOIInby63t/1LW8J1CpPDf2X1/s+YSTeCbfM160a2/mlPi5ncx0vOY7DyThCHyrWxgjgwScWC3kA==
   dependencies:
     "@radix-ui/react-portal" "^1.0.1"
     command-score "^0.1.2"
