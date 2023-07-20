@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDataGrid, List, ShowButton } from '@refinedev/mui';
-import { DataGrid, GridColumns } from '@mui/x-data-grid';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
 
 import { UserIdentity } from '../../types/auth';
 import { notNil } from '../../utils/validators';
@@ -102,7 +102,7 @@ export const TasksList = () => {
     },
   });
 
-  const columns = React.useMemo<GridColumns<BaseTask>>(
+  const columns = React.useMemo<GridColDef<BaseTask>[]>(
     () => [
       { field: 'id', headerName: 'ID', flex: 1 },
       { field: 'name', headerName: 'Name', flex: 1 },
@@ -174,7 +174,7 @@ export const TasksList = () => {
                   options={TaskStatusSelectOptions}
                   fullWidth
                 />
-                <LocalizationProvider dateAdapter={AdapterDayjs} fullWidth>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DateTimePickerElement
                     name={'firstRunAt'}
                     label="First run from"
@@ -277,7 +277,7 @@ export const TasksList = () => {
             columns={columns}
             filterModel={undefined}
             checkboxSelection
-            onSelectionModelChange={(model) => {
+            onRowSelectionModelChange={(model) => {
               const selectedIds = new Set(model);
               const selectedItems = dataGridData.filter((item) =>
                 selectedIds.has(item.id),

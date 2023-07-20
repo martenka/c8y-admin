@@ -6,16 +6,16 @@ import {
   DialogActions,
   DialogTitle,
   IconButton,
+  Theme,
 } from '@mui/material';
 import { DeleteButtonProps } from '@refinedev/mui';
 import { notNil } from '../utils/validators';
 import { DeleteOutline } from '@mui/icons-material';
+import { SxProps } from '@mui/system';
 
-type DeleteManyButtonProps = Pick<
-  DeleteButtonProps,
-  'meta' | 'disabled' | 'sx'
-> & {
+type DeleteManyButtonProps = Pick<DeleteButtonProps, 'meta' | 'disabled'> & {
   ids: string[];
+  sx?: SxProps<Theme>;
 };
 export const DeleteManyButton = ({
   ids,
@@ -49,7 +49,11 @@ export const DeleteManyButton = ({
 
   return (
     <div>
-      <IconButton onClick={handleDialogOpen} {...rest}>
+      <IconButton
+        onClick={handleDialogOpen}
+        sx={rest.sx}
+        disabled={rest.disabled}
+      >
         <DeleteOutline />
       </IconButton>
       <Dialog open={open} onClose={handleDialogClose}>

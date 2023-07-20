@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDataGrid, List } from '@refinedev/mui';
-import { DataGrid, GridColumns } from '@mui/x-data-grid';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
 
 import { UserIdentity } from '../../types/auth';
 import { notNil } from '../../utils/validators';
@@ -17,14 +17,14 @@ export const UsersList = () => {
     },
   });
 
-  const columns = React.useMemo<GridColumns<User>>(
+  const columns = React.useMemo<GridColDef<User>[]>(
     () => [
       { field: 'id', headerName: 'ID', flex: 1 },
       { field: 'username', headerName: 'Username', flex: 1 },
       {
         field: 'roles',
         headerName: 'Roles',
-        valueFormatter: (_params) => {
+        valueFormatter: () => {
           return 'Placeholder';
         },
         flex: 1,

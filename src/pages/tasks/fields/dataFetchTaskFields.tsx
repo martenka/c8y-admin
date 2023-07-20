@@ -23,7 +23,7 @@ export const DataFetchTaskFields = ({ control }: DataFetchTaskProps) => {
       <Typography variant="body1" fontWeight="bold" sx={{ mb: 2, mt: 2 }}>
         Fetch timeframe
       </Typography>
-      <LocalizationProvider dateAdapter={AdapterDayjs} fullWidth>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
         <Stack direction={'row'} spacing={2}>
           <DateTimePickerElement
             name={'dateFrom'}

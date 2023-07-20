@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { DeleteButton, List, ShowButton, useDataGrid } from '@refinedev/mui';
-import { DataGrid, GridColumns } from '@mui/x-data-grid';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
 
 import { UserIdentity } from '../../types/auth';
 import { notNil } from '../../utils/validators';
@@ -101,7 +101,7 @@ export const FilesList = () => {
       sensorId: getDefaultFilter('sensorId', filters, 'eq'),
     },
   });
-  const columns = React.useMemo<GridColumns<File>>(
+  const columns = React.useMemo<GridColDef<File>[]>(
     () => [
       { field: 'name', headerName: 'Name', flex: 1 },
       { field: 'createdByTask', headerName: 'CreatedByTask', flex: 1 },
@@ -222,7 +222,7 @@ export const FilesList = () => {
                   size="small"
                   fullWidth
                 />
-                <LocalizationProvider dateAdapter={AdapterDayjs} fullWidth>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <Stack direction={'row'} spacing={2}>
                     <DateTimePickerElement
                       name={'dateFrom'}
@@ -291,7 +291,7 @@ export const FilesList = () => {
             columns={columns}
             filterModel={undefined}
             checkboxSelection
-            onSelectionModelChange={(model) => {
+            onRowSelectionModelChange={(model) => {
               const selectedIds = new Set(model);
               const selectedSensors = dataGridData.filter((item) =>
                 selectedIds.has(item.id),

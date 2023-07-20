@@ -4,7 +4,7 @@ import { Typography, Stack, Grid, Button } from '@mui/material';
 import { UserIdentity } from '../../types/auth';
 import { isNil, notNil } from '../../utils/validators';
 import { Group } from '../../types/group';
-import { DataGrid, GridColumns } from '@mui/x-data-grid';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import React, { useState } from 'react';
 import { Sensor } from '../../types/sensors';
 import { CustomAttributes } from '../../components/CustomAttributes';
@@ -38,7 +38,7 @@ export const GroupShow = () => {
       : { left: 2, right: 10 };
     setGridColumnAmount(gridColumnValues);
   }, [customAttributes]);
-  const columns = React.useMemo<GridColumns<Sensor>>(
+  const columns = React.useMemo<GridColDef<Sensor>[]>(
     () => [
       { field: 'id', headerName: 'ID', flex: 1 },
       { field: 'managedObjectId', headerName: 'ManagedObject', flex: 1 },
@@ -133,7 +133,7 @@ export const GroupShow = () => {
               columns={columns}
               rows={rows}
               checkboxSelection
-              onSelectionModelChange={(model) => {
+              onRowSelectionModelChange={(model) => {
                 const selectedIds = new Set(model);
                 const selectedSensors = rows.filter((item) =>
                   selectedIds.has(item.id),

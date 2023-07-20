@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDataGrid, List, ShowButton } from '@refinedev/mui';
-import { DataGrid, GridColumns } from '@mui/x-data-grid';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
 
 import { UserIdentity } from '../../types/auth';
 import { notNil } from '../../utils/validators';
@@ -52,7 +52,7 @@ export const GroupsList = () => {
     },
   });
 
-  const columns = React.useMemo<GridColumns<Group>>(
+  const columns = React.useMemo<GridColDef<Group>[]>(
     () => [
       { field: 'id', headerName: 'ID', flex: 1 },
       { field: 'name', headerName: 'Group name', flex: 1 },

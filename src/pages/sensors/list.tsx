@@ -1,9 +1,7 @@
-import { DataGrid, GridColumns } from '@mui/x-data-grid';
 import { List, ShowButton, useDataGrid } from '@refinedev/mui';
 import React, { useState } from 'react';
 
 import {
-  Box,
   Button,
   Card,
   CardContent,
@@ -39,6 +37,7 @@ import { notNil } from '../../utils/validators';
 import { Edit } from '@mui/icons-material';
 import { EditMultipleSensorsModal } from './components/edit-multiple';
 import { centerFlexStyle } from '../../utils/styles';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
 
 export const SensorsList = () => {
   const auth = useGetIdentity<UserIdentity>();
@@ -75,7 +74,7 @@ export const SensorsList = () => {
 
   const dataGridData = tableQueryResult.data?.data ?? [];
 
-  const columns = React.useMemo<GridColumns<Sensor>>(
+  const columns = React.useMemo<GridColDef<Sensor>[]>(
     () => [
       { field: 'id', headerName: 'ID', flex: 1 },
       { field: 'managedObjectId', headerName: 'ManagedObject', flex: 1 },
@@ -280,7 +279,7 @@ export const SensorsList = () => {
               columns={columns}
               filterModel={undefined}
               checkboxSelection
-              onSelectionModelChange={(model) => {
+              onRowSelectionModelChange={(model) => {
                 const selectedIds = new Set(model);
                 const selectedSensors = dataGridData.filter((item) =>
                   selectedIds.has(item.id),
