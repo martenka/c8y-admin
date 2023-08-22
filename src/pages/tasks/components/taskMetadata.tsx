@@ -42,9 +42,9 @@ export const TaskMetadata = ({ task }: TaskProps) => {
             <Stack direction="row" spacing={2}>
               <Typography fontWeight="bold">Fetch Duration</Typography>
               <Typography>
-                {metadata?.periodicData && (
+                {metadata?.periodicData?.windowDurationSeconds && (
                   <span>
-                    {metadata?.periodicData?.fetchDurationSeconds} seconds
+                    {metadata?.periodicData?.windowDurationSeconds} seconds
                   </span>
                 )}
               </Typography>

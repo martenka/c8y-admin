@@ -15,6 +15,7 @@ export const TaskStepsRuntype = Union(
   Literal('NOT_STARTED'),
   Literal('IN_QUEUE'),
   Literal('PROCESSING'),
+  Literal('WAITING_NEXT_CYCLE'),
   Literal('DONE'),
   Literal('FAILED'),
   Literal('DISABLED'),
@@ -70,7 +71,7 @@ export const TaskModesMap = TaskModesArray.reduce(
 
 const TaskPeriodicDataRuntype = Partial({
   pattern: String,
-  fetchDurationSeconds: Number.Or(String),
+  windowDurationSeconds: Number.Or(String),
 });
 
 export const TaskMetadataRuntype = Partial({
@@ -122,7 +123,7 @@ export const TaskAPIInputRuntype = Record({
       pattern: NonEmptyString,
     }).And(
       Partial({
-        fetchDurationSeconds: Number,
+        windowDurationSeconds: Number,
       }),
     ),
   }),

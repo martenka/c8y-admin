@@ -134,7 +134,7 @@ export const taskSubmitHandler = (task: TaskPayload): TaskAPIInput => {
     if (notNil(task.pattern)) {
       periodicData = {
         pattern: task.pattern,
-        fetchDurationSeconds: task.fetchDurationSeconds,
+        windowDurationSeconds: task.windowDurationSeconds,
       };
     }
     return {

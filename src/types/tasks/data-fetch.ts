@@ -35,7 +35,7 @@ export const CreateDataFetchTaskFormDataRuntype = BaseCreateTaskFormData.And(
     Partial({
       dateFrom: Unknown.withGuard(isDayjs).Or(Null),
       dateTo: Unknown.withGuard(isDayjs).Or(Null),
-      fetchDurationSeconds: Number,
+      windowDurationSeconds: Number,
     }),
   ),
 );

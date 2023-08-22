@@ -171,7 +171,7 @@ export const GeneralTaskFormFields = ({
             {selectedTask === 'DATA_FETCH' && (
               <TextFieldElement
                 type="number"
-                name={'fetchDurationSeconds'}
+                name="windowDurationSeconds"
                 label="Duration (seconds)"
               />
             )}
